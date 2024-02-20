@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 @EntityListeners({AuditingEntityListener.class})
 public class Residence {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     private String reference;
     private String nom;
     private String description;

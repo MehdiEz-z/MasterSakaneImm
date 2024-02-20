@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 @EntityListeners({AuditingEntityListener.class})
 public class Immeuble {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     private String reference;
     private String numero;
     @JsonIgnore
