@@ -1,10 +1,9 @@
 package org.example.appartementservice.services.inmplementations;
-import org.example.appartementservice.handlers.exceptionHandler.OperationsException;
+import org.example.appartementservice.handlers.exceptionHandler.ResourcesNotFoundException;
 import org.example.appartementservice.models.entities.Residence;
 import org.example.appartementservice.repositories.ResidenceRepository;
 import org.example.appartementservice.services.interfaces.ResidenceService;
 import org.springframework.stereotype.Component;
-import java.util.Collections;
 import java.util.List;
 @Component
 public class ResidenceServiceImpl implements ResidenceService{
@@ -14,27 +13,26 @@ public class ResidenceServiceImpl implements ResidenceService{
     }
     @Override
     public Residence createResidence(Residence residence) {
-        String reference = generateReferenceResidence(residence);
+        String reference = generateReferenceResidence();
         residence.setReference(reference);
         return residenceRepository.save(residence);
     }
-    public String generateReferenceResidence(Residence residence) {
-        long count = residenceRepository.count();
-        if (count < 0) {
-            throw new OperationsException("Erreur lors de la génération de la référence de la résidence");
-        }
-        String reference = "RES-" + (count + 1);
-        if (residence.getReference() == null || residence.getReference().isEmpty()) {
-            residence.setReference(reference);
+    public String generateReferenceResidence() {
+        int suffix = 1;
+        String reference = "RES-" + suffix;
+        while (residenceRepository.existsByReference(reference)) {
+            suffix++;
+            reference = "RES-" + suffix;
         }
         return reference;
     }
     @Override
-    public Residence getResidenceByReference(String reference) {
-        return null;
+    public Residence getResidenceByReference(String nomResidence) {
+        return residenceRepository.findByNom(nomResidence)
+                .orElseThrow(() -> new ResourcesNotFoundException("La Residence " + nomResidence + " n'existe pas"));
     }
     @Override
     public List<Residence> getAllResidences() {
-        return Collections.emptyList();
+        return residenceRepository.findAll();
     }
 }
