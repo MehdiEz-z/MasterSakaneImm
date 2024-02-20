@@ -2,6 +2,7 @@ package org.example.appartementservice.models.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.appartementservice.models.enums.StatusAppEtMag;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -27,6 +28,10 @@ public class Appartement {
     private int nombreSalleDeBain;
     private int nombrePlacard;
     private int nombreBalcon;
+    @ManyToOne
+    private Etage etage;
+    @Enumerated(EnumType.STRING)
+    private StatusAppEtMag status;
     @JsonIgnore
     @CreatedDate
     private LocalDateTime createdAt;

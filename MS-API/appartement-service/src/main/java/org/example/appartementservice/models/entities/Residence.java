@@ -6,6 +6,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
+import java.util.List;
+
 @Entity
 @Getter @Setter @ToString
 @AllArgsConstructor @NoArgsConstructor
@@ -17,6 +19,8 @@ public class Residence {
     private String nom;
     private String description;
     private String adresse;
+    @OneToMany(mappedBy = "residence")
+    private List<Immeuble> immeubles;
     @JsonIgnore
     @CreatedDate
     private LocalDateTime createdAt;
