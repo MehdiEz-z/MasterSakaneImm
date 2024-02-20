@@ -30,10 +30,10 @@ public class GlobalExceptionHandler {
     }
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ResponseMessage> notValid(MethodArgumentNotValidException ex, WebRequest request) {
-        List<String> errors = new ArrayList<>();
-        ex.getAllErrors().forEach(err -> errors.add(err.getDefaultMessage()));
+        List<String> erreurs = new ArrayList<>();
+        ex.getAllErrors().forEach(err -> erreurs.add(err.getDefaultMessage()));
         Map<String, List<String>> result = new HashMap<>();
-        result.put("errors", errors);
+        result.put("erreur", erreurs);
         return ResponseMessage.badRequest("Erreur de validation", result);
     }
     @ExceptionHandler(Exception.class)
