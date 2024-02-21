@@ -16,13 +16,14 @@ public class ImmeubleServiceImpl implements ImmeubleService {
     }
     @Override
     public Immeuble createImmeuble(Immeuble immeuble) {
-        return null;
+        checkResidenceExists(immeuble.getResidence().getReference());
+        String reference = generateReferenceImmeuble(immeuble);
+        immeuble.setReference(reference);
+        return immeubleRepository.save(immeuble);
     }
     public String generateReferenceImmeuble(Immeuble immeuble) {
         String residenceReference = immeuble.getResidence().getReference();
-        if (residenceService.getResidenceByReference(residenceReference) == null) {
-            throw new ResourcesNotFoundException("La Residence \"" + residenceReference + "\" n'existe pas");
-        }
+        checkResidenceExists(residenceReference);
         int suffix = 1;
         String reference = residenceReference + "-IMM-" + suffix;
         while (immeubleRepository.existsByReference(reference)) {
@@ -30,6 +31,11 @@ public class ImmeubleServiceImpl implements ImmeubleService {
             reference = residenceReference + "-IMM-" + suffix;
         }
         return reference;
+    }
+    private void checkResidenceExists(String residenceReference) {
+        if (residenceService.getResidenceByReference(residenceReference) == null) {
+            throw new ResourcesNotFoundException("La Residence \"" + residenceReference + "\" n'existe pas");
+        }
     }
     @Override
     public Immeuble getImmeubleByReferenceAndResidence(String immeubleReference, String residenceReference) {
