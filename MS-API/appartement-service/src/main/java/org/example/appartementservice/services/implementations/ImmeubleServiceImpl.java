@@ -39,7 +39,11 @@ public class ImmeubleServiceImpl implements ImmeubleService {
     }
     @Override
     public Immeuble getImmeubleByReferenceAndResidence(String immeubleReference, String residenceReference) {
-        return null;
+        checkResidenceExists(residenceReference);
+        if(immeubleRepository.findByReferenceAndResidence_Reference(immeubleReference, residenceReference) == null){
+            throw new ResourcesNotFoundException("L'Immeuble \"" + immeubleReference + "\" n'existe pas");
+        }
+        return immeubleRepository.findByReferenceAndResidence_Reference(immeubleReference, residenceReference);
     }
     @Override
     public List<Immeuble> getAllImmeubleByResidence() {
