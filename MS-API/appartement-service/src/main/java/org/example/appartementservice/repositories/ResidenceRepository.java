@@ -8,5 +8,6 @@ import java.util.Optional;
 @Repository
 public interface ResidenceRepository extends JpaRepository<Residence, String>{
     boolean existsByReference(String reference);
+    Optional<Residence> findByReference(String reference);
     Optional<Residence> findByNom(String reference);
 }

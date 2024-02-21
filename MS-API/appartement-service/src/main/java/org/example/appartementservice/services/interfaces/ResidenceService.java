@@ -5,6 +5,7 @@ import java.util.List;
 @Service
 public interface ResidenceService {
     Residence createResidence(Residence residence);
+    Residence getResidenceByReference(String reference);
     Residence getResidenceByNom(String reference);
     List<Residence> getAllResidences();
 }

@@ -1,4 +1,4 @@
-package org.example.appartementservice.services.inmplementations;
+package org.example.appartementservice.services.implementations;
 import org.example.appartementservice.handlers.exceptionHandler.ResourcesNotFoundException;
 import org.example.appartementservice.models.entities.Residence;
 import org.example.appartementservice.repositories.ResidenceRepository;
@@ -25,6 +25,11 @@ public class ResidenceServiceImpl implements ResidenceService{
             reference = "RES-" + suffix;
         }
         return reference;
+    }
+    @Override
+    public Residence getResidenceByReference(String reference) {
+        return residenceRepository.findByReference(reference)
+                .orElseThrow(() -> new ResourcesNotFoundException("La Residence \"" + reference + "\" n'existe pas"));
     }
     @Override
     public Residence getResidenceByNom(String nomResidence) {

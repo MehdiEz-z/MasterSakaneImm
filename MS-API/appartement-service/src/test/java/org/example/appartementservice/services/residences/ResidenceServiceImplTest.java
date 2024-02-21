@@ -2,7 +2,7 @@ package org.example.appartementservice.services.residences;
 import org.example.appartementservice.handlers.exceptionHandler.ResourcesNotFoundException;
 import org.example.appartementservice.models.entities.Residence;
 import org.example.appartementservice.repositories.ResidenceRepository;
-import org.example.appartementservice.services.inmplementations.ResidenceServiceImpl;
+import org.example.appartementservice.services.implementations.ResidenceServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -57,13 +57,13 @@ class ResidenceServiceImplTest {
     void testGetResidenceByReferenceEmptyAndThrowException(){
         String nomResidence = "RES-1";
         Mockito.when(residenceRepository.findByNom(nomResidence)).thenReturn(Optional.empty());
-        String exceptedMessage = "La Residence " + nomResidence + " n'existe pas";
+        String exceptedMessage = "La Residence \"" + nomResidence + "\" n'existe pas";
         ResourcesNotFoundException exception = assertThrows(ResourcesNotFoundException.class,
                 () -> residenceService.getResidenceByNom(nomResidence));
         assertEquals(exceptedMessage, exception.getMessage());
     }
     @Test
-    void testGetResidenceByReferenceSuccess(){
+    void testGetResidenceByNomSuccess(){
         Residence residence1 = createResidence();
         Mockito.when(residenceRepository.findByNom(residence1.getNom())).thenReturn(Optional.of(residence1));
         Residence residence = residenceService.getResidenceByNom(residence1.getNom());
