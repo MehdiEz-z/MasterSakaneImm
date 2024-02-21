@@ -37,21 +37,25 @@ class ImmeubleServiceImplTest {
                 .thenReturn(null);
         String exceptedMessage = "La Residence \"" + immeuble1.getResidence().getReference() + "\" n'existe pas";
         Exception exception = assertThrows(ResourcesNotFoundException.class,
-                () -> immeubleService.generateReferenceImmeuble());
+                () -> immeubleService.generateReferenceImmeuble(immeuble1));
         assertEquals(exceptedMessage, exception.getMessage());
     }
     @Test
     void testGenerateReferenceImmeuble(){
         Immeuble immeuble1 = createImmeuble();
-        String reference = immeubleService.generateReferenceImmeuble();
+        Mockito.when(residenceService.getResidenceByReference(immeuble1.getResidence().getReference()))
+                .thenReturn(immeuble1.getResidence());
+        String reference = immeubleService.generateReferenceImmeuble(immeuble1);
         assertNotNull(reference);
         assertEquals(immeuble1.getReference(), reference);
     }
     @Test
     void testGenerateSecondImmeubleReference(){
         Immeuble immeuble1 = createImmeuble();
+        Mockito.when(residenceService.getResidenceByReference(immeuble1.getResidence().getReference()))
+                .thenReturn(immeuble1.getResidence());
         Mockito.when(immeubleRepository.existsByReference(immeuble1.getReference())).thenReturn(true);
-        String reference = immeubleService.generateReferenceImmeuble();
+        String reference = immeubleService.generateReferenceImmeuble(immeuble1);
         assertNotNull(reference);
         assertEquals("RES-1-IMM-2", reference);
     }
