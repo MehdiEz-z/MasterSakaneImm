@@ -59,14 +59,14 @@ class ResidenceServiceImplTest {
         Mockito.when(residenceRepository.findByNom(nomResidence)).thenReturn(Optional.empty());
         String exceptedMessage = "La Residence " + nomResidence + " n'existe pas";
         ResourcesNotFoundException exception = assertThrows(ResourcesNotFoundException.class,
-                () -> residenceService.getResidenceByReference(nomResidence));
+                () -> residenceService.getResidenceByNom(nomResidence));
         assertEquals(exceptedMessage, exception.getMessage());
     }
     @Test
     void testGetResidenceByReferenceSuccess(){
         Residence residence1 = createResidence();
         Mockito.when(residenceRepository.findByNom(residence1.getNom())).thenReturn(Optional.of(residence1));
-        Residence residence = residenceService.getResidenceByReference(residence1.getNom());
+        Residence residence = residenceService.getResidenceByNom(residence1.getNom());
         assertNotNull(residence);
         assertEquals(residence1.getReference(), residence.getReference());
     }

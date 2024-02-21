@@ -27,9 +27,9 @@ public class ResidenceServiceImpl implements ResidenceService{
         return reference;
     }
     @Override
-    public Residence getResidenceByReference(String nomResidence) {
+    public Residence getResidenceByNom(String nomResidence) {
         return residenceRepository.findByNom(nomResidence)
-                .orElseThrow(() -> new ResourcesNotFoundException("La Residence " + nomResidence + " n'existe pas"));
+                .orElseThrow(() -> new ResourcesNotFoundException("La Residence \"" + nomResidence + "\" n'existe pas"));
     }
     @Override
     public List<Residence> getAllResidences() {
