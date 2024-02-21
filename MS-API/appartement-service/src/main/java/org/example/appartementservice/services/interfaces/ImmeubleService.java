@@ -6,5 +6,5 @@ import java.util.List;
 public interface ImmeubleService {
     Immeuble createImmeuble(Immeuble residence);
     Immeuble getImmeubleByReferenceAndResidence(String immeubleReference, String residenceReference);
-    List<Immeuble> getAllImmeubleByResidence();
+    List<Immeuble> getAllImmeubleByResidence(String residenceReference);
 }

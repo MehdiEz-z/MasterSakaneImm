@@ -136,9 +136,11 @@ class ImmeubleServiceImplTest {
                 .numero("Immeuble-3")
                 .residence(Residence.builder().reference("RES-1").build())
                 .build();
+        Mockito.when(residenceService.getResidenceByReference("RES-1"))
+                .thenReturn(Residence.builder().reference("RES-1").build());
         Mockito.when(immeubleRepository.findAllByResidence_Reference("RES-1"))
                 .thenReturn(List.of(immeuble1, immeuble2, immeuble3));
-        List<Immeuble> immeubles = immeubleService.getAllImmeubleByResidence();
+        List<Immeuble> immeubles = immeubleService.getAllImmeubleByResidence("RES-1");
         assertNotNull(immeubles);
         assertEquals(3, immeubles.size());
     }

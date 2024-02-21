@@ -46,7 +46,8 @@ public class ImmeubleServiceImpl implements ImmeubleService {
         return immeubleRepository.findByReferenceAndResidence_Reference(immeubleReference, residenceReference);
     }
     @Override
-    public List<Immeuble> getAllImmeubleByResidence() {
-        return null;
+    public List<Immeuble> getAllImmeubleByResidence(String residenceReference) {
+        checkResidenceExists(residenceReference);
+        return immeubleRepository.findAllByResidence_Reference(residenceReference);
     }
 }
