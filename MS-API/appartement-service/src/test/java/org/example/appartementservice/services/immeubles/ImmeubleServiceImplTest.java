@@ -8,11 +8,8 @@ import org.example.appartementservice.services.interfaces.ResidenceService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
-
 class ImmeubleServiceImplTest {
     private ImmeubleServiceImpl immeubleService;
     private ImmeubleRepository immeubleRepository;
@@ -62,7 +59,6 @@ class ImmeubleServiceImplTest {
     @Test
     void testCreateImmeubleNotExistingResidence(){
         Immeuble immeuble2 = Immeuble.builder()
-                .numero("Immeuble-1")
                 .residence(Residence.builder().reference("RES-1").build())
                 .build();
         Mockito.when(residenceService.getResidenceByReference(immeuble2.getResidence().getReference()))

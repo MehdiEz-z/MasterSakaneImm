@@ -21,6 +21,19 @@ public class ImmeubleServiceImpl implements ImmeubleService {
         immeuble.setReference(reference);
         return immeubleRepository.save(immeuble);
     }
+    @Override
+    public Immeuble getImmeubleByReferenceAndResidence(String immeubleReference, String residenceReference) {
+        checkResidenceExists(residenceReference);
+        if(immeubleRepository.findByReferenceAndResidence_Reference(immeubleReference, residenceReference) == null){
+            throw new ResourcesNotFoundException("L'Immeuble \"" + immeubleReference + "\" n'existe pas");
+        }
+        return immeubleRepository.findByReferenceAndResidence_Reference(immeubleReference, residenceReference);
+    }
+    @Override
+    public List<Immeuble> getAllImmeubleByResidence(String residenceReference) {
+        checkResidenceExists(residenceReference);
+        return immeubleRepository.findAllByResidence_Reference(residenceReference);
+    }
     public String generateReferenceImmeuble(Immeuble immeuble) {
         String residenceReference = immeuble.getResidence().getReference();
         checkResidenceExists(residenceReference);
@@ -36,18 +49,5 @@ public class ImmeubleServiceImpl implements ImmeubleService {
         if (residenceService.getResidenceByReference(residenceReference) == null) {
             throw new ResourcesNotFoundException("La Residence \"" + residenceReference + "\" n'existe pas");
         }
-    }
-    @Override
-    public Immeuble getImmeubleByReferenceAndResidence(String immeubleReference, String residenceReference) {
-        checkResidenceExists(residenceReference);
-        if(immeubleRepository.findByReferenceAndResidence_Reference(immeubleReference, residenceReference) == null){
-            throw new ResourcesNotFoundException("L'Immeuble \"" + immeubleReference + "\" n'existe pas");
-        }
-        return immeubleRepository.findByReferenceAndResidence_Reference(immeubleReference, residenceReference);
-    }
-    @Override
-    public List<Immeuble> getAllImmeubleByResidence(String residenceReference) {
-        checkResidenceExists(residenceReference);
-        return immeubleRepository.findAllByResidence_Reference(residenceReference);
     }
 }

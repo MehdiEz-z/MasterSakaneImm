@@ -17,15 +17,6 @@ public class ResidenceServiceImpl implements ResidenceService{
         residence.setReference(reference);
         return residenceRepository.save(residence);
     }
-    public String generateReferenceResidence() {
-        int suffix = 1;
-        String reference = "RES-" + suffix;
-        while (residenceRepository.existsByReference(reference)) {
-            suffix++;
-            reference = "RES-" + suffix;
-        }
-        return reference;
-    }
     @Override
     public Residence getResidenceByReference(String reference) {
         return residenceRepository.findByReference(reference)
@@ -39,5 +30,14 @@ public class ResidenceServiceImpl implements ResidenceService{
     @Override
     public List<Residence> getAllResidences() {
         return residenceRepository.findAll();
+    }
+    public String generateReferenceResidence() {
+        int suffix = 1;
+        String reference = "RES-" + suffix;
+        while (residenceRepository.existsByReference(reference)) {
+            suffix++;
+            reference = "RES-" + suffix;
+        }
+        return reference;
     }
 }
