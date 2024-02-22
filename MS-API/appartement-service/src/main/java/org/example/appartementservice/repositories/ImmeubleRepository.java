@@ -6,6 +6,6 @@ import java.util.List;
 @Repository
 public interface ImmeubleRepository extends JpaRepository<Immeuble, String> {
     boolean existsByReference(String reference);
-    Immeuble findByReferenceAndResidence_Reference(String reference, String referenceResidence);
+    Immeuble findByReference(String reference);
     List<Immeuble> findAllByResidence_Reference(String reference);
 }

@@ -13,8 +13,9 @@ import java.time.LocalDateTime;
 @Builder
 @EntityListeners({AuditingEntityListener.class})
 public class Magasin {
-    @Id
+    @Id @Column(unique = true)
     private String reference;
+    @Column(unique = true)
     private String numero;
     private String description;
     private String titreFoncier;

@@ -22,12 +22,12 @@ public class ImmeubleServiceImpl implements ImmeubleService {
         return immeubleRepository.save(immeuble);
     }
     @Override
-    public Immeuble getImmeubleByReferenceAndResidence(String immeubleReference, String residenceReference) {
-        checkResidenceExists(residenceReference);
-        if(immeubleRepository.findByReferenceAndResidence_Reference(immeubleReference, residenceReference) == null){
+    public Immeuble getImmeubleByReference(String immeubleReference) {
+        Immeuble foundImmeuble = immeubleRepository.findByReference(immeubleReference);
+        if(foundImmeuble == null){
             throw new ResourcesNotFoundException("L'Immeuble \"" + immeubleReference + "\" n'existe pas");
         }
-        return immeubleRepository.findByReferenceAndResidence_Reference(immeubleReference, residenceReference);
+        return foundImmeuble;
     }
     @Override
     public List<Immeuble> getAllImmeubleByResidence(String residenceReference) {

@@ -13,8 +13,9 @@ import java.util.List;
 @Builder
 @EntityListeners({AuditingEntityListener.class})
 public class Immeuble {
-    @Id
+    @Id @Column(unique = true)
     private String reference;
+    @Column(unique = true)
     private String numero;
     @ManyToOne
     private Residence residence;

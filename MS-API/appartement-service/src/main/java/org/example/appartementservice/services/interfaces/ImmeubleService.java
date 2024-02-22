@@ -5,6 +5,6 @@ import java.util.List;
 @Service
 public interface ImmeubleService {
     Immeuble createImmeuble(Immeuble residence);
-    Immeuble getImmeubleByReferenceAndResidence(String immeubleReference, String residenceReference);
+    Immeuble getImmeubleByReference(String immeubleReference);
     List<Immeuble> getAllImmeubleByResidence(String residenceReference);
 }

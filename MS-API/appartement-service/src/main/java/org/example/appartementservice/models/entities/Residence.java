@@ -13,7 +13,7 @@ import java.util.List;
 @Builder
 @EntityListeners({AuditingEntityListener.class})
 public class Residence {
-    @Id
+    @Id @Column(unique = true)
     private String reference;
     private String nom;
     private String description;

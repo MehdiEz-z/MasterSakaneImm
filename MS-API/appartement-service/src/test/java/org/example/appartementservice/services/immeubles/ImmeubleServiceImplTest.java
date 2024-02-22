@@ -83,39 +83,21 @@ class ImmeubleServiceImplTest {
         assertEquals(immeuble1.getReference(), immeuble2.getReference());
     }
     @Test
-    void testGetImmeubleByReferenceAndResidenceNotFoundAndThrowException(){
-        Immeuble immeuble1 = createImmeuble();
-        String immeubleReference = immeuble1.getReference();
-        String residenceReference = immeuble1.getResidence().getReference();
-        Mockito.when(residenceService.getResidenceByReference(residenceReference))
-                .thenReturn(null);
-        String exceptedMessage = "La Residence \"" + immeuble1.getResidence().getReference() + "\" n'existe pas";
-        Exception exception = assertThrows(ResourcesNotFoundException.class,
-                () -> immeubleService.getImmeubleByReferenceAndResidence(immeubleReference, residenceReference));
-        assertEquals(exceptedMessage, exception.getMessage());
-    }
-    @Test
     void testGetImmeubleByReferenceNotFoundAndThrowException(){
         Immeuble immeuble1 = createImmeuble();
-        String immeubleReference = immeuble1.getReference();
-        String residenceReference = immeuble1.getResidence().getReference();
-        Mockito.when(residenceService.getResidenceByReference(residenceReference))
-                .thenReturn(Residence.builder().reference(residenceReference).build());
-        Mockito.when(immeubleRepository.findByReferenceAndResidence_Reference(immeubleReference, residenceReference))
+        Mockito.when(immeubleRepository.findByReference(immeuble1.getReference()))
                 .thenReturn(null);
         String exceptedMessage = "L'Immeuble \"" + immeuble1.getReference() + "\" n'existe pas";
         Exception exception = assertThrows(ResourcesNotFoundException.class,
-                () -> immeubleService.getImmeubleByReferenceAndResidence(immeubleReference, residenceReference));
+                () -> immeubleService.getImmeubleByReference(immeuble1.getReference()));
         assertEquals(exceptedMessage, exception.getMessage());
     }
     @Test
-    void testGetImmeubleByReferenceAndResidenceSuccess(){
+    void testGetImmeubleByReferenceSuccess(){
         Immeuble immeuble1 = createImmeuble();
-        Mockito.when(residenceService.getResidenceByReference(immeuble1.getResidence().getReference()))
-                .thenReturn(Residence.builder().reference(immeuble1.getResidence().getReference()).build());
-        Mockito.when(immeubleRepository.findByReferenceAndResidence_Reference(immeuble1.getReference(), immeuble1.getResidence().getReference()))
+        Mockito.when(immeubleRepository.findByReference(immeuble1.getReference()))
                 .thenReturn(immeuble1);
-        Immeuble immeuble = immeubleService.getImmeubleByReferenceAndResidence(immeuble1.getReference(), immeuble1.getResidence().getReference());
+        Immeuble immeuble = immeubleService.getImmeubleByReference(immeuble1.getReference());
         assertNotNull(immeuble);
         assertEquals(immeuble1.getReference(), immeuble.getReference());
     }

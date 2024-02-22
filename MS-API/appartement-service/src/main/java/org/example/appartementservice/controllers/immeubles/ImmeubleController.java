@@ -15,9 +15,9 @@ public class ImmeubleController {
     public ImmeubleController(ImmeubleService immeubleService) {
         this.immeubleService = immeubleService;
     }
-    @GetMapping("/{residenceReference}/{reference}")
-    public ResponseEntity<ResponseMessage> getImmeubleByReferenceAndResidence(@PathVariable String residenceReference, @PathVariable String reference) {
-        Immeuble immeuble = immeubleService.getImmeubleByReferenceAndResidence(reference, residenceReference);
+    @GetMapping("/{reference}")
+    public ResponseEntity<ResponseMessage> getImmeubleByReferenceAndResidence(@PathVariable String reference) {
+        Immeuble immeuble = immeubleService.getImmeubleByReference(reference);
         return ResponseMessage.ok(ImmeubleResponseVM.toVM(immeuble),
                 "Immeuble trouvé avec succès");
     }
