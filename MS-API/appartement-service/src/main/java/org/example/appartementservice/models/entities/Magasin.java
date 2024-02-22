@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 public class Magasin {
     @Id @Column(unique = true)
     private String reference;
-    @Column(unique = true)
     private String numero;
     private String description;
     private String titreFoncier;

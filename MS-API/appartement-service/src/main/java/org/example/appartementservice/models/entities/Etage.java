@@ -15,7 +15,6 @@ import java.util.List;
 public class Etage {
     @Id @Column(unique = true)
     private String reference;
-    @Column(unique = true)
     private String numero;
     @ManyToOne
     private Immeuble immeuble;

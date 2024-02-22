@@ -21,11 +21,11 @@ public class ImmeubleController {
         return ResponseMessage.ok(ImmeubleResponseVM.toVM(immeuble),
                 "Immeuble trouvé avec succès");
     }
-    @GetMapping("/{residenceReference}")
+    @GetMapping("/{residenceReference}/all")
     public ResponseEntity<ResponseMessage> getAllImmeubleByResidence(@PathVariable String residenceReference) {
         List<Immeuble> immeubles = immeubleService.getAllImmeubleByResidence(residenceReference);
         if(immeubles.isEmpty()) {
-            return ResponseMessage.notFound("Audun Immeuble trouvé");
+            return ResponseMessage.notFound("Aucun Immeuble trouvé");
         }else {
             return ResponseMessage.ok(immeubles.stream()
                             .map(ImmeubleResponseVM::toVM).toList(),

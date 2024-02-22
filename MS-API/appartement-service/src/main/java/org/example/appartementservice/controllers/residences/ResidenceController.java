@@ -21,7 +21,7 @@ public class ResidenceController {
         return ResponseMessage.ok(ResidenceResponseVM.toVM(residence),
                 "Résidence trouvée avec succès");
     }
-    @GetMapping("/")
+    @GetMapping("/all")
     public ResponseEntity<ResponseMessage> getAllResidences() {
         List<Residence> residences = residenceService.getAllResidences();
         if(residences.isEmpty()) {

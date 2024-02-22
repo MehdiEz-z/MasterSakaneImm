@@ -6,8 +6,6 @@ import org.example.appartementservice.repositories.EtageRepository;
 import org.example.appartementservice.services.interfaces.EtageService;
 import org.example.appartementservice.services.interfaces.ImmeubleService;
 import org.springframework.stereotype.Component;
-
-import java.util.Collections;
 import java.util.List;
 @Component
 public class EtageServiceImpl implements EtageService {
