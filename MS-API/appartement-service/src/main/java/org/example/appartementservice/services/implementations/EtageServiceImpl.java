@@ -6,6 +6,8 @@ import org.example.appartementservice.repositories.EtageRepository;
 import org.example.appartementservice.services.interfaces.EtageService;
 import org.example.appartementservice.services.interfaces.ImmeubleService;
 import org.springframework.stereotype.Component;
+
+import java.util.Collections;
 import java.util.List;
 @Component
 public class EtageServiceImpl implements EtageService {
@@ -17,7 +19,10 @@ public class EtageServiceImpl implements EtageService {
     }
     @Override
     public Etage createEtage(Etage etage) {
-        return null;
+        checkImmeubleExists(etage.getImmeuble().getReference(), etage.getImmeuble().getResidence().getReference());
+        String reference = generateReferenceEtage(etage);
+        etage.setReference(reference);
+        return etageRepository.save(etage);
     }
     @Override
     public Etage getEtageByReferenceAndImmeuble(String etageReference, String immeubleReference) {
@@ -25,7 +30,7 @@ public class EtageServiceImpl implements EtageService {
     }
     @Override
     public List<Etage> getAllEtageByImmeuble(String immeubleReference) {
-        return null;
+        return Collections.emptyList();
     }
     public String generateReferenceEtage(Etage etage) {
         String immeubleReference = etage.getImmeuble().getReference();

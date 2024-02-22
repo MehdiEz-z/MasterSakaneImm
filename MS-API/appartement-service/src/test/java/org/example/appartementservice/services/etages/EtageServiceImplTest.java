@@ -77,7 +77,10 @@ class EtageServiceImplTest {
         Etage etage1 = createEtage();
         Etage etage2 = Etage.builder()
                 .numero("Etage-1")
-                .immeuble(Immeuble.builder().reference("RES-1-IMM-1").build())
+                .immeuble(Immeuble.builder()
+                        .reference("RES-1-IMM-1")
+                        .residence(Residence.builder().reference("RES-1").build())
+                        .build())
                 .build();
         Mockito.when(immeubleService.getImmeubleByReferenceAndResidence(etage1.getImmeuble().getReference(),
                 etage1.getImmeuble().getResidence().getReference())).thenReturn(etage1.getImmeuble());
