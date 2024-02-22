@@ -1,4 +1,5 @@
 package org.example.appartementservice.controllers.etages;
+import jakarta.validation.Valid;
 import org.example.appartementservice.controllers.etages.vms.request.EtageRequestVM;
 import org.example.appartementservice.controllers.etages.vms.response.EtageResponseVM;
 import org.example.appartementservice.handlers.response.ResponseMessage;
@@ -6,7 +7,6 @@ import org.example.appartementservice.models.entities.Etage;
 import org.example.appartementservice.services.interfaces.EtageService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 @RestController
 @RequestMapping("/api/etages")
@@ -16,7 +16,7 @@ public class EtageController {
         this.etageService = etageService;
     }
     @GetMapping("/{reference}")
-    public ResponseEntity<ResponseMessage> getEtageByReferenceAndImmeuble(@PathVariable String reference) {
+    public ResponseEntity<ResponseMessage> getEtageByReference(@PathVariable String reference) {
         Etage etage = etageService.getEtageByReference(reference);
         return ResponseMessage.ok(EtageResponseVM.toVM(etage),
                 "Etage trouvé avec succès");
@@ -33,7 +33,7 @@ public class EtageController {
         }
     }
     @PostMapping("/")
-    public ResponseEntity<ResponseMessage> createEtage(@RequestBody EtageRequestVM etageRequestVM){
+    public ResponseEntity<ResponseMessage> createEtage(@RequestBody @Valid EtageRequestVM etageRequestVM){
         Etage etage = etageRequestVM.toEtage();
         Etage createdEtage = etageService.createEtage(etage);
         return ResponseMessage.created(EtageResponseVM.toVM(createdEtage),
