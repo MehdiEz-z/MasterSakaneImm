@@ -19,13 +19,16 @@ public class EtageServiceImpl implements EtageService {
     }
     @Override
     public Etage createEtage(Etage etage) {
-        checkImmeubleExists(etage.getImmeuble().getReference(), etage.getImmeuble().getResidence().getReference());
+        checkImmeubleExists(etage.getImmeuble().getReference());
         String reference = generateReferenceEtage(etage);
         etage.setReference(reference);
         return etageRepository.save(etage);
     }
     @Override
-    public Etage getEtageByReferenceAndImmeuble(String etageReference, String immeubleReference) {
+    public Etage getEtageByReference(String etageReference) {
+        if(etageRepository.findByReference(etageReference) == null){
+            throw new ResourcesNotFoundException("L'Etage \"" + etageReference + "\" n'existe pas");
+        }
         return null;
     }
     @Override
@@ -34,8 +37,7 @@ public class EtageServiceImpl implements EtageService {
     }
     public String generateReferenceEtage(Etage etage) {
         String immeubleReference = etage.getImmeuble().getReference();
-        String residenceReference = etage.getImmeuble().getResidence().getReference();
-        checkImmeubleExists(immeubleReference, residenceReference);
+        checkImmeubleExists(immeubleReference);
         int suffix = 1;
         String reference = immeubleReference + "-ETG-" + suffix;
         while (etageRepository.existsByReference(reference)) {
@@ -44,8 +46,8 @@ public class EtageServiceImpl implements EtageService {
         }
         return reference;
     }
-    private void checkImmeubleExists(String immeubleReference, String residenceReference) {
-        Immeuble immeuble = immeubleService.getImmeubleByReferenceAndResidence(immeubleReference, residenceReference);
+    private void checkImmeubleExists(String immeubleReference) {
+        Immeuble immeuble = immeubleService.getImmeubleByReference(immeubleReference);
         if (immeuble == null) {
             throw new ResourcesNotFoundException("L'Immeuble \"" + immeubleReference + "\" n'existe pas");
         }

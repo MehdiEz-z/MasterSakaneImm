@@ -85,11 +85,12 @@ class ImmeubleServiceImplTest {
     @Test
     void testGetImmeubleByReferenceNotFoundAndThrowException(){
         Immeuble immeuble1 = createImmeuble();
+        String reference = immeuble1.getReference();
         Mockito.when(immeubleRepository.findByReference(immeuble1.getReference()))
                 .thenReturn(null);
         String exceptedMessage = "L'Immeuble \"" + immeuble1.getReference() + "\" n'existe pas";
         Exception exception = assertThrows(ResourcesNotFoundException.class,
-                () -> immeubleService.getImmeubleByReference(immeuble1.getReference()));
+                () -> immeubleService.getImmeubleByReference(reference));
         assertEquals(exceptedMessage, exception.getMessage());
     }
     @Test

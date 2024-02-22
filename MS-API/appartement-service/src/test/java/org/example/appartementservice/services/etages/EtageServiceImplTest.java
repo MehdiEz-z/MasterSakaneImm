@@ -90,11 +90,12 @@ class EtageServiceImplTest {
     @Test
     void testGetEtageByReferenceNotFoundAndThrowException(){
         Etage etage1 = createEtage();
+        String reference = etage1.getReference();
         Mockito.when(etageRepository.findByReference(etage1.getReference()))
                 .thenReturn(null);
         String exceptedMessage = "L'Etage \"" + etage1.getReference() + "\" n'existe pas";
         Exception exception = assertThrows(ResourcesNotFoundException.class,
-                () -> etageService.getEtageByReference(etage1.getReference()));
+                () -> etageService.getEtageByReference(reference));
         assertEquals(exceptedMessage, exception.getMessage());
     }
     @Test
