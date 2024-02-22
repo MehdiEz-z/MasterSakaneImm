@@ -17,7 +17,10 @@ public class AppartementServiceImpl implements AppartementService {
     }
     @Override
     public Appartement createAppartement(Appartement appartement) {
-        return null;
+        checkEtageExists(appartement.getEtage().getReference());
+        String reference = generateReferenceAppartement(appartement);
+        appartement.setReference(reference);
+        return appartementRepository.save(appartement);
     }
     @Override
     public Appartement getAppartementByReference(String appartementReference) {

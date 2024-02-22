@@ -72,7 +72,7 @@ class AppartementServiceImplTest {
         Mockito.when(appartementRepository.existsByReference(appartement1.getReference())).thenReturn(true);
         String reference = appartementService.generateReferenceAppartement(appartement1);
         assertNotNull(reference);
-        assertEquals("APP-1-IMM-1-ETG-1-APT-2", reference);
+        assertEquals("RES-1-IMM-1-ETG-1-APT-2", reference);
     }
     @Test
     void testCreateAppartementNotExistingEtage(){
@@ -138,7 +138,7 @@ class AppartementServiceImplTest {
     void testGetAllAppartementByEtageSuccess(){
         Appartement appartement1 = createAppartement();
         Appartement appartement2 = Appartement.builder()
-                .reference("APP-1-IMM-1-ETG-1-APT-2")
+                .reference("RES-1-IMM-1-ETG-1-APT-2")
                 .numero("Appartement-2")
                 .description("Appartement de type F3")
                 .titreFoncier("Titre Foncier-2")
@@ -159,7 +159,7 @@ class AppartementServiceImplTest {
                 .status(StatusAppEtMag.DISPONIBLE)
                 .build();
         Appartement appartement3 = Appartement.builder()
-                .reference("APP-1-IMM-1-ETG-1-APT-3")
+                .reference("RES-1-IMM-1-ETG-1-APT-3")
                 .numero("Appartement-3")
                 .description("Appartement de type F3")
                 .titreFoncier("Titre Foncier-3")
