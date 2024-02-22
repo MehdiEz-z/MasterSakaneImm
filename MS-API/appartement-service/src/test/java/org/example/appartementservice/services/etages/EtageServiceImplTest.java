@@ -9,9 +9,7 @@ import org.example.appartementservice.services.interfaces.ImmeubleService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 class EtageServiceImplTest {
     private EtageServiceImpl etageService;
@@ -36,8 +34,8 @@ class EtageServiceImplTest {
     @Test
     void testGenerateReferenceEtageWithNotExistingImmeubleAndThrowException(){
         Etage etage1 = createEtage();
-        Mockito.when(immeubleService.getImmeubleByReferenceAndResidence(etage1.getImmeuble().getReference(),
-                        etage1.getImmeuble().getResidence().getReference())).thenReturn(null);
+        Mockito.when(immeubleService.getImmeubleByReference(etage1.getImmeuble().getReference()))
+                .thenReturn(null);
         String exceptedMessage = "L'Immeuble \"" + etage1.getImmeuble().getReference() + "\" n'existe pas";
         Exception exception = assertThrows(ResourcesNotFoundException.class,
                 () -> etageService.generateReferenceEtage(etage1));
@@ -46,8 +44,8 @@ class EtageServiceImplTest {
     @Test
     void testGenerateReferenceEtage(){
         Etage etage1 = createEtage();
-        Mockito.when(immeubleService.getImmeubleByReferenceAndResidence(etage1.getImmeuble().getReference(),
-                etage1.getImmeuble().getResidence().getReference())).thenReturn(etage1.getImmeuble());
+        Mockito.when(immeubleService.getImmeubleByReference(etage1.getImmeuble().getReference()))
+                .thenReturn(etage1.getImmeuble());
         String reference = etageService.generateReferenceEtage(etage1);
         assertNotNull(reference);
         assertEquals(etage1.getReference(), reference);
@@ -55,8 +53,8 @@ class EtageServiceImplTest {
     @Test
     void testGenerateSecondEtageReference(){
         Etage etage1 = createEtage();
-        Mockito.when(immeubleService.getImmeubleByReferenceAndResidence(etage1.getImmeuble().getReference(),
-                etage1.getImmeuble().getResidence().getReference())).thenReturn(etage1.getImmeuble());
+        Mockito.when(immeubleService.getImmeubleByReference(etage1.getImmeuble().getReference()))
+                .thenReturn(etage1.getImmeuble());
         Mockito.when(etageRepository.existsByReference(etage1.getReference())).thenReturn(true);
         String reference = etageService.generateReferenceEtage(etage1);
         assertNotNull(reference);
@@ -65,8 +63,8 @@ class EtageServiceImplTest {
     @Test
     void testCreateEtageNotExistingImmeuble(){
         Etage etage1 = createEtage();
-        Mockito.when(immeubleService.getImmeubleByReferenceAndResidence(etage1.getImmeuble().getReference(),
-                etage1.getImmeuble().getResidence().getReference())).thenReturn(null);
+        Mockito.when(immeubleService.getImmeubleByReference(etage1.getImmeuble().getReference()))
+                .thenReturn(null);
         String exceptedMessage = "L'Immeuble \"" + etage1.getImmeuble().getReference() + "\" n'existe pas";
         Exception exception = assertThrows(ResourcesNotFoundException.class,
                 () -> etageService.createEtage(etage1));
@@ -82,49 +80,29 @@ class EtageServiceImplTest {
                         .residence(Residence.builder().reference("RES-1").build())
                         .build())
                 .build();
-        Mockito.when(immeubleService.getImmeubleByReferenceAndResidence(etage1.getImmeuble().getReference(),
-                etage1.getImmeuble().getResidence().getReference())).thenReturn(etage1.getImmeuble());
+        Mockito.when(immeubleService.getImmeubleByReference(etage1.getImmeuble().getReference()))
+                .thenReturn(etage1.getImmeuble());
         Mockito.when(etageRepository.save(etage2)).thenReturn(etage2);
         Etage createdEtage = etageService.createEtage(etage2);
         assertNotNull(createdEtage);
         assertEquals(etage1.getReference(), createdEtage.getReference());
     }
     @Test
-    void testGetEtageByReferenceAndImmeubleNotFoundAndThrowException(){
-        Etage etage1 = createEtage();
-        String etageReference = etage1.getReference();
-        String immeubleReference = etage1.getImmeuble().getReference();
-        Mockito.when(immeubleService.getImmeubleByReferenceAndResidence(immeubleReference,
-                etage1.getImmeuble().getResidence().getReference())).thenReturn(null);
-        String exceptedMessage = "L'Immeuble \"" + etage1.getImmeuble().getReference() + "\" n'existe pas";
-        Exception exception = assertThrows(ResourcesNotFoundException.class,
-                () -> etageService.getEtageByReferenceAndImmeuble(etageReference, immeubleReference));
-        assertEquals(exceptedMessage, exception.getMessage());
-    }
-    @Test
     void testGetEtageByReferenceNotFoundAndThrowException(){
         Etage etage1 = createEtage();
-        String etageReference = etage1.getReference();
-        String immeubleReference = etage1.getImmeuble().getReference();
-        Mockito.when(immeubleService.getImmeubleByReferenceAndResidence(immeubleReference,
-                etage1.getImmeuble().getResidence().getReference())).thenReturn(etage1.getImmeuble());
-        Mockito.when(etageRepository.findByReferenceAndImmeuble_Reference(etageReference, immeubleReference))
+        Mockito.when(etageRepository.findByReference(etage1.getReference()))
                 .thenReturn(null);
         String exceptedMessage = "L'Etage \"" + etage1.getReference() + "\" n'existe pas";
         Exception exception = assertThrows(ResourcesNotFoundException.class,
-                () -> etageService.getEtageByReferenceAndImmeuble(etageReference, immeubleReference));
+                () -> etageService.getEtageByReference(etage1.getReference()));
         assertEquals(exceptedMessage, exception.getMessage());
     }
     @Test
-    void testGetEtageByReferenceAndImmeubleSuccess(){
+    void testGetEtageByReferenceSuccess(){
         Etage etage1 = createEtage();
-        String etageReference = etage1.getReference();
-        String immeubleReference = etage1.getImmeuble().getReference();
-        Mockito.when(immeubleService.getImmeubleByReferenceAndResidence(immeubleReference,
-                etage1.getImmeuble().getResidence().getReference())).thenReturn(etage1.getImmeuble());
-        Mockito.when(etageRepository.findByReferenceAndImmeuble_Reference(etageReference, immeubleReference))
+        Mockito.when(etageRepository.findByReference(etage1.getReference()))
                 .thenReturn(etage1);
-        Etage etage = etageService.getEtageByReferenceAndImmeuble(etageReference, immeubleReference);
+        Etage etage = etageService.getEtageByReference(etage1.getReference());
         assertNotNull(etage);
         assertEquals(etage1.getReference(), etage.getReference());
     }
@@ -146,8 +124,8 @@ class EtageServiceImplTest {
                 .numero("Etage-4")
                 .immeuble(Immeuble.builder().reference("RES-1-IMM-1").build())
                 .build();
-        Mockito.when(immeubleService.getImmeubleByReferenceAndResidence(etage1.getImmeuble().getReference(),
-                etage1.getImmeuble().getResidence().getReference())).thenReturn(etage1.getImmeuble());
+        Mockito.when(immeubleService.getImmeubleByReference(etage1.getImmeuble().getReference()))
+                .thenReturn(etage1.getImmeuble());
         Mockito.when(etageRepository.findAllByImmeuble_Reference("RES-1-IMM-1"))
                 .thenReturn(List.of(etage1, etage2, etage3, etage4));
         List<Etage> etages = etageService.getAllEtageByImmeuble("RES-1-IMM-1");

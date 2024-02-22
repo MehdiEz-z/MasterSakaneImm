@@ -7,6 +7,6 @@ import java.util.List;
 @Repository
 public interface EtageRepository extends JpaRepository<Etage, String> {
     boolean existsByReference(String reference);
-    Etage findByReferenceAndImmeuble_Reference(String reference, String referenceImmeuble);
+    Etage findByReference(String reference);
     List<Etage> findAllByImmeuble_Reference(String reference);
 }
