@@ -70,9 +70,9 @@ public record AppartementRequestVM(
             .nombreSalleDeBain(nombreSalleDeBain)
             .nombrePlacard(nombrePlacard)
             .nombreBalcon(nombreBalcon)
-                .etage(Etage.builder()
-                        .reference(etage)
-                        .build())
+            .etage(Etage.builder()
+                    .reference(etage)
+                    .build())
             .status(StatusAppEtMag.DISPONIBLE)
             .build();
     }
