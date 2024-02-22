@@ -1,6 +1,8 @@
 package org.example.appartementservice.controllers.appartements.vms.response;
 import org.example.appartementservice.models.entities.Appartement;
 public record AppartementResponseVM(
+    String residence,
+    String immeuble,
     String etage,
     String numero,
     String description,
@@ -19,6 +21,8 @@ public record AppartementResponseVM(
 ) {
     public static AppartementResponseVM toVM(Appartement appartement) {
         return new AppartementResponseVM(
+            appartement.getEtage().getImmeuble().getResidence().getNom(),
+            appartement.getEtage().getImmeuble().getNumero(),
             appartement.getEtage().getNumero(),
             appartement.getNumero(),
             appartement.getDescription(),

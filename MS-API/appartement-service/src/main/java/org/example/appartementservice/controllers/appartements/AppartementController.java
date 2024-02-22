@@ -38,6 +38,5 @@ public class AppartementController {
         Appartement createdAppartement = appartementService.createAppartement(appartement);
         return ResponseMessage.created(AppartementResponseVM.toVM(createdAppartement),
                 "Appartement créé avec succès");
-
     }
 }
