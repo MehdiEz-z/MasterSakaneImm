@@ -1,5 +1,7 @@
 package org.example.appartementservice.services.implementations;
+import org.example.appartementservice.handlers.exceptionHandler.ResourcesNotFoundException;
 import org.example.appartementservice.models.entities.Appartement;
+import org.example.appartementservice.models.entities.Etage;
 import org.example.appartementservice.repositories.AppartementRepository;
 import org.example.appartementservice.services.interfaces.AppartementService;
 import org.example.appartementservice.services.interfaces.EtageService;
@@ -26,6 +28,20 @@ public class AppartementServiceImpl implements AppartementService {
         return null;
     }
     public String generateReferenceAppartement(Appartement appartement) {
-        return null;
+        String etageReference = appartement.getEtage().getReference();
+        checkEtageExists(etageReference);
+        int suffix = 1;
+        String reference = etageReference + "-APT-" + suffix;
+        while (appartementRepository.existsByReference(reference)) {
+            suffix++;
+            reference = etageReference + "-APT-" + suffix;
+        }
+        return reference;
+    }
+    private void checkEtageExists(String etageReference) {
+        Etage etage = etageService.getEtageByReference(etageReference);
+    if (etage == null) {
+            throw new ResourcesNotFoundException("L'Etage \"" + etageReference + "\" n'existe pas");
+        }
     }
 }

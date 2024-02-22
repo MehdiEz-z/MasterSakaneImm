@@ -24,7 +24,7 @@ class AppartementServiceImplTest {
     }
     private Appartement createAppartement() {
         return Appartement.builder()
-                .reference("APP-1-IMM-1-ETG-1-APT-1")
+                .reference("RES-1-IMM-1-ETG-1-APT-1")
                 .numero("Appartement-1")
                 .description("Appartement de type F3")
                 .titreFoncier("Titre Foncier-1")
