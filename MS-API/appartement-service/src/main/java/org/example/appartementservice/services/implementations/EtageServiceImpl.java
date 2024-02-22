@@ -26,14 +26,16 @@ public class EtageServiceImpl implements EtageService {
     }
     @Override
     public Etage getEtageByReference(String etageReference) {
-        if(etageRepository.findByReference(etageReference) == null){
+        Etage foundEtage = etageRepository.findByReference(etageReference);
+        if(foundEtage == null){
             throw new ResourcesNotFoundException("L'Etage \"" + etageReference + "\" n'existe pas");
         }
-        return null;
+        return foundEtage;
     }
     @Override
     public List<Etage> getAllEtageByImmeuble(String immeubleReference) {
-        return Collections.emptyList();
+        checkImmeubleExists(immeubleReference);
+        return etageRepository.findAllByImmeuble_Reference(immeubleReference);
     }
     public String generateReferenceEtage(Etage etage) {
         String immeubleReference = etage.getImmeuble().getReference();
