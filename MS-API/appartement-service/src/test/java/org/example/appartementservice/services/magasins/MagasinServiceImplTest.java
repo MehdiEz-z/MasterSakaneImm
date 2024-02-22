@@ -10,7 +10,6 @@ import org.example.appartementservice.services.interfaces.EtageService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
 import static org.junit.jupiter.api.Assertions.*;
 class MagasinServiceImplTest {
     private MagasinServiceImpl magasinService;
@@ -144,7 +143,7 @@ class MagasinServiceImplTest {
         Mockito.when(etageService.getEtageByReference("RES-1-IMM-1-ETG-1"))
                 .thenReturn(magasin1.getEtage());
         Mockito.when(magasinRepository.findAllByEtage_Reference("RES-1-IMM-1-ETG-1"))
-                .thenReturn(java.util.List.of(magasin1));
+                .thenReturn(java.util.List.of(magasin1, magasin2));
         java.util.List<Magasin> magasins = magasinService.getAllMagasinByEtage("RES-1-IMM-1-ETG-1");
         assertNotNull(magasins);
         assertEquals(2, magasins.size());
