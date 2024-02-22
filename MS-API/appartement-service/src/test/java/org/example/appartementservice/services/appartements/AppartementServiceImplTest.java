@@ -69,7 +69,8 @@ class AppartementServiceImplTest {
         Appartement appartement1 = createAppartement();
         Mockito.when(etageService.getEtageByReference(appartement1.getEtage().getReference()))
                 .thenReturn(appartement1.getEtage());
-        Mockito.when(appartementRepository.existsByReference(appartement1.getReference())).thenReturn(true);
+        Mockito.when(appartementRepository.existsByReference(appartement1.getReference()))
+                .thenReturn(true);
         String reference = appartementService.generateReferenceAppartement(appartement1);
         assertNotNull(reference);
         assertEquals("RES-1-IMM-1-ETG-1-APT-2", reference);
@@ -109,7 +110,8 @@ class AppartementServiceImplTest {
                 .build();
         Mockito.when(etageService.getEtageByReference(appartement1.getEtage().getReference()))
                 .thenReturn(appartement1.getEtage());
-        Mockito.when(appartementRepository.save(appartement2)).thenReturn(appartement2);
+        Mockito.when(appartementRepository.save(appartement2))
+                .thenReturn(appartement2);
         Appartement createdAppartement = appartementService.createAppartement(appartement2);
         assertNotNull(createdAppartement);
         assertEquals(appartement1.getReference(), createdAppartement.getReference());
