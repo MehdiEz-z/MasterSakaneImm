@@ -24,11 +24,16 @@ public class AppartementServiceImpl implements AppartementService {
     }
     @Override
     public Appartement getAppartementByReference(String appartementReference) {
-        return null;
+        Appartement foundAppartement = appartementRepository.findByReference(appartementReference);
+        if(foundAppartement == null){
+            throw new ResourcesNotFoundException("L'Appartement \"" + appartementReference + "\" n'existe pas");
+        }
+        return foundAppartement;
     }
     @Override
     public List<Appartement> getAllAppartementByEtage(String etageReference) {
-        return null;
+        checkEtageExists(etageReference);
+        return appartementRepository.findAllByEtage_Reference(etageReference);
     }
     public String generateReferenceAppartement(Appartement appartement) {
         String etageReference = appartement.getEtage().getReference();
@@ -43,7 +48,7 @@ public class AppartementServiceImpl implements AppartementService {
     }
     private void checkEtageExists(String etageReference) {
         Etage etage = etageService.getEtageByReference(etageReference);
-    if (etage == null) {
+        if (etage == null) {
             throw new ResourcesNotFoundException("L'Etage \"" + etageReference + "\" n'existe pas");
         }
     }

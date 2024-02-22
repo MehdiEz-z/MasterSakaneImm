@@ -159,7 +159,7 @@ class AppartementServiceImplTest {
                 .status(StatusAppEtMag.DISPONIBLE)
                 .build();
         Appartement appartement3 = Appartement.builder()
-                .reference("RES-1-IMM-1-ETG-1-APT-3")
+                .reference("RES -1-IMM-1-ETG-1-APT-3")
                 .numero("Appartement-3")
                 .description("Appartement de type F3")
                 .titreFoncier("Titre Foncier-3")
@@ -179,9 +179,11 @@ class AppartementServiceImplTest {
                         .build())
                 .status(StatusAppEtMag.DISPONIBLE)
                 .build();
-        Mockito.when(appartementRepository.findAllByEtage_Reference(appartement1.getEtage().getReference()))
-                .thenReturn(List.of(appartement1, appartement2));
-        List<Appartement> appartements = appartementService.getAllAppartementByEtage(appartement1.getEtage().getReference());
+        Mockito.when(etageService.getEtageByReference("RES-1-IMM-1-ETG-1"))
+                .thenReturn(appartement1.getEtage());
+        Mockito.when(appartementRepository.findAllByEtage_Reference("RES-1-IMM-1-ETG-1"))
+                .thenReturn(List.of(appartement1, appartement2,appartement3));
+        List<Appartement> appartements = appartementService.getAllAppartementByEtage("RES-1-IMM-1-ETG-1");
         assertNotNull(appartements);
         assertEquals(3, appartements.size());
     }
