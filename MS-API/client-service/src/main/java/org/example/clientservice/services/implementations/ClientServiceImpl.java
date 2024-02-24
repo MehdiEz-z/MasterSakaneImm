@@ -20,7 +20,8 @@ public class ClientServiceImpl implements ClientService {
         if (clientRepository.existsByCin(client.getCin())) {
             throw new ResourcesNotFoundException("La CIN \"" + client.getCin() + "\" appartient déjà à un autre client");
         }
-        return null;
+        client.setReference(reference);
+        return clientRepository.save(client);
     }
     @Override
     public Client getClientByReference(String clientReference) {

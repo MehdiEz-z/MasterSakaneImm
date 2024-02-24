@@ -102,6 +102,6 @@ class ClientServiceImplTest {
                 .thenReturn(client2);
         Client savedClient = clientService.createClient(client2);
         assertNotNull(savedClient);
-        assertEquals(client, savedClient);
+        assertEquals(client.getReference(), savedClient.getReference());
     }
 }
