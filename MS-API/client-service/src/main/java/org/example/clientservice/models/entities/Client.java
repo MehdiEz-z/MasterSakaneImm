@@ -10,8 +10,8 @@ import org.example.clientservice.models.enums.SituationFamiliale;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 @Entity
 @Getter @Setter @ToString
 @AllArgsConstructor @NoArgsConstructor
@@ -22,14 +22,14 @@ public class Client {
     private String reference;
     private String nom;
     private String prenom;
-    private Date dateNaissance;
+    private LocalDate dateNaissance;
     private String lieuNaissance;
     private String nomPere;
     private String nomMere;
     private String adresse;
     @Column(unique = true)
     private String cin;
-    private Date cinValidite;
+    private LocalDate cinValidite;
     private String telephone;
     private String nationalite;
     @Column(unique = true)
