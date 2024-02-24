@@ -26,4 +26,11 @@ public class ClientServiceImpl implements ClientService {
     public List<Client> getAllClients() {
         return null;
     }
+    public String generateReferenceClient(Client client) {
+        String deuxPremiersCaracteresNom = client.getNom().substring(0,  Math.min(client.getNom().length(), 2)).toUpperCase();
+        String troisPremiersCaracteresPrenom = client.getPrenom().substring(0,  Math.min(client.getPrenom().length(), 3)).toUpperCase();
+        String anneeNaissance = String.valueOf(client.getDateNaissance().getYear()).substring(2);
+        int suffix = 1;
+        return deuxPremiersCaracteresNom + "-" + troisPremiersCaracteresPrenom + "-" + anneeNaissance + "-" + suffix;
+    }
 }
