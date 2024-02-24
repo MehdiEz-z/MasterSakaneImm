@@ -27,10 +27,12 @@ public class Client {
     private String nomPere;
     private String nomMere;
     private String adresse;
+    @Column(unique = true)
     private String cin;
     private Date cinValidite;
     private String telephone;
     private String nationalite;
+    @Column(unique = true)
     private String email;
     private String profession;
     private SituationFamiliale situationFamiliale;
