@@ -1,4 +1,5 @@
 package org.example.clientservice.services.implementations;
+import org.example.clientservice.handlers.exceptionHandler.ResourcesNotFoundException;
 import org.example.clientservice.models.entities.Client;
 import org.example.clientservice.repositories.ClientRepository;
 import org.example.clientservice.services.interfaces.ClientService;
@@ -12,6 +13,13 @@ public class ClientServiceImpl implements ClientService {
     }
     @Override
     public Client createClient(Client client) {
+        String reference = generateReferenceClient(client);
+        if (clientRepository.existsByEmail(client.getEmail())) {
+            throw new ResourcesNotFoundException("L'email \"" + client.getEmail() + "\" appartient déjà à un autre client");
+        }
+        if (clientRepository.existsByCin(client.getCin())) {
+            throw new ResourcesNotFoundException("La CIN \"" + client.getCin() + "\" appartient déjà à un autre client");
+        }
         return null;
     }
     @Override
