@@ -31,6 +31,11 @@ public class ClientServiceImpl implements ClientService {
         String troisPremiersCaracteresPrenom = client.getPrenom().substring(0,  Math.min(client.getPrenom().length(), 3)).toUpperCase();
         String anneeNaissance = String.valueOf(client.getDateNaissance().getYear()).substring(2);
         int suffix = 1;
-        return deuxPremiersCaracteresNom + "-" + troisPremiersCaracteresPrenom + "-" + anneeNaissance + "-" + suffix;
+        String reference = deuxPremiersCaracteresNom + "-" + troisPremiersCaracteresPrenom + "-" + anneeNaissance + "-" + suffix;
+        while (clientRepository.existsByReference(reference)) {
+            suffix++;
+            reference = deuxPremiersCaracteresNom + "-" + troisPremiersCaracteresPrenom + "-" + anneeNaissance + "-" + suffix;
+        }
+        return reference;
     }
 }
