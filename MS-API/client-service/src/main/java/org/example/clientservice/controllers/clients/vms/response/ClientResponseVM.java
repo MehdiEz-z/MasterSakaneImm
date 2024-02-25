@@ -1,10 +1,8 @@
 package org.example.clientservice.controllers.clients.vms.response;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.example.clientservice.models.entities.Client;
 import java.time.LocalDate;
 public record ClientResponseVM(
-    @JsonIgnore
     String reference,
     String nom,
     String prenom,
