@@ -25,15 +25,17 @@ public class ClientServiceImpl implements ClientService {
     }
     @Override
     public Client getClientByReference(String clientReference) {
-        return null;
+        return clientRepository.findByReference(clientReference)
+                .orElseThrow( ()-> new ResourcesNotFoundException("Le client \"" + clientReference + "\" n'existe pas"));
     }
     @Override
     public Client getClientByCin(String clientCin) {
-        return null;
+        return clientRepository.findByCin(clientCin)
+                .orElseThrow( ()-> new ResourcesNotFoundException("Le client avec la cin :  \"" + clientCin + "\" n'existe pas"));
     }
     @Override
     public List<Client> getAllClients() {
-        return null;
+        return clientRepository.findAll();
     }
     public String generateReferenceClient(Client client) {
         String deuxPremiersCaracteresNom = client.getNom().substring(0,  Math.min(client.getNom().length(), 2)).toUpperCase();
