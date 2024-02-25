@@ -9,6 +9,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 class ClientServiceImplTest {
     private ClientServiceImpl clientService;
@@ -103,5 +105,67 @@ class ClientServiceImplTest {
         Client savedClient = clientService.createClient(client2);
         assertNotNull(savedClient);
         assertEquals(client.getReference(), savedClient.getReference());
+    }
+    @Test
+    void testGetClientByReferenceEmptyAndThrowException(){
+        String referenceClient = "ME-EZZ-90-1";
+        Mockito.when(clientRepository.findByReference(referenceClient))
+                .thenReturn(Optional.empty());
+        String exceptedMessage = "Le client \"" + referenceClient + "\" n'existe pas";
+        Exception exception = assertThrows(ResourcesNotFoundException.class,
+                () -> clientService.getClientByReference(referenceClient));
+        assertEquals(exceptedMessage, exception.getMessage());
+    }
+    @Test
+    void testGetClientByReferenceSuccess(){
+        Client client = createClient();
+        Mockito.when(clientRepository.findByReference(client.getReference()))
+                .thenReturn(Optional.of(client));
+        Client client1 = clientService.getClientByReference(client.getReference());
+        assertNotNull(client1);
+        assertEquals(client.getReference(),client1.getReference());
+    }
+    @Test
+    void testGetClientByCinEmptyAndThrowException(){
+        String cinClient = "BJ123456";
+        Mockito.when(clientRepository.findByCin(cinClient))
+                .thenReturn(Optional.empty());
+        String exceptedMessage = "Le client avec la cin :  \"" + cinClient + "\" n'existe pas";
+        Exception exception = assertThrows(ResourcesNotFoundException.class,
+                () -> clientService.getClientByCin(cinClient));
+        assertEquals(exceptedMessage, exception.getMessage());
+    }
+    @Test
+    void testGetClientByCinSuccess(){
+        Client client = createClient();
+        Mockito.when(clientRepository.findByCin(client.getCin()))
+                .thenReturn(Optional.of(client));
+        Client client1 = clientService.getClientByCin(client.getCin());
+        assertNotNull(client1);
+        assertEquals(client,client1);
+    }
+    @Test
+    void testGetAllClient(){
+        Client client = createClient();
+        Client client1 = Client.builder()
+                .reference("AN-CHO-94-1")
+                .nom("Anass")
+                .prenom("Choubri")
+                .cin("BQ654321")
+                .dateNaissance(LocalDate.of(1994, 1, 1))
+                .email("anass@gmail.com")
+                .build();
+        Client client2 = Client.builder()
+                .reference("AN-CHO-94-2")
+                .nom("Anass")
+                .prenom("Choubri")
+                .cin("BQ6549871")
+                .dateNaissance(LocalDate.of(1994, 1, 1))
+                .email("anass2@gmail.com")
+                .build();
+        Mockito.when(clientRepository.findAll()).thenReturn(List.of(client,client2,client1));
+        List<Client> clients = clientService.getAllClients();
+        assertNotNull(clients);
+        assertEquals(3,clients.size());
     }
 }
