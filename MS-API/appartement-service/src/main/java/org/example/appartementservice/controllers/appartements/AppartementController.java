@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @RestController
-@RequestMapping("/api/appartements")
+@RequestMapping("/appartements")
 public class AppartementController {
     private final AppartementService appartementService;
     public AppartementController(AppartementService appartementService) {

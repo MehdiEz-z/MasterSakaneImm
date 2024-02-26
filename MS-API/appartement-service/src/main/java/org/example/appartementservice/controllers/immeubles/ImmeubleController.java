@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @RestController
-@RequestMapping("/api/immeubles")
+@RequestMapping("/immeubles")
 public class ImmeubleController {
     private final ImmeubleService immeubleService;
     public ImmeubleController(ImmeubleService immeubleService) {

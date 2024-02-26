@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      routes:
+        - id: appartements
+          uri: http://localhost:8081/
+          predicates:
+            - Path=/appartements/**
+
+        - id: etages
+          uri: http://localhost:8081/
+          predicates:
+            - Path=/etages/**
+
+        - id: immeubles
+          uri: http://localhost:8081/
+          predicates:
+            - Path=/immeubles/**
+
+        - id: residences
+          uri: http://localhost:8081/
+          predicates:
+            - Path=/residences/**
+
+        - id: clients
+          uri: http://localhost:8082/
+          predicates:
+            - Path=/clients/**
+
+        - id: reservations
+          uri: http://localhost:8083/
+          predicates:
+            - Path=/reservations/**
+server:
+  port: 8888
