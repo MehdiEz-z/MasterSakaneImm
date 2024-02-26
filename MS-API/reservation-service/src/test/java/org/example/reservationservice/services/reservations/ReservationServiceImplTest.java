@@ -4,6 +4,8 @@ import org.example.reservationservice.clients.ClientRest;
 import org.example.reservationservice.handlers.exceptionHandler.OperationsException;
 import org.example.reservationservice.models.entities.Reservation;
 import org.example.reservationservice.models.enums.StatusReservation;
+import org.example.reservationservice.models.model.Appartement;
+import org.example.reservationservice.models.model.Client;
 import org.example.reservationservice.repositories.ReservationRepository;
 import org.example.reservationservice.services.implementations.ReservationServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,9 +27,17 @@ class ReservationServiceImplTest {
     }
     private Reservation createReservationAppartement(){
         return Reservation.builder()
-                .reference("RES-1-IMM-1-ETG-1-APT-1-RSV-1")
+                .reference("RES-1-IMM-1-ETG-1-APT-1-ME-EZZ-96-1-RSV-1")
                 .referenceAppartement("ES-1-IMM-1-ETG-1-APT-1")
+                .appartement(Appartement.builder()
+                        .reference("ES-1-IMM-1-ETG-1-APT-1")
+                        .build()
+                )
                 .referenceClient("ME-EZZ-96-1")
+                .client(Client.builder()
+                        .reference("ME-EZZ-96-1")
+                        .build()
+                )
                 .dateReservation(LocalDate.of(2024, 3, 1))
                 .status(StatusReservation.EN_ATTENTE)
                 .prixMetreCarre(11200.0)
@@ -38,32 +48,41 @@ class ReservationServiceImplTest {
     void testGenerateReferenceReservation(){
         Reservation reservation1 = createReservationAppartement();
         Reservation reservation2 = Reservation.builder()
-                .referenceAppartement("ES-1-IMM-1-ETG-1-APT-1")
+                .referenceAppartement("RES-1-IMM-1-ETG-1-APT-1")
                 .referenceClient("ME-EZZ-96-1")
                 .dateReservation(LocalDate.of(2024, 3, 1))
                 .status(StatusReservation.EN_ATTENTE)
                 .prixMetreCarre(11200.0)
                 .prixDeVente(1120000.0)
                 .build();
+        Mockito.when(appartementRest.getAppartementByReference(reservation2.getReferenceAppartement()))
+                .thenReturn(reservation1.getAppartement());
+        Mockito.when(clientRest.getClientByReference(reservation2.getReferenceClient()))
+                .thenReturn(reservation1.getClient());
         String reference = reservationService.generateReferenceReservation(reservation2);
         assertNotNull(reference);
         assertEquals(reservation1.getReference(), reference);
     }
     @Test
     void testGenerateSecondReservationReference(){
-        String reference = "RES-1-IMM-1-ETG-1-APT-1-RSV-1";
+        Reservation reservation1 = createReservationAppartement();
         Reservation reservation2 = Reservation.builder()
-                .referenceAppartement("ES-1-IMM-1-ETG-1-APT-1")
+                .referenceAppartement("RES-1-IMM-1-ETG-1-APT-1")
                 .referenceClient("ME-EZZ-96-1")
                 .dateReservation(LocalDate.of(2024, 3, 1))
                 .status(StatusReservation.EN_ATTENTE)
                 .prixMetreCarre(11200.0)
                 .prixDeVente(1120000.0)
                 .build();
-        Mockito.when(reservationRepository.existsByReference(reference)).thenReturn(true);
+        Mockito.when(appartementRest.getAppartementByReference(reservation2.getReferenceAppartement()))
+                .thenReturn(reservation1.getAppartement());
+        Mockito.when(clientRest.getClientByReference(reservation2.getReferenceClient()))
+                .thenReturn(reservation1.getClient());
+        Mockito.when(reservationRepository.existsByReference(reservation1.getReference()))
+                .thenReturn(true);
         String reference2 = reservationService.generateReferenceReservation(reservation2);
-        assertNotNull(reference);
-        assertEquals(reference, reference2);
+        assertNotNull(reference2);
+        assertEquals("RES-1-IMM-1-ETG-1-APT-1-ME-EZZ-96-1-RSV-2", reference2);
     }
     @Test
     void testCheckDateReservationNotInPast(){
@@ -122,6 +141,6 @@ class ReservationServiceImplTest {
         Mockito.when(reservationRepository.save(reservation2)).thenReturn(reservation2);
         Reservation createdReservation = reservationService.createReservation(reservation2);
         assertNotNull(createdReservation);
-        assertEquals(reservation1, createdReservation);
+        assertEquals(reservation1.getReference(), createdReservation.getReference());
     }
 }
