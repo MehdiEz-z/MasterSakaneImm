@@ -1,13 +1,11 @@
 package org.example.reservationservice.handlers.exceptionHandler;
-
-import org.example.clientservice.handlers.response.ResponseMessage;
+import org.example.reservationservice.handlers.response.ResponseMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
