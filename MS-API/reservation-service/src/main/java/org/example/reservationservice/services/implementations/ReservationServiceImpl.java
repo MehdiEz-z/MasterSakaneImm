@@ -1,11 +1,14 @@
 package org.example.reservationservice.services.implementations;
 import org.example.reservationservice.clients.AppartementRest;
 import org.example.reservationservice.clients.ClientRest;
+import org.example.reservationservice.handlers.exceptionHandler.OperationsException;
 import org.example.reservationservice.handlers.exceptionHandler.ResourcesNotFoundException;
 import org.example.reservationservice.models.entities.Reservation;
 import org.example.reservationservice.repositories.ReservationRepository;
 import org.example.reservationservice.services.interfaces.ReservationService;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
 import java.util.List;
 @Component
 public class ReservationServiceImpl implements ReservationService {
@@ -18,8 +21,15 @@ public class ReservationServiceImpl implements ReservationService {
         this.appartementRest = appartementRest;
     }
     @Override
-    public Reservation createReservation(Reservation reservation) {
-        return null;
+    public Reservation createReservationAppartement(Reservation reservation) {
+        String reference = generateReferenceReservation(reservation);
+        LocalDate dateReservation= reservation.getDateReservation();
+        LocalDate dateMaintenant = LocalDate.now();
+        if(dateReservation.isBefore(dateMaintenant)){
+            throw new OperationsException("La date de réservation ne peut pas être dans le passé");
+        }
+        reservation.setReference(reference);
+        return reservationRepository.save(reservation);
     }
     @Override
     public Reservation getReservationByReference(String reservationReference) {
@@ -44,12 +54,12 @@ public class ReservationServiceImpl implements ReservationService {
     }
     private void checkAppartementExists(String appartementReference) {
         if (appartementRest.getAppartementByReference(appartementReference) == null) {
-            throw new ResourcesNotFoundException("L'Appartement \"" + appartementReference + "\" n'existe pas");
+            throw new ResourcesNotFoundException("L'appartement \"" + appartementReference + "\" n'existe pas");
         }
     }
     private void checkClientExists(String clientReference) {
         if (clientRest.getClientByReference(clientReference) == null) {
-            throw new ResourcesNotFoundException("Le Client \"" + clientReference + "\" n'existe pas");
+            throw new ResourcesNotFoundException("Le client \"" + clientReference + "\" n'existe pas");
         }
     }
 }
