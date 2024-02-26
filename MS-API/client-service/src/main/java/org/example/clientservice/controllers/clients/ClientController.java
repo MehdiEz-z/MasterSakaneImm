@@ -21,6 +21,12 @@ public class ClientController {
         return ResponseMessage.ok(ClientResponseVM.toVM(client),
                 "Client trouvé avec succès");
     }
+    @GetMapping("/{reference}")
+    public ResponseEntity<ResponseMessage> getClientByReference(@PathVariable String reference) {
+        Client client = clientService.getClientByReference(reference);
+        return ResponseMessage.ok(ClientResponseVM.toVM(client),
+                "Client trouvé avec succès");
+    }
     @GetMapping("/all")
     public ResponseEntity<ResponseMessage> getAllClients() {
         List<Client> clients = clientService.getAllClients();
