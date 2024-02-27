@@ -5,12 +5,15 @@ import org.example.reservationservice.handlers.exceptionHandler.OperationsExcept
 import org.example.reservationservice.handlers.exceptionHandler.ResourcesNotFoundException;
 import org.example.reservationservice.models.entities.Reservation;
 import org.example.reservationservice.models.model.Appartement;
+import org.example.reservationservice.models.model.Client;
 import org.example.reservationservice.repositories.ReservationRepository;
 import org.example.reservationservice.services.interfaces.ReservationService;
 import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+
 @Component
 public class ReservationServiceImpl implements ReservationService {
     private final ReservationRepository reservationRepository;
@@ -40,7 +43,16 @@ public class ReservationServiceImpl implements ReservationService {
     }
     @Override
     public Reservation getReservationByReference(String reservationReference) {
-        return null;
+        Optional<Reservation> optionalReservation = reservationRepository.findByReference(reservationReference);
+        if (optionalReservation.isPresent()){
+            Reservation reservation = optionalReservation.get();
+            Client client = clientRest.getClientByReference(reservation.getReferenceClient());
+            Appartement appartement = appartementRest.getAppartementByReference(reservation.getReferenceAppartement());
+            reservation.setClient(client);
+            reservation.setAppartement(appartement);
+            return reservation;
+        }
+        throw new ResourcesNotFoundException("La réservation \"" + reservationReference + "\" n'existe pas");
     }
     @Override
     public List<Reservation> getAllReservation() {
