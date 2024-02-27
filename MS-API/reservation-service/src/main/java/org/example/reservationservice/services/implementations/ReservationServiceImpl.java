@@ -4,6 +4,7 @@ import org.example.reservationservice.clients.ClientRest;
 import org.example.reservationservice.handlers.exceptionHandler.OperationsException;
 import org.example.reservationservice.handlers.exceptionHandler.ResourcesNotFoundException;
 import org.example.reservationservice.models.entities.Reservation;
+import org.example.reservationservice.models.enums.StatusReservation;
 import org.example.reservationservice.models.model.Appartement;
 import org.example.reservationservice.repositories.ReservationRepository;
 import org.example.reservationservice.services.interfaces.ReservationService;
@@ -74,23 +75,27 @@ public class ReservationServiceImpl implements ReservationService {
         return reservations;
     }
     @Override
-    public void annulerReservation(String reservationReference) {
-        updateAppartementStatus(reservationReference, "DISPONIBLE", "confirmée", "annulée");
+    public String annulerReservation(String reservationReference) {
+        return updateAppartementAndReservationStatus(reservationReference, "DISPONIBLE", "confirmée", "annulée", StatusReservation.ANNULEE);
     }
     @Override
-    public void confirmerReservation(String reservationReference) {
-        updateAppartementStatus(reservationReference, "RESERVE", "annulée", "confirmée");
+    public String confirmerReservation(String reservationReference) {
+        return updateAppartementAndReservationStatus(reservationReference, "RESERVE", "annulée", "confirmée", StatusReservation.CONFIRMEE);
     }
-    private void updateAppartementStatus(String reservationReference, String newStatus, String statusMessageOne, String statusMessageTwo) {
-        Appartement appartement = appartementRest.getAppartementByReference(reservationReference);
-        if ("RESERVE".equals(appartement.getStatus())){
-            throw new OperationsException("La réservation '" + reservationReference + "' est déjà " + statusMessageOne);
+    private String updateAppartementAndReservationStatus(String reservationReference, String newStatus, String statusMessageOne, String statusMessageTwo, StatusReservation nouveauStatus) {
+        Reservation reservation = getReservationByReference(reservationReference);
+        if ("CONFIRMEE".equals(reservation.getStatus().name())){
+            throw new OperationsException("La reservation '" + reservationReference + "' est déjà " + statusMessageOne);
         }
-        if ("ANNULER".equals(appartement.getStatus())){
+        if ("ANNULEE".equals(reservation.getStatus().name())){
             throw new OperationsException("La réservation '" + reservationReference + "' est déjà " + statusMessageTwo);
         }
-        if (STATUS_APT.equals(appartement.getStatus())){
-            appartementRest.updateAppartementStatus(reservationReference, newStatus);
+        if (STATUS_APT.equals(reservation.getStatus().name())){
+            reservation.setStatus(nouveauStatus);
+            reservationRepository.save(reservation);
+            appartementRest.updateAppartementStatus(reservation.getReferenceAppartement(), newStatus);
+            return newStatus;
         }
+        throw new OperationsException("La réservation '" + reservationReference + "' n'est pas " + statusMessageTwo);
     }
 }

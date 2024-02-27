@@ -7,6 +7,6 @@ public interface ReservationService {
     Reservation createReservationAppartement(Reservation reservation);
     Reservation getReservationByReference(String reservationReference);
     List<Reservation> getAllReservation();
-    void annulerReservation(String reservationReference);
-    void confirmerReservation(String reservationReference);
+    String annulerReservation(String reservationReference);
+    String confirmerReservation(String reservationReference);
 }

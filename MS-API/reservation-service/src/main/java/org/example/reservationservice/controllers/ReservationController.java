@@ -41,4 +41,14 @@ public class ReservationController {
         return ResponseMessage.created(ReservationResponseVM.toVM(createdReservation),
                 "Reservation créée avec succès");
     }
+    @PutMapping("/{reservationReference}/annuler")
+    public ResponseEntity<ResponseMessage> annulerReservation(@PathVariable String reservationReference){
+        String newStatus = reservationService.annulerReservation(reservationReference);
+        return ResponseMessage.ok(newStatus,"Réservation annulée avec succès");
+    }
+    @PutMapping("/{reservationReference}/confirmer")
+    public ResponseEntity<ResponseMessage> confirmerReservation(@PathVariable String reservationReference){
+        String newStatus = reservationService.confirmerReservation(reservationReference);
+        return ResponseMessage.ok(newStatus,"Réservation confirmée avec succès");
+    }
 }
