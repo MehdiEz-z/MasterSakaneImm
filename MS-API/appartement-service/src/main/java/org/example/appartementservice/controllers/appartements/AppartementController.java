@@ -16,10 +16,9 @@ public class AppartementController {
         this.appartementService = appartementService;
     }
     @GetMapping("{reference}")
-    public ResponseEntity<ResponseMessage> getAppartementByReference(@PathVariable String reference) {
+    public AppartementResponseVM getAppartementByReference(@PathVariable String reference) {
         Appartement appartement = appartementService.getAppartementByReference(reference);
-        return ResponseMessage.ok(AppartementResponseVM.toVM(appartement),
-                "Appartement trouvé avec succès");
+        return AppartementResponseVM.toVM(appartement);
     }
     @GetMapping("/{etageReference}/all")
     public ResponseEntity<ResponseMessage> getAllAppartementByEtage(@PathVariable String etageReference) {
