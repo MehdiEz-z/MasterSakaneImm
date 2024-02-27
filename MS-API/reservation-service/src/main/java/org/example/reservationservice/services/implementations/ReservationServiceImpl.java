@@ -49,17 +49,20 @@ public class ReservationServiceImpl implements ReservationService {
         Optional<Reservation> optionalReservation = reservationRepository.findByReference(reservationReference);
         if (optionalReservation.isPresent()){
             Reservation reservation = optionalReservation.get();
-            Client client = clientRest.getClientByReference(reservation.getReferenceClient());
-            Appartement appartement = appartementRest.getAppartementByReference(reservation.getReferenceAppartement());
-            reservation.setClient(client);
-            reservation.setAppartement(appartement);
+            reservation.setClient(clientRest.getClientByReference(reservation.getReferenceClient()));
+            reservation.setAppartement(appartementRest.getAppartementByReference(reservation.getReferenceAppartement()));
             return reservation;
         }
         throw new ResourcesNotFoundException("La réservation"+ " '" + reservationReference + "'" + " n'existe pas");
     }
     @Override
     public List<Reservation> getAllReservation() {
-        return Collections.emptyList();
+        List<Reservation> reservations = reservationRepository.findAll();
+        for (Reservation reservation : reservations){
+            reservation.setClient(clientRest.getClientByReference(reservation.getReferenceClient()));
+            reservation.setAppartement(appartementRest.getAppartementByReference(reservation.getReferenceAppartement()));
+        }
+        return reservations;
     }
     public String generateReferenceReservation(Reservation reservation) {
         String appartementReference = reservation.getReferenceAppartement();

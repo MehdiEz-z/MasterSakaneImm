@@ -8,6 +8,8 @@ import org.example.reservationservice.services.interfaces.ReservationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/reservations")
 public class ReservationController {
@@ -20,6 +22,17 @@ public class ReservationController {
         Reservation reservation = reservationService.getReservationByReference(reservationReference);
         return ResponseMessage.ok(ReservationResponseVM.toVM(reservation),
                 "Réservation trouvée avec succès");
+    }
+    @GetMapping("/all")
+    public ResponseEntity<ResponseMessage> getAllReservation(){
+        List<Reservation> reservations = reservationService.getAllReservation();
+        if(reservations.isEmpty()) {
+            return ResponseMessage.notFound("Aucune Réservation trouvée");
+        }else {
+            return ResponseMessage.ok(reservations.stream()
+                            .map(ReservationResponseVM::toVM).toList(),
+                    "Réservations trouvées avec succès");
+        }
     }
     @PostMapping("/")
     public ResponseEntity<ResponseMessage> createReservation(@RequestBody @Valid ReservationRequestVM reservationRequestVM){
