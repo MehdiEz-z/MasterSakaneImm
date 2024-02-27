@@ -5,15 +5,12 @@ import org.example.reservationservice.handlers.exceptionHandler.OperationsExcept
 import org.example.reservationservice.handlers.exceptionHandler.ResourcesNotFoundException;
 import org.example.reservationservice.models.entities.Reservation;
 import org.example.reservationservice.models.model.Appartement;
-import org.example.reservationservice.models.model.Client;
 import org.example.reservationservice.repositories.ReservationRepository;
 import org.example.reservationservice.services.interfaces.ReservationService;
 import org.springframework.stereotype.Component;
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
 @Component
 public class ReservationServiceImpl implements ReservationService {
     private final ReservationRepository reservationRepository;
@@ -24,10 +21,11 @@ public class ReservationServiceImpl implements ReservationService {
         this.clientRest = clientRest;
         this.appartementRest = appartementRest;
     }
+    private static final String STATUS_APT = "EN_ATTENTE";
     @Override
     public Reservation createReservationAppartement(Reservation reservation) {
         Appartement appartement = appartementRest.getAppartementByReference(reservation.getReferenceAppartement());
-        if (("EN_ATTENTE").equals(appartement.getStatus())){
+        if (STATUS_APT.equals(appartement.getStatus())){
             throw new OperationsException("L'appartement" + " '" + reservation.getReferenceAppartement() + "'" +" est en cours de réservation par un autre client");
         }
         String reference = generateReferenceReservation(reservation);
@@ -41,8 +39,19 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setClient(clientRest.getClientByReference(reservation.getReferenceClient()));
         reservation.setPrixDeVente(( appartement.getSuperficieUtile() + (appartement.getSuperficieTerrasse() * 2 )) * reservation.getPrixMetreCarre());
         reservationRepository.save(reservation);
-        appartementRest.updateAppartementStatus(reservation.getReferenceAppartement(), "EN_ATTENTE");
+        appartementRest.updateAppartementStatus(reservation.getReferenceAppartement(), STATUS_APT);
         return reservation;
+    }
+    public String generateReferenceReservation(Reservation reservation) {
+        String appartementReference = reservation.getReferenceAppartement();
+        String clientReference = reservation.getReferenceClient();
+        int suffix = 1;
+        String reference = appartementReference + '-' + clientReference + "-RSV-" + suffix;
+        while (reservationRepository.existsByReference(reference)) {
+            suffix++;
+            reference = appartementReference + '-' + clientReference + "-RSV-" + suffix;
+        }
+        return reference;
     }
     @Override
     public Reservation getReservationByReference(String reservationReference) {
@@ -64,15 +73,24 @@ public class ReservationServiceImpl implements ReservationService {
         }
         return reservations;
     }
-    public String generateReferenceReservation(Reservation reservation) {
-        String appartementReference = reservation.getReferenceAppartement();
-        String clientReference = reservation.getReferenceClient();
-        int suffix = 1;
-        String reference = appartementReference + '-' + clientReference + "-RSV-" + suffix;
-        while (reservationRepository.existsByReference(reference)) {
-            suffix++;
-            reference = appartementReference + '-' + clientReference + "-RSV-" + suffix;
+    @Override
+    public void annulerReservation(String reservationReference) {
+        updateAppartementStatus(reservationReference, "DISPONIBLE", "confirmée", "annulée");
+    }
+    @Override
+    public void confirmerReservation(String reservationReference) {
+        updateAppartementStatus(reservationReference, "RESERVE", "annulée", "confirmée");
+    }
+    private void updateAppartementStatus(String reservationReference, String newStatus, String statusMessageOne, String statusMessageTwo) {
+        Appartement appartement = appartementRest.getAppartementByReference(reservationReference);
+        if ("RESERVE".equals(appartement.getStatus())){
+            throw new OperationsException("La réservation '" + reservationReference + "' est déjà " + statusMessageOne);
         }
-        return reference;
+        if ("ANNULER".equals(appartement.getStatus())){
+            throw new OperationsException("La réservation '" + reservationReference + "' est déjà " + statusMessageTwo);
+        }
+        if (STATUS_APT.equals(appartement.getStatus())){
+            appartementRest.updateAppartementStatus(reservationReference, newStatus);
+        }
     }
 }
