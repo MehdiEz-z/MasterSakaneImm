@@ -26,6 +26,10 @@ public class ReservationServiceImpl implements ReservationService {
     }
     @Override
     public Reservation createReservationAppartement(Reservation reservation) {
+        Appartement appartement = appartementRest.getAppartementByReference(reservation.getReferenceAppartement());
+        if (("EN_ATTENTE").equals(appartement.getStatus())){
+            throw new OperationsException("L'appartement" + " '" + reservation.getReferenceAppartement() + "'" +" est en cours de réservation par un autre client");
+        }
         String reference = generateReferenceReservation(reservation);
         LocalDate dateReservation= reservation.getDateReservation();
         LocalDate dateMaintenant = LocalDate.now();
@@ -33,7 +37,6 @@ public class ReservationServiceImpl implements ReservationService {
             throw new OperationsException("La date de réservation ne peut pas être dans le passé");
         }
         reservation.setReference(reference);
-        Appartement appartement = appartementRest.getAppartementByReference(reservation.getReferenceAppartement());
         reservation.setAppartement(appartement);
         reservation.setClient(clientRest.getClientByReference(reservation.getReferenceClient()));
         reservation.setPrixDeVente(( appartement.getSuperficieUtile() + (appartement.getSuperficieTerrasse() * 2 )) * reservation.getPrixMetreCarre());
@@ -52,7 +55,7 @@ public class ReservationServiceImpl implements ReservationService {
             reservation.setAppartement(appartement);
             return reservation;
         }
-        throw new ResourcesNotFoundException("La réservation \"" + reservationReference + "\" n'existe pas");
+        throw new ResourcesNotFoundException("La réservation"+ " '" + reservationReference + "'" + " n'existe pas");
     }
     @Override
     public List<Reservation> getAllReservation() {
