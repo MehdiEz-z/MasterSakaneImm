@@ -34,11 +34,11 @@ public class ReservationServiceImpl implements ReservationService {
         }
         reservation.setReference(reference);
         Appartement appartement = appartementRest.getAppartementByReference(reservation.getReferenceAppartement());
-        appartement.setStatus("EN_ATTENTE");
         reservation.setAppartement(appartement);
         reservation.setClient(clientRest.getClientByReference(reservation.getReferenceClient()));
         reservation.setPrixDeVente(( appartement.getSuperficieUtile() + (appartement.getSuperficieTerrasse() * 2 )) * reservation.getPrixMetreCarre());
         reservationRepository.save(reservation);
+        appartementRest.updateAppartementStatus(reservation.getReferenceAppartement(), "EN_ATTENTE");
         return reservation;
     }
     @Override

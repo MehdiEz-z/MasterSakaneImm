@@ -4,6 +4,7 @@ import org.example.reservationservice.models.model.Appartement;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import java.util.List;
 @FeignClient(name = "APPARTEMENT-SERVICE")
 public interface AppartementRest {
@@ -12,6 +13,9 @@ public interface AppartementRest {
     Appartement getAppartementByReference(@PathVariable String reference);
     @GetMapping("/appartements/all")
     List<Appartement> getAllAppartements();
+    @PutMapping("/appartements/{reference}/status/{newStatus}")
+    void updateAppartementStatus(@PathVariable String reference, @PathVariable String newStatus);
+
     default Appartement getDefaultAppartement(String reference, Throwable e) {
         return Appartement.builder()
                 .residence("Résidence par défaut")

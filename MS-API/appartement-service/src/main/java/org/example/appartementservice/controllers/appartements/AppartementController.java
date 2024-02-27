@@ -31,6 +31,10 @@ public class AppartementController {
                     "Appartements trouvés avec succès");
         }
     }
+    @PutMapping("/{reference}/status/{status}")
+    public void updateAppartementStatus(@PathVariable String reference, @PathVariable String status) {
+        appartementService.updateAppartementStatus(reference, status);
+    }
     @PostMapping("/")
     public ResponseEntity<ResponseMessage> createAppartement(@RequestBody @Valid AppartementRequestVM appartementRequestVM){
         Appartement appartement = appartementRequestVM.toAppartement();
