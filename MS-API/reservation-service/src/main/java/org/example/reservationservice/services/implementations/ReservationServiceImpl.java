@@ -4,11 +4,12 @@ import org.example.reservationservice.clients.ClientRest;
 import org.example.reservationservice.handlers.exceptionHandler.OperationsException;
 import org.example.reservationservice.handlers.exceptionHandler.ResourcesNotFoundException;
 import org.example.reservationservice.models.entities.Reservation;
+import org.example.reservationservice.models.model.Appartement;
 import org.example.reservationservice.repositories.ReservationRepository;
 import org.example.reservationservice.services.interfaces.ReservationService;
 import org.springframework.stereotype.Component;
-
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 @Component
 public class ReservationServiceImpl implements ReservationService {
@@ -28,7 +29,12 @@ public class ReservationServiceImpl implements ReservationService {
         if(dateReservation.isBefore(dateMaintenant)){
             throw new OperationsException("La date de réservation ne peut pas être dans le passé");
         }
+        Appartement appartement = appartementRest.getAppartementByReference(reservation.getReferenceAppartement());
+        appartement.setStatus("EN_ATTENTE");
+        reservation.setAppartement(appartement);
+        reservation.setClient(clientRest.getClientByReference(reservation.getReferenceClient()));
         reservation.setReference(reference);
+        reservation.setPrixDeVente(( appartement.getSuperficieUtile() + (appartement.getSuperficieTerrasse() * 2 )) * reservation.getPrixMetreCarre());
         return reservationRepository.save(reservation);
     }
     @Override
@@ -37,7 +43,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
     @Override
     public List<Reservation> getAllReservation() {
-        return null;
+        return Collections.emptyList();
     }
     public String generateReferenceReservation(Reservation reservation) {
         checkAppartementExists(reservation.getReferenceAppartement());
