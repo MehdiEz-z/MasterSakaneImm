@@ -9,9 +9,6 @@ public record ReservationRequestVM(
     String appartementReference,
     @NotBlank(message = "La Réference du Client est Obligatoire")
     String clientReference,
-    @NotNull(message = "La Date de Réservation est obligatoire")
-    @JsonFormat(pattern = "dd-MM-yyyy")
-    LocalDate dateReservation,
     @Min(value =1, message = "Le Prix de Metre est Obligatoire")
     @Positive(message = "Le Prix de Metre doit être supérieur a 0")
     @Digits(integer = 10, fraction = 2, message = "Le Prix de Metre doit être une valeur numérique avec au maximum deux décimales")
@@ -21,7 +18,7 @@ public record ReservationRequestVM(
         return Reservation.builder()
                 .referenceAppartement(appartementReference)
                 .referenceClient(clientReference)
-                .dateReservation(dateReservation)
+                .dateReservation(LocalDate.now())
                 .prixMetreCarre(prixMetreCarre)
                 .status(StatusReservation.EN_ATTENTE)
                 .build();

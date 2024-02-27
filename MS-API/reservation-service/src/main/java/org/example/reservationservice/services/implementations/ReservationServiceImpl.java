@@ -29,13 +29,14 @@ public class ReservationServiceImpl implements ReservationService {
         if(dateReservation.isBefore(dateMaintenant)){
             throw new OperationsException("La date de réservation ne peut pas être dans le passé");
         }
+        reservation.setReference(reference);
         Appartement appartement = appartementRest.getAppartementByReference(reservation.getReferenceAppartement());
         appartement.setStatus("EN_ATTENTE");
         reservation.setAppartement(appartement);
         reservation.setClient(clientRest.getClientByReference(reservation.getReferenceClient()));
-        reservation.setReference(reference);
         reservation.setPrixDeVente(( appartement.getSuperficieUtile() + (appartement.getSuperficieTerrasse() * 2 )) * reservation.getPrixMetreCarre());
-        return reservationRepository.save(reservation);
+        reservationRepository.save(reservation);
+        return reservation;
     }
     @Override
     public Reservation getReservationByReference(String reservationReference) {
@@ -46,9 +47,7 @@ public class ReservationServiceImpl implements ReservationService {
         return Collections.emptyList();
     }
     public String generateReferenceReservation(Reservation reservation) {
-        checkAppartementExists(reservation.getReferenceAppartement());
         String appartementReference = reservation.getReferenceAppartement();
-        checkClientExists(reservation.getReferenceClient());
         String clientReference = reservation.getReferenceClient();
         int suffix = 1;
         String reference = appartementReference + '-' + clientReference + "-RSV-" + suffix;
@@ -57,15 +56,5 @@ public class ReservationServiceImpl implements ReservationService {
             reference = appartementReference + '-' + clientReference + "-RSV-" + suffix;
         }
         return reference;
-    }
-    private void checkAppartementExists(String appartementReference) {
-        if (appartementRest.getAppartementByReference(appartementReference) == null) {
-            throw new ResourcesNotFoundException("L'appartement \"" + appartementReference + "\" n'existe pas");
-        }
-    }
-    private void checkClientExists(String clientReference) {
-        if (clientRest.getClientByReference(clientReference) == null) {
-            throw new ResourcesNotFoundException("Le client \"" + clientReference + "\" n'existe pas");
-        }
     }
 }

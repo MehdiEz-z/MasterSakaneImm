@@ -15,12 +15,12 @@ public class ClientController {
     public ClientController(ClientService clientService) {
         this.clientService = clientService;
     }
-    @GetMapping("/{cin}")
+    /*@GetMapping("/{cin}")
     public ResponseEntity<ResponseMessage> getClientByCin(@PathVariable String cin) {
         Client client = clientService.getClientByCin(cin);
         return ResponseMessage.ok(ClientResponseVM.toVM(client),
                 "Client trouvé avec succès");
-    }
+    }*/
     @GetMapping("/{reference}")
     public ResponseEntity<ResponseMessage> getClientByReference(@PathVariable String reference) {
         Client client = clientService.getClientByReference(reference);

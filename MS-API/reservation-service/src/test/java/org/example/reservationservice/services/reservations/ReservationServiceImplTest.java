@@ -75,10 +75,6 @@ class ReservationServiceImplTest {
                 .prixMetreCarre(11200.0)
                 .prixDeVente(1120000.0)
                 .build();
-        Mockito.when(appartementRest.getAppartementByReference(reservation2.getReferenceAppartement()))
-                .thenReturn(reservation1.getAppartement());
-        Mockito.when(clientRest.getClientByReference(reservation2.getReferenceClient()))
-                .thenReturn(reservation1.getClient());
         Mockito.when(reservationRepository.existsByReference(reservation1.getReference()))
                 .thenReturn(true);
         String reference2 = reservationService.generateReferenceReservation(reservation2);
@@ -96,36 +92,8 @@ class ReservationServiceImplTest {
                 .prixMetreCarre(11200.0)
                 .prixDeVente(1120000.0)
                 .build();
-        Mockito.when(appartementRest.getAppartementByReference(reservation2.getReferenceAppartement()))
-                .thenReturn(reservation1.getAppartement());
-        Mockito.when(clientRest.getClientByReference(reservation2.getReferenceClient()))
-                .thenReturn(reservation1.getClient());
         String exceptedMessage = "La date de réservation ne peut pas être dans le passé";
         Exception exception = assertThrows(OperationsException.class,
-                () -> reservationService.createReservationAppartement(reservation2));
-        assertEquals(exceptedMessage, exception.getMessage());
-    }
-    @Test
-    void testCheckClientIfNotExistsAndThrowException(){
-        Reservation reservation2 = createReservationAppartement();
-        Mockito.when(appartementRest.getAppartementByReference(reservation2.getReferenceAppartement()))
-                .thenReturn(reservation2.getAppartement());
-        Mockito.when(clientRest.getClientByReference(reservation2.getReferenceClient()))
-                .thenReturn(null);
-        String exceptedMessage = "Le client \"" + reservation2.getReferenceClient() + "\" n'existe pas";
-        Exception exception = assertThrows(ResourcesNotFoundException.class,
-                () -> reservationService.createReservationAppartement(reservation2));
-        assertEquals(exceptedMessage, exception.getMessage());
-    }
-    @Test
-    void testCheckAppartementIfNotExistsAndThrowException(){
-        Reservation reservation2 = createReservationAppartement();
-        Mockito.when(appartementRest.getAppartementByReference(reservation2.getReferenceAppartement()))
-                .thenReturn(null);
-        Mockito.when(clientRest.getClientByReference(reservation2.getReferenceClient()))
-                .thenReturn(reservation2.getClient());
-        String exceptedMessage = "L'appartement \"" + reservation2.getReferenceAppartement() + "\" n'existe pas";
-        Exception exception = assertThrows(ResourcesNotFoundException.class,
                 () -> reservationService.createReservationAppartement(reservation2));
         assertEquals(exceptedMessage, exception.getMessage());
     }
