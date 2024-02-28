@@ -1,4 +1,6 @@
 package org.example.reservationservice.services.implementations;
+import feign.FeignException;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.example.reservationservice.clients.AppartementRest;
 import org.example.reservationservice.clients.ClientRest;
 import org.example.reservationservice.handlers.exceptionHandler.OperationsException;
@@ -27,7 +29,13 @@ public class ReservationServiceImpl implements ReservationService {
     public Reservation createReservationAppartement(Reservation reservation) {
         Appartement appartement = appartementRest.getAppartementByReference(reservation.getReferenceAppartement());
         if (STATUS_APT.equals(appartement.getStatus())){
-            throw new OperationsException("L'appartement" + " '" + reservation.getReferenceAppartement() + "'" +" est en cours de réservation par un autre client");
+            throw new OperationsException("L'Appartement" + " '" + reservation.getReferenceAppartement() + "'" +" est en cours de réservation par un autre client");
+        }
+        if ("RESERVER".equals(appartement.getStatus())){
+            throw new OperationsException("L'appartement" + " '" + reservation.getReferenceAppartement() + "'" +" est déjà réservée");
+        }
+        if ("VENDU".equals(appartement.getStatus())){
+            throw new OperationsException("L'appartement" + " '" + reservation.getReferenceAppartement() + "'" +" est déjà vendu");
         }
         String reference = generateReferenceReservation(reservation);
         LocalDate dateReservation= reservation.getDateReservation();
@@ -39,9 +47,13 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setAppartement(appartement);
         reservation.setClient(clientRest.getClientByReference(reservation.getReferenceClient()));
         reservation.setPrixDeVente(( appartement.getSuperficieUtile() + (appartement.getSuperficieTerrasse() * 2 )) * reservation.getPrixMetreCarre());
-        reservationRepository.save(reservation);
-        appartementRest.updateAppartementStatus(reservation.getReferenceAppartement(), STATUS_APT);
-        return reservation;
+        try {
+            appartementRest.updateAppartementStatus(reservation.getReferenceAppartement(), STATUS_APT);
+            reservationRepository.save(reservation);
+            return reservation;
+        } catch (FeignException e) {
+            throw new OperationsException("Oops! Une erreur s'est produite lors de la création de la réservation");
+        }
     }
     public String generateReferenceReservation(Reservation reservation) {
         String appartementReference = reservation.getReferenceAppartement();
@@ -76,26 +88,31 @@ public class ReservationServiceImpl implements ReservationService {
     }
     @Override
     public String annulerReservation(String reservationReference) {
-        return updateAppartementAndReservationStatus(reservationReference, "DISPONIBLE", "confirmée", "annulée", StatusReservation.ANNULEE);
+        return updateAppartementAndReservationStatus(reservationReference, "DISPONIBLE", StatusReservation.ANNULEE);
     }
     @Override
     public String confirmerReservation(String reservationReference) {
-        return updateAppartementAndReservationStatus(reservationReference, "RESERVE", "annulée", "confirmée", StatusReservation.CONFIRMEE);
+        return updateAppartementAndReservationStatus(reservationReference, "RESERVER", StatusReservation.CONFIRMEE);
     }
-    private String updateAppartementAndReservationStatus(String reservationReference, String newStatus, String statusMessageOne, String statusMessageTwo, StatusReservation nouveauStatus) {
+    @CircuitBreaker(name = "appartement-service")
+    private String updateAppartementAndReservationStatus(String reservationReference, String newStatus, StatusReservation nouveauStatus) {
         Reservation reservation = getReservationByReference(reservationReference);
-        if ("CONFIRMEE".equals(reservation.getStatus().name())){
-            throw new OperationsException("La reservation '" + reservationReference + "' est déjà " + statusMessageOne);
+        if ("CONFIRMEE".equals(reservation.getStatus().name())) {
+            throw new OperationsException("La réservation '" + reservationReference + "' est déjà confirmée");
         }
-        if ("ANNULEE".equals(reservation.getStatus().name())){
-            throw new OperationsException("La réservation '" + reservationReference + "' est déjà " + statusMessageTwo);
+        if ("ANNULEE".equals(reservation.getStatus().name())) {
+            throw new OperationsException("La réservation '" + reservationReference + "' est déjà annulée");
         }
-        if (STATUS_APT.equals(reservation.getStatus().name())){
+        if (STATUS_APT.equals(reservation.getStatus().name())) {
             reservation.setStatus(nouveauStatus);
-            reservationRepository.save(reservation);
-            appartementRest.updateAppartementStatus(reservation.getReferenceAppartement(), newStatus);
-            return newStatus;
+            try {
+                appartementRest.updateAppartementStatus(reservation.getReferenceAppartement(), newStatus);
+                reservationRepository.save(reservation);
+                return newStatus;
+            } catch (FeignException e) {
+                throw new OperationsException("Oops! Une erreur s'est produite lors de la mise à jour du status de l'appartement");
+            }
         }
-        throw new OperationsException("La réservation '" + reservationReference + "' n'est pas " + statusMessageTwo);
+        throw new OperationsException("Oops! Une erreur s'est produite lors de la mise à jour du status de la réservation");
     }
 }
