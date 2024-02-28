@@ -9,17 +9,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @RestController
-@RequestMapping("/api/clients")
+@RequestMapping("/clients")
 public class ClientController {
     private final ClientService clientService;
     public ClientController(ClientService clientService) {
         this.clientService = clientService;
     }
-    @GetMapping("/{cin}")
+    /*@GetMapping("/{cin}")
     public ResponseEntity<ResponseMessage> getClientByCin(@PathVariable String cin) {
         Client client = clientService.getClientByCin(cin);
         return ResponseMessage.ok(ClientResponseVM.toVM(client),
                 "Client trouvé avec succès");
+    }*/
+    @GetMapping("/{reference}")
+    public ClientResponseVM getClientByReference(@PathVariable String reference) {
+        Client client = clientService.getClientByReference(reference);
+        return ClientResponseVM.toVM(client);
     }
     @GetMapping("/all")
     public ResponseEntity<ResponseMessage> getAllClients() {

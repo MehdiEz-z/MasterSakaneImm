@@ -9,17 +9,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @RestController
-@RequestMapping("/api/appartements")
+@RequestMapping("/appartements")
 public class AppartementController {
     private final AppartementService appartementService;
     public AppartementController(AppartementService appartementService) {
         this.appartementService = appartementService;
     }
     @GetMapping("{reference}")
-    public ResponseEntity<ResponseMessage> getAppartementByReference(@PathVariable String reference) {
+    public AppartementResponseVM getAppartementByReference(@PathVariable String reference) {
         Appartement appartement = appartementService.getAppartementByReference(reference);
-        return ResponseMessage.ok(AppartementResponseVM.toVM(appartement),
-                "Appartement trouvé avec succès");
+        return AppartementResponseVM.toVM(appartement);
     }
     @GetMapping("/{etageReference}/all")
     public ResponseEntity<ResponseMessage> getAllAppartementByEtage(@PathVariable String etageReference) {
@@ -31,6 +30,10 @@ public class AppartementController {
                             .map(AppartementResponseVM::toVM).toList(),
                     "Appartements trouvés avec succès");
         }
+    }
+    @PutMapping("/{reference}/status/{status}")
+    public void updateAppartementStatus(@PathVariable String reference, @PathVariable String status) {
+        appartementService.updateAppartementStatus(reference, status);
     }
     @PostMapping("/")
     public ResponseEntity<ResponseMessage> createAppartement(@RequestBody @Valid AppartementRequestVM appartementRequestVM){

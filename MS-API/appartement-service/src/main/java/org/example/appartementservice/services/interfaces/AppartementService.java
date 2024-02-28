@@ -7,4 +7,5 @@ public interface AppartementService {
     Appartement createAppartement(Appartement appartement);
     Appartement getAppartementByReference(String appartementReference);
     List<Appartement> getAllAppartementByEtage(String etageReference);
+    void updateAppartementStatus(String appartementReference, String status);
 }

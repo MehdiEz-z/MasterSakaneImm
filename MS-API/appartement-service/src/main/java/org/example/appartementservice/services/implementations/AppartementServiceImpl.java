@@ -2,6 +2,7 @@ package org.example.appartementservice.services.implementations;
 import org.example.appartementservice.handlers.exceptionHandler.ResourcesNotFoundException;
 import org.example.appartementservice.models.entities.Appartement;
 import org.example.appartementservice.models.entities.Etage;
+import org.example.appartementservice.models.enums.StatusAppEtMag;
 import org.example.appartementservice.repositories.AppartementRepository;
 import org.example.appartementservice.services.interfaces.AppartementService;
 import org.example.appartementservice.services.interfaces.EtageService;
@@ -51,5 +52,11 @@ public class AppartementServiceImpl implements AppartementService {
         if (etage == null) {
             throw new ResourcesNotFoundException("L'Etage \"" + etageReference + "\" n'existe pas");
         }
+    }
+    @Override
+    public void updateAppartementStatus(String appartementReference, String status) {
+        Appartement appartement = getAppartementByReference(appartementReference);
+        appartement.setStatus(StatusAppEtMag.valueOf(status));
+        appartementRepository.save(appartement);
     }
 }
