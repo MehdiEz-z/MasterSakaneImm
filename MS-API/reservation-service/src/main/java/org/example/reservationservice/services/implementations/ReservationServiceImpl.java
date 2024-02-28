@@ -1,6 +1,6 @@
 package org.example.reservationservice.services.implementations;
 import feign.FeignException;
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import jakarta.transaction.Transactional;
 import org.example.reservationservice.clients.AppartementRest;
 import org.example.reservationservice.clients.ClientRest;
 import org.example.reservationservice.handlers.exceptionHandler.OperationsException;
@@ -26,6 +26,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
     private static final String STATUS_APT = "EN_ATTENTE";
     @Override
+    @Transactional
     public Reservation createReservationAppartement(Reservation reservation) {
         Appartement appartement = appartementRest.getAppartementByReference(reservation.getReferenceAppartement());
         if (STATUS_APT.equals(appartement.getStatus())){
@@ -48,8 +49,8 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setClient(clientRest.getClientByReference(reservation.getReferenceClient()));
         reservation.setPrixDeVente(( appartement.getSuperficieUtile() + (appartement.getSuperficieTerrasse() * 2 )) * reservation.getPrixMetreCarre());
         try {
-            appartementRest.updateAppartementStatus(reservation.getReferenceAppartement(), STATUS_APT);
             reservationRepository.save(reservation);
+            appartementRest.updateAppartementStatus(reservation.getReferenceAppartement(), STATUS_APT);
             return reservation;
         } catch (FeignException e) {
             throw new OperationsException("Oops! Une erreur s'est produite lors de la création de la réservation");
@@ -87,14 +88,15 @@ public class ReservationServiceImpl implements ReservationService {
         return reservations;
     }
     @Override
+    @Transactional
     public String annulerReservation(String reservationReference) {
         return updateAppartementAndReservationStatus(reservationReference, "DISPONIBLE", StatusReservation.ANNULEE);
     }
     @Override
+    @Transactional
     public String confirmerReservation(String reservationReference) {
         return updateAppartementAndReservationStatus(reservationReference, "RESERVER", StatusReservation.CONFIRMEE);
     }
-    @CircuitBreaker(name = "appartement-service")
     private String updateAppartementAndReservationStatus(String reservationReference, String newStatus, StatusReservation nouveauStatus) {
         Reservation reservation = getReservationByReference(reservationReference);
         if ("CONFIRMEE".equals(reservation.getStatus().name())) {
@@ -106,8 +108,8 @@ public class ReservationServiceImpl implements ReservationService {
         if (STATUS_APT.equals(reservation.getStatus().name())) {
             reservation.setStatus(nouveauStatus);
             try {
-                appartementRest.updateAppartementStatus(reservation.getReferenceAppartement(), newStatus);
                 reservationRepository.save(reservation);
+                appartementRest.updateAppartementStatus(reservation.getReferenceAppartement(), newStatus);
                 return newStatus;
             } catch (FeignException e) {
                 throw new OperationsException("Oops! Une erreur s'est produite lors de la mise à jour du status de l'appartement");
