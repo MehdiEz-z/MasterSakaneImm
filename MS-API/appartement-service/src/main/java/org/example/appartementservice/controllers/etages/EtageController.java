@@ -6,6 +6,7 @@ import org.example.appartementservice.handlers.response.ResponseMessage;
 import org.example.appartementservice.models.entities.Etage;
 import org.example.appartementservice.services.interfaces.EtageService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @RestController
@@ -16,12 +17,14 @@ public class EtageController {
         this.etageService = etageService;
     }
     @GetMapping("/{reference}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','CLIENT')")
     public ResponseEntity<ResponseMessage> getEtageByReference(@PathVariable String reference) {
         Etage etage = etageService.getEtageByReference(reference);
         return ResponseMessage.ok(EtageResponseVM.toVM(etage),
                 "Etage trouvé avec succès");
     }
     @GetMapping("/{immeubleReference}/all")
+    @PreAuthorize("hasAnyAuthority('ADMIN','CLIENT')")
     public ResponseEntity<ResponseMessage> getAllEtageByImmeuble(@PathVariable String immeubleReference) {
         List<Etage> etages = etageService.getAllEtageByImmeuble(immeubleReference);
         if(etages.isEmpty()) {
@@ -33,6 +36,7 @@ public class EtageController {
         }
     }
     @PostMapping("/")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<ResponseMessage> createEtage(@RequestBody @Valid EtageRequestVM etageRequestVM){
         Etage etage = etageRequestVM.toEtage();
         Etage createdEtage = etageService.createEtage(etage);

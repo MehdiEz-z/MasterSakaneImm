@@ -6,6 +6,7 @@ import org.example.appartementservice.handlers.response.ResponseMessage;
 import org.example.appartementservice.models.entities.Immeuble;
 import org.example.appartementservice.services.interfaces.ImmeubleService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @RestController
@@ -16,12 +17,14 @@ public class ImmeubleController {
         this.immeubleService = immeubleService;
     }
     @GetMapping("/{reference}")
+
     public ResponseEntity<ResponseMessage> getImmeubleByReferenceAndResidence(@PathVariable String reference) {
         Immeuble immeuble = immeubleService.getImmeubleByReference(reference);
         return ResponseMessage.ok(ImmeubleResponseVM.toVM(immeuble),
                 "Immeuble trouvé avec succès");
     }
     @GetMapping("/{residenceReference}/all")
+    @PreAuthorize("hasAnyAuthority('ADMIN','CLIENT')")
     public ResponseEntity<ResponseMessage> getAllImmeubleByResidence(@PathVariable String residenceReference) {
         List<Immeuble> immeubles = immeubleService.getAllImmeubleByResidence(residenceReference);
         if(immeubles.isEmpty()) {
@@ -33,6 +36,7 @@ public class ImmeubleController {
         }
     }
     @PostMapping("/")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<ResponseMessage> createImmeuble(@RequestBody @Valid ImmeubleRequestVM immeubleRequestVM){
         Immeuble immeuble = immeubleRequestVM.toImmeuble();
         Immeuble createdImmeuble = immeubleService.createImmeuble(immeuble);

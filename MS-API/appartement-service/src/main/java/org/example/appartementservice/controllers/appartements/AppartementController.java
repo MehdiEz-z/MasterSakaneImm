@@ -6,6 +6,7 @@ import org.example.appartementservice.handlers.response.ResponseMessage;
 import org.example.appartementservice.models.entities.Appartement;
 import org.example.appartementservice.services.interfaces.AppartementService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @RestController
@@ -16,11 +17,13 @@ public class AppartementController {
         this.appartementService = appartementService;
     }
     @GetMapping("{reference}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','CLIENT')")
     public AppartementResponseVM getAppartementByReference(@PathVariable String reference) {
         Appartement appartement = appartementService.getAppartementByReference(reference);
         return AppartementResponseVM.toVM(appartement);
     }
     @GetMapping("/{etageReference}/all")
+    @PreAuthorize("hasAnyAuthority('ADMIN','CLIENT')")
     public ResponseEntity<ResponseMessage> getAllAppartementByEtage(@PathVariable String etageReference) {
         List<Appartement> appartements = appartementService.getAllAppartementByEtage(etageReference);
         if(appartements.isEmpty()) {
@@ -36,6 +39,7 @@ public class AppartementController {
         appartementService.updateAppartementStatus(reference, status);
     }
     @PostMapping("/")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<ResponseMessage> createAppartement(@RequestBody @Valid AppartementRequestVM appartementRequestVM){
         Appartement appartement = appartementRequestVM.toAppartement();
         Appartement createdAppartement = appartementService.createAppartement(appartement);
