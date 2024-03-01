@@ -6,6 +6,7 @@ import org.example.appartementservice.handlers.response.ResponseMessage;
 import org.example.appartementservice.models.entities.Magasin;
 import org.example.appartementservice.services.interfaces.MagasinService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @RestController
@@ -16,12 +17,14 @@ public class MagasinController {
         this.magasinService = magasinService;
     }
     @GetMapping("{reference}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','CLIENT')")
     public ResponseEntity<ResponseMessage> getMagasinByReference(@PathVariable String reference) {
         Magasin magasin = magasinService.getMagasinByReference(reference);
         return ResponseMessage.ok(MagasinResponseVM.toVM(magasin),
                 "Magasin trouvé avec succès");
     }
     @GetMapping("/{etageReference}/all")
+    @PreAuthorize("hasAnyAuthority('ADMIN','CLIENT')")
     public ResponseEntity<ResponseMessage> getAllMagasinByEtage(@PathVariable String etageReference) {
         List<Magasin> magasins = magasinService.getAllMagasinByEtage(etageReference);
         if(magasins.isEmpty()) {
@@ -33,6 +36,7 @@ public class MagasinController {
         }
     }
     @PostMapping("/")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<ResponseMessage> createMagasin(@RequestBody @Valid MagasinRequestVM magasinRequestVM){
         Magasin magasin = magasinRequestVM.toMagasin();
         Magasin createdMagasin = magasinService.createMagasin(magasin);

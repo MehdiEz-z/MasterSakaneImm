@@ -2,9 +2,11 @@ package org.example.appartementservice.handlers.exceptionHandler;
 import org.example.appartementservice.handlers.response.ResponseMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.request.WebRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +27,6 @@ public class GlobalExceptionHandler {
         ResponseMessage message = new ResponseMessage(
                 HttpStatus.BAD_REQUEST.value(),
                 ex.getMessage());
-
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -41,7 +42,20 @@ public class GlobalExceptionHandler {
         ResponseMessage message = new ResponseMessage(
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 ex.getMessage());
-
         return new ResponseEntity<>(message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ResponseMessage> accessDeniedException(AccessDeniedException ex, WebRequest request) {
+        ResponseMessage message = new ResponseMessage(
+                HttpStatus.FORBIDDEN.value(),
+                ex.getMessage());
+        return new ResponseEntity<>(message, HttpStatus.FORBIDDEN);
+    }
+    @ExceptionHandler(HttpClientErrorException.Unauthorized.class)
+    public ResponseEntity<ResponseMessage> unauthorizedException(HttpClientErrorException.Unauthorized ex, WebRequest request) {
+        ResponseMessage message = new ResponseMessage(
+                HttpStatus.UNAUTHORIZED.value(),
+                ex.getMessage());
+        return new ResponseEntity<>(message, HttpStatus.UNAUTHORIZED);
     }
 }
