@@ -6,6 +6,7 @@ import org.example.appartementservice.handlers.response.ResponseMessage;
 import org.example.appartementservice.models.entities.Residence;
 import org.example.appartementservice.services.interfaces.ResidenceService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @RestController
@@ -16,12 +17,14 @@ public class ResidenceController {
         this.residenceService = residenceService;
     }
     @GetMapping("/{nom}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','CLIENT')")
     public ResponseEntity<ResponseMessage> getResidenceByNom(@PathVariable String nom) {
         Residence residence = residenceService.getResidenceByNom(nom);
         return ResponseMessage.ok(ResidenceResponseVM.toVM(residence),
                 "Résidence trouvée avec succès");
     }
     @GetMapping("/all")
+    @PreAuthorize("hasAnyAuthority('ADMIN','CLIENT')")
     public ResponseEntity<ResponseMessage> getAllResidences() {
         List<Residence> residences = residenceService.getAllResidences();
         if(residences.isEmpty()) {
@@ -33,6 +36,7 @@ public class ResidenceController {
         }
     }
     @PostMapping("/")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<ResponseMessage> createResidence(@RequestBody @Valid ResidenceRequestVM residenceRequestVM){
         Residence residence = residenceRequestVM.toResidence();
         Residence createdResidence = residenceService.createResidence(residence);
