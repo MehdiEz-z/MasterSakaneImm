@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'ms-angular';
+  title = 'Master Sakane';
+  status = false;
+  addToggle()
+  {
+    this.status = !this.status;
+  }
 }
