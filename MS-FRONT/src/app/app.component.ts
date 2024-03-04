@@ -7,9 +7,4 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Master Sakane';
-  status = false;
-  addToggle()
-  {
-    this.status = !this.status;
-  }
 }
