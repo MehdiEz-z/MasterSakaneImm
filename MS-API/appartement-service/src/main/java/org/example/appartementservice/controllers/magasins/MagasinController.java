@@ -17,14 +17,14 @@ public class MagasinController {
         this.magasinService = magasinService;
     }
     @GetMapping("{reference}")
-    @PreAuthorize("hasAnyAuthority('ADMIN','CLIENT')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','COMMERCIAL')")
     public ResponseEntity<ResponseMessage> getMagasinByReference(@PathVariable String reference) {
         Magasin magasin = magasinService.getMagasinByReference(reference);
         return ResponseMessage.ok(MagasinResponseVM.toVM(magasin),
                 "Magasin trouvé avec succès");
     }
     @GetMapping("/{etageReference}/all")
-    @PreAuthorize("hasAnyAuthority('ADMIN','CLIENT')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','COMMERCIAL')")
     public ResponseEntity<ResponseMessage> getAllMagasinByEtage(@PathVariable String etageReference) {
         List<Magasin> magasins = magasinService.getAllMagasinByEtage(etageReference);
         if(magasins.isEmpty()) {

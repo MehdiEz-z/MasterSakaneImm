@@ -17,13 +17,13 @@ public class AppartementController {
         this.appartementService = appartementService;
     }
     @GetMapping("{reference}")
-    @PreAuthorize("hasAnyAuthority('ADMIN','CLIENT')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','COMMERCIAL')")
     public AppartementResponseVM getAppartementByReference(@PathVariable String reference) {
         Appartement appartement = appartementService.getAppartementByReference(reference);
         return AppartementResponseVM.toVM(appartement);
     }
     @GetMapping("/{etageReference}/all")
-    @PreAuthorize("hasAnyAuthority('ADMIN','CLIENT')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','COMMERCIAL')")
     public ResponseEntity<ResponseMessage> getAllAppartementByEtage(@PathVariable String etageReference) {
         List<Appartement> appartements = appartementService.getAllAppartementByEtage(etageReference);
         if(appartements.isEmpty()) {

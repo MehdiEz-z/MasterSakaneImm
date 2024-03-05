@@ -5,6 +5,7 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="boxicons" level="application" />
   </component>
   <component name="SonarLintModuleSettings">
     <option name="uniqueId" value="d23fbf3a-3413-4058-84fa-e81d8d01048f" />

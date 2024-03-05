@@ -1,0 +1,56 @@
+<!-- SIDEBAR -->
+<section id="sidebar" [ngClass]="{ 'hide' : isSidebarHidden }">
+  <a href="#" class="brand">
+    <i class='bx bxs-smile'></i>
+    <span class="text">AdminHub</span>
+  </a>
+  <div class="menu-container">
+    <ul class="side-menu top">
+      <li [routerLinkActive]="['active']" *ngIf="hasAnyRoles(['ADMIN','COMMERCIAL'])">
+        <a routerLink = '/dashboard'>
+          <i class='bx bxs-dashboard' ></i>
+          <span class="text">Dashboard</span>
+        </a>
+      </li>
+      <li [routerLinkActive]="['active']" *ngIf="hasAnyRoles(['ADMIN','COMMERCIAL'])">
+        <a routerLink= 'clients'>
+          <i class='bx bxs-user-account' ></i>
+          <span class="text">Clients</span>
+        </a>
+      </li>
+      <li [routerLinkActive]="['active']">
+        <a routerLink= 'residences'>
+          <i class='bx bxs-building-house' ></i>
+          <span class="text">Résidences</span>
+        </a>
+      </li>
+      <li [routerLinkActive]="['active']">
+        <a routerLink= 'reservations'>
+          <i class='bx bxs-purchase-tag-alt' ></i>
+          <span class="text">Réservations</span>
+        </a>
+      </li>
+    </ul>
+    <ul class="side-menu">
+      <li [routerLinkActive]="['active']">
+        <a>
+          <i class='bx bxs-user' ></i>
+          <span class="text">Profile</span>
+        </a>
+      </li>
+      <li [routerLinkActive]="['active']">
+        <a>
+          <i class='bx bxs-cog' ></i>
+          <span class="text">Settings</span>
+        </a>
+      </li>
+      <li>
+        <a (click)="handleLogout()" class="logout">
+          <i class='bx bxs-log-out-circle' ></i>
+          <span class="text">Logout</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</section>
+<!-- SIDEBAR -->

@@ -17,14 +17,14 @@ public class EtageController {
         this.etageService = etageService;
     }
     @GetMapping("/{reference}")
-    @PreAuthorize("hasAnyAuthority('ADMIN','CLIENT')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','COMMERCIAL')")
     public ResponseEntity<ResponseMessage> getEtageByReference(@PathVariable String reference) {
         Etage etage = etageService.getEtageByReference(reference);
         return ResponseMessage.ok(EtageResponseVM.toVM(etage),
                 "Etage trouvé avec succès");
     }
     @GetMapping("/{immeubleReference}/all")
-    @PreAuthorize("hasAnyAuthority('ADMIN','CLIENT')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','COMMERCIAL')")
     public ResponseEntity<ResponseMessage> getAllEtageByImmeuble(@PathVariable String immeubleReference) {
         List<Etage> etages = etageService.getAllEtageByImmeuble(immeubleReference);
         if(etages.isEmpty()) {
