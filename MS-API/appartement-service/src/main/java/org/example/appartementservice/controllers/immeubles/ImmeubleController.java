@@ -17,14 +17,14 @@ public class ImmeubleController {
         this.immeubleService = immeubleService;
     }
     @GetMapping("/{reference}")
-
+    @PreAuthorize("hasAnyAuthority('ADMIN','COMMERCIAL')")
     public ResponseEntity<ResponseMessage> getImmeubleByReferenceAndResidence(@PathVariable String reference) {
         Immeuble immeuble = immeubleService.getImmeubleByReference(reference);
         return ResponseMessage.ok(ImmeubleResponseVM.toVM(immeuble),
                 "Immeuble trouvé avec succès");
     }
     @GetMapping("/{residenceReference}/all")
-    @PreAuthorize("hasAnyAuthority('ADMIN','CLIENT')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','COMMERCIAL')")
     public ResponseEntity<ResponseMessage> getAllImmeubleByResidence(@PathVariable String residenceReference) {
         List<Immeuble> immeubles = immeubleService.getAllImmeubleByResidence(residenceReference);
         if(immeubles.isEmpty()) {
