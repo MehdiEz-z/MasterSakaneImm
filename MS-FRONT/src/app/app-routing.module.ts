@@ -7,10 +7,10 @@ import {ReservationsComponent} from "./pages/reservations/reservations.component
 import {AuthGuard} from "./core/guards/auth.guard";
 
 const routes: Routes = [
-  { path: 'dashboard', component: DashboardComponent, canActivate : [AuthGuard], data: { roles: ['ADMIN', 'COMMERCIAL'] } },
-  { path: 'residences', component: ResidencesComponent, canActivate : [AuthGuard], data: { roles: ['ADMIN', 'COMMERCIAL'] } },
-  { path: 'clients', component: ClientsComponent, canActivate : [AuthGuard], data: { roles: ['ADMIN', 'COMMERCIAL'] } },
-  { path: 'reservations', component: ReservationsComponent, canActivate : [AuthGuard], data: { roles: ['ADMIN', 'COMMERCIAL'] } },
+  { path: 'dashboard', component: DashboardComponent, canActivate : [AuthGuard], data: { roles: ['ADMIN', 'COMMERCIAL','CLIENT'] } },
+  { path: 'residences', component: ResidencesComponent, canActivate : [AuthGuard], data: { roles: ['ADMIN', 'COMMERCIAL','CLIENT'] } },
+  { path: 'clients', component: ClientsComponent, canActivate : [AuthGuard], data: { roles: ['ADMIN', 'COMMERCIAL','CLIENT'] } },
+  { path: 'reservations', component: ReservationsComponent, canActivate : [AuthGuard], data: { roles: ['ADMIN', 'COMMERCIAL','CLIENT'] } },
 ];
 
 @NgModule({

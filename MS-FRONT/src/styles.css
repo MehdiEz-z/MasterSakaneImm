@@ -147,6 +147,7 @@ body {
 }
 #sidebar .side-menu li a.logout {
   color: var(--red);
+  cursor: pointer;
 }
 #sidebar .side-menu.top li a:hover {
   color: var(--green);
@@ -259,6 +260,7 @@ body {
 #content nav .notification {
   font-size: 20px;
   position: relative;
+  margin-top: 5px;
 }
 #content nav .notification .num {
   position: absolute;
@@ -275,6 +277,16 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+#content nav .profile {
+  display: flex;
+  align-items: center;
+  grid-gap: 16px;
+}
+#content nav .profile .name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--dark);
 }
 #content nav .profile img {
   width: 36px;
