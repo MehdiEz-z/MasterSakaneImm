@@ -4,12 +4,13 @@ import {DashboardComponent} from "./pages/dashboard/dashboard.component";
 import {ResidencesComponent} from "./pages/residences/residences.component";
 import {ClientsComponent} from "./pages/clients/clients.component";
 import {ReservationsComponent} from "./pages/reservations/reservations.component";
+import {AuthGuard} from "./core/guards/auth.guard";
 
 const routes: Routes = [
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'residences', component: ResidencesComponent },
-  { path: 'clients', component: ClientsComponent },
-  { path: 'reservations', component: ReservationsComponent },
+  { path: 'dashboard', component: DashboardComponent, canActivate : [AuthGuard], data: { roles: ['ADMIN', 'COMMERCIAL'] } },
+  { path: 'residences', component: ResidencesComponent, canActivate : [AuthGuard], data: { roles: ['ADMIN', 'COMMERCIAL'] } },
+  { path: 'clients', component: ClientsComponent, canActivate : [AuthGuard], data: { roles: ['ADMIN', 'COMMERCIAL'] } },
+  { path: 'reservations', component: ReservationsComponent, canActivate : [AuthGuard], data: { roles: ['ADMIN', 'COMMERCIAL'] } },
 ];
 
 @NgModule({
