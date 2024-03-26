@@ -17,14 +17,14 @@ public class ResidenceController {
         this.residenceService = residenceService;
     }
     @GetMapping("/{nom}")
-    @PreAuthorize("hasAnyAuthority('ADMIN','COMMERCIAL')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','COMMERCIAL','CLIENT')")
     public ResponseEntity<ResponseMessage> getResidenceByNom(@PathVariable String nom) {
         Residence residence = residenceService.getResidenceByNom(nom);
         return ResponseMessage.ok(ResidenceResponseVM.toVM(residence),
                 "Résidence trouvée avec succès");
     }
     @GetMapping("/all")
-    @PreAuthorize("hasAnyAuthority('ADMIN','COMMERCIAL')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','COMMERCIAL','CLIENT')")
     public ResponseEntity<ResponseMessage> getAllResidences() {
         List<Residence> residences = residenceService.getAllResidences();
         if(residences.isEmpty()) {

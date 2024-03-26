@@ -1,0 +1,52 @@
+<div class="head-title">
+  <div class="left">
+    <h1>Etages</h1>
+    <ul class="breadcrumb">
+      <li>
+        <a>{{ etage?.residence }}</a>
+      </li>
+      <li><i class='bx bx-chevron-right' ></i></li>
+      <li>
+        <a>{{ etage?.immeuble }}</a>
+      </li>
+      <li><i class='bx bx-chevron-right' ></i></li>
+      <li>
+        <a>{{etage?.numero}}</a>
+      </li>
+      <li><i class='bx bx-chevron-right' ></i></li>
+      <li>
+        <a class="active">Details</a>
+      </li>
+    </ul>
+  </div>
+  <div class="right">
+    <a *ngIf="hasAnyRoles(['ADMIN'])" class="btn-create">Crée un Appartement</a>
+    <a class="btn-retour" (click)="goBack()">Retour</a>
+  </div>
+</div>
+<div class="table-data">
+  <div class="image-container">
+    <img src="assets/imgs/Green%20Walks_1-immA.jpg" alt="Residence">
+  </div>
+  <div class="todo">
+    <div class="head">
+      <h3>Appartements</h3>
+    </div>
+
+    <ul class="todo-list">
+      @for ( appartement of appartements; track $index){
+        <a (click)="getAppartementDetails(appartement)">
+          <li class="not-completed">
+            <p>{{ appartement.numero }}</p>
+            <div class="status-imm">
+              <div [class]="'imm-'+(appartement.status === 'DISPONIBLE' ? 'disponible' : appartement.status === 'EN_ATTENTE' ? 'attente' : appartement.status === 'RESERVER' ? 'reserve' : 'vendu')">
+                <i class='bx bx-check-circle'></i>
+                <span>{{ appartement.status }}</span>
+              </div>
+            </div>
+          </li>
+        </a>
+      }
+    </ul>
+  </div>
+</div>

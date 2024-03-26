@@ -35,6 +35,7 @@ public class AppartementController {
         }
     }
     @PutMapping("/{reference}/status/{status}")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public void updateAppartementStatus(@PathVariable String reference, @PathVariable String status) {
         appartementService.updateAppartementStatus(reference, status);
     }

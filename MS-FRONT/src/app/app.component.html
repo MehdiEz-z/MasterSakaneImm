@@ -1,11 +1,18 @@
-<app-sidebar></app-sidebar>
-<!-- CONTENT -->
-<section id="content">
-  <app-navbar></app-navbar>
-  <!-- MAIN -->
-  <main>
-    <router-outlet></router-outlet>
-  </main>
-  <!-- MAIN -->
-</section>
-<!-- CONTENT -->
+<div *ngIf="isAuthenticated">
+  <app-sidebar></app-sidebar>
+  <!-- CONTENT -->
+  <section id="content">
+    <app-navbar></app-navbar>
+    <!-- MAIN -->
+    <main>
+      <router-outlet></router-outlet>
+    </main>
+    <!-- MAIN -->
+  </section>
+  <!-- CONTENT -->
+</div>
+<div *ngIf="!isAuthenticated">
+  <div class="btnLogin">
+    <button class="loginBtn" (click)="handleLogin()">Login</button>
+  </div>
+</div>

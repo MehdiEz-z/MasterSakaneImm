@@ -1,0 +1,51 @@
+<div class="head-title">
+  <div class="left">
+    <h1>Résidences</h1>
+    <ul class="breadcrumb">
+      <li>
+        <a>{{residence?.nom}}</a>
+      </li>
+      <li><i class='bx bx-chevron-right' ></i></li>
+      <li>
+        <a class="active">Details</a>
+      </li>
+    </ul>
+  </div>
+  <div class="right">
+    <a *ngIf="hasAnyRoles(['ADMIN'])" class="btn-create">Crée un Immeuble</a>
+    <a routerLink="/residences" class="btn-retour">Retour</a>
+  </div>
+</div>
+<div class="table-data">
+  <div class="image-container">
+    <img src="assets/imgs/Green%20Walks_01.jpg" alt="Residence">
+  </div>
+  <div class="todo">
+    <div class="head">
+      <h3>Immeubles</h3>
+    </div>
+    <ul class="todo-list">
+      @for ( immeuble of immeubles; track $index){
+        <a (click)="getImmeubleDetails(immeuble)" >
+          <li class="not-completed">
+            <p>{{ immeuble.numero }}</p>
+            <div class="status-imm">
+              <div class="imm-disponible">
+                <i class='bx bx-check-circle'></i>
+                <span>10</span>
+              </div>
+              <div class="imm-reserve">
+                <i class='bx bx-time-five'></i>
+                <span>10</span>
+              </div>
+              <div class="imm-vendu">
+                <i class='bx bx-x-circle'></i>
+                <span>10</span>
+              </div>
+            </div>
+          </li>
+        </a>
+      }
+    </ul>
+  </div>
+</div>
