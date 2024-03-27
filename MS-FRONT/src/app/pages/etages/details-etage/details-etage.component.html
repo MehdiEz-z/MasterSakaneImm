@@ -36,12 +36,12 @@
     <ul class="todo-list">
       @for ( appartement of appartements; track $index){
         <a (click)="getAppartementDetails(appartement)">
-          <li class="not-completed">
+          <li [class]="(appartement.status === 'DISPONIBLE' ? 'completed' : appartement.status === 'EN_ATTENTE' ? 'attente' : appartement.status === 'RESERVER' ? 'reserve' : 'not-completed')">
             <p>{{ appartement.numero }}</p>
             <div class="status-imm">
               <div [class]="'imm-'+(appartement.status === 'DISPONIBLE' ? 'disponible' : appartement.status === 'EN_ATTENTE' ? 'attente' : appartement.status === 'RESERVER' ? 'reserve' : 'vendu')">
-                <i class='bx bx-check-circle'></i>
-                <span>{{ appartement.status }}</span>
+                <i [class]="'bx bx-'+(appartement.status === 'DISPONIBLE' ? 'check-circle' : appartement.status === 'EN_ATTENTE' ? 'time-five' : appartement.status === 'RESERVER' ? 'x-circle' : 'dollar-circle')"></i>
+                <span>{{ appartement.status === 'DISPONIBLE' ? 'Disponible' : appartement.status === 'EN_ATTENTE' ? 'En reservation' : appartement.status === 'RESERVER' ? 'Réservé' : 'Vendu' }}</span>
               </div>
             </div>
           </li>

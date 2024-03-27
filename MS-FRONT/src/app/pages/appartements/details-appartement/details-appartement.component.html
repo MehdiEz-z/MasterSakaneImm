@@ -1,1 +1,88 @@
-<p>details-appartement works!</p>
+<div class="head-title">
+  <div class="left">
+    <div class="appt-status">
+      <h1>Appartements</h1>
+      <div [class]="'imm-'+(appartement?.status === 'DISPONIBLE' ? 'disponible' : appartement?.status === 'EN_ATTENTE' ? 'attente' : appartement?.status === 'RESERVER' ? 'reserve' : 'vendu')">
+        <i [class]="'bx bx-'+(appartement?.status === 'DISPONIBLE' ? 'check-circle' : appartement?.status === 'EN_ATTENTE' ? 'time-five' : appartement?.status === 'RESERVER' ? 'x-circle' : 'dollar-circle')"></i>
+        <span>{{ appartement?.status === 'DISPONIBLE' ? 'Disponible' : appartement?.status === 'EN_ATTENTE' ? 'En reservation' : appartement?.status === 'RESERVER' ? 'Réservé' : 'Vendu' }}</span>
+      </div>
+    </div>
+    <ul class="breadcrumb">
+      <li>
+        <a>{{ appartement?.residence }}</a>
+      </li>
+      <li><i class='bx bx-chevron-right' ></i></li>
+      <li>
+        <a>{{ appartement?.immeuble }}</a>
+      </li>
+      <li><i class='bx bx-chevron-right' ></i></li>
+      <li>
+        <a>{{appartement?.etage}}</a>
+      </li>
+      <li><i class='bx bx-chevron-right' ></i></li>
+      <li>
+        <a>{{appartement?.numero}}</a>
+      </li>
+      <li><i class='bx bx-chevron-right' ></i></li>
+      <li>
+        <a class="active">Details</a>
+      </li>
+    </ul>
+  </div>
+  <div class="right">
+    <a *ngIf="hasAnyRoles(['ADMIN','COMMERCIAL']) && appartement?.status === 'DISPONIBLE'" class="btn-create">Réserver</a>
+    <a *ngIf="hasAnyRoles(['ADMIN']) && appartement?.status === 'EN_ATTENTE'" class="btn-create">Confirmer</a>
+    <a *ngIf="hasAnyRoles(['ADMIN']) && appartement?.status === 'EN_ATTENTE'" class="btn-annuler">Annuler</a>
+    <a class="btn-retour" (click)="goBack()">Retour</a>
+  </div>
+</div>
+<div class="table-data">
+  <div class="mySlide" id="slideshow">
+    <div class="slide-wrapper">
+      <div class="slide">
+        <img src="assets/imgs/Green%20Walks_cover-1.jpg" alt="Residence">
+      </div>
+      <div class="slide">
+        <img src="assets/imgs/Green%20Walks_cover-2.jpg" alt="Residence">
+      </div>
+      <div class="slide">
+        <img src="assets/imgs/Green%20Walks_cover-3.jpg" alt="Residence">
+      </div>
+      <div class="slide">
+        <img src="assets/imgs/Green%20Walks_cover-5.jpg" alt="Residence">
+      </div>
+      <div class="slide">
+        <img src="assets/imgs/Green%20Walks_cover-6.jpg" alt="Residence">
+      </div>
+    </div>
+  </div>
+  <div class="todo">
+    <div class="head">
+      <h3>Réservation</h3>
+    </div>
+    <ul class="todo-list">
+
+    </ul>
+  </div>
+</div>
+<div class="warpper">
+  <input class="radio" id="one" name="group" type="radio" checked>
+  <input class="radio" id="two" name="group" type="radio">
+  <input class="radio" id="three" name="group" type="radio">
+  <div class="tabs">
+    <label class="tab" id="one-tab" for="one">Plan 2D</label>
+    <label class="tab" id="two-tab" for="two">Plan 3D</label>
+    <label class="tab" id="three-tab" for="three">Plan 3D éclaté</label>
+  </div>
+  <div class="panels">
+    <div class="panel" id="one-panel">
+      <img src="assets/imgs/Green%20Walks_plan-01-rdc-A.jpg" alt="Plan 2D">
+    </div>
+    <div class="panel" id="two-panel">
+      <img src="assets/imgs/Green%20Walks_top-01-rdc-A.jpg" alt="Plan 3D">
+    </div>
+    <div class="panel" id="three-panel">
+      <img src="assets/imgs/Green%20Walks_eclatee-01-rdc-A.jpg" alt="Plan 3D éclaté">
+    </div>
+  </div>
+</div>

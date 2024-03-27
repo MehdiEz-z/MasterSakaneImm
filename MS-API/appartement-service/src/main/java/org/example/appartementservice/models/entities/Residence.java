@@ -18,7 +18,7 @@ public class Residence {
     private String nom;
     private String description;
     private String adresse;
-    @OneToMany(mappedBy = "residence")
+    @OneToMany(mappedBy = "residence", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Immeuble> immeubles;
     @JsonIgnore
     @CreatedDate

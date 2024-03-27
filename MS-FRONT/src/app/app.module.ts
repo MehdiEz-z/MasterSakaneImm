@@ -6,6 +6,7 @@ import {SharedModule} from "./shared/shared.module";
 import {HttpClientModule} from "@angular/common/http";
 import {KeycloakAngularModule, KeycloakService} from "keycloak-angular";
 import {CommonModule} from "@angular/common";
+import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -32,7 +33,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     AppRoutingModule,
     SharedModule,
     HttpClientModule,
-    KeycloakAngularModule
+    KeycloakAngularModule,
+    SweetAlert2Module.forRoot()
   ],
   providers: [
     {

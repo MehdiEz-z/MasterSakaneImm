@@ -355,6 +355,48 @@ body {
   grid-gap: 16px;
   flex-wrap: wrap;
 }
+#content main .head-title .left .appt-status {
+  display: flex;
+  align-items: center;
+  grid-gap: 10px;
+}
+#content main .head-title .left .appt-status .imm-disponible {
+  background: var(--light-green);
+  border-radius: 8px;
+  padding: 2px 4px;
+  display: flex;
+  align-items: center;
+  color: var(--green);
+}
+#content main .head-title .left .appt-status .imm-attente {
+  background: var(--light-yellow);
+  border-radius: 8px;
+  padding: 2px 4px;
+  display: flex;
+  align-items: center;
+  color: var(--yellow);
+}
+#content main .head-title .left .appt-status .imm-reserve {
+  background: var(--light-blue);
+  border-radius: 8px;
+  padding: 2px 4px;
+  display: flex;
+  align-items: center;
+  color: var(--blue);
+}
+#content main .head-title .left .appt-status .imm-vendu {
+  background: var(--light-orange);
+  border-radius: 8px;
+  padding: 2px 4px;
+  display: flex;
+  align-items: center;
+  color: var(--orange);
+}
+#content main .head-title .left .appt-status span {
+  margin-left: 5px;
+  font-size: small;
+  font-weight: 600;
+}
 #content main .head-title .left h1 {
   font-size: 36px;
   font-weight: 600;
@@ -386,6 +428,18 @@ body {
   padding: 0 16px;
   border-radius: 10px;
   background: var(--green);
+  color: var(--light);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-gap: 10px;
+  font-weight: 500;
+}
+#content main .head-title .btn-annuler{
+  height: 36px;
+  padding: 0 16px;
+  border-radius: 10px;
+  background: var(--orange);
   color: var(--light);
   display: flex;
   justify-content: center;
@@ -453,17 +507,80 @@ body {
 }
 
 
+.warpper{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 24px;
+}
+.tabs {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.tab{
+  cursor: pointer;
+  padding:10px 20px;
+  margin:0px 2px;
+  background:var(--dark);;
+  display:inline-block;
+  color:var(--light);;
+  border-radius:3px 3px 0px 0px;
+  width: 30%;
+}
+.panels{
+  background:var(--light);
+  min-height:200px;
+  width:100%;
+  border-radius:20px;
+  overflow:hidden;
+  padding:20px;
+}
+.panel{
+  display:none;
+  animation: fadein .8s;
+}
+.panel img {
+  width: 100%;
+  border-radius: 20px;
+}
+@keyframes fadein {
+  from {
+    opacity:0;
+  }
+  to {
+    opacity:1;
+  }
+}
+.panel-title{
+  font-size:1.5em;
+  font-weight:bold
+}
+.radio{
+  display:none;
+}
+#one:checked ~ .panels #one-panel,
+#two:checked ~ .panels #two-panel,
+#three:checked ~ .panels #three-panel{
+  display:block
+}
+#one:checked ~ .tabs #one-tab,
+#two:checked ~ .tabs #two-tab,
+#three:checked ~ .tabs #three-tab{
+  background: var(--light);
+  color: var(--dark);
+  border-top: 3px solid var(--dark);
+}
 
 
 #content main .table-data {
   display: flex;
-  flex-wrap: wrap;
   grid-gap: 24px;
   margin-top: 24px;
   width: 100%;
   color: var(--dark);
 }
-#content main .table-data > div:not(.image-container) {
+#content main .table-data > div:not(.image-container):not(.mySlide)  {
   border-radius: 20px;
   background: var(--light);
   padding: 24px;
@@ -573,7 +690,7 @@ body {
   align-items: center;
   color: var(--green);
 }
-#content main .table-data .todo .todo-list li .imm-disponible span {
+#content main .table-data .todo .todo-list li span {
   margin-left: 5px;
   font-size: small;
   font-weight: 600;
@@ -588,11 +705,6 @@ body {
   color: var(--yellow);
   margin-left: 5px;
 }
-#content main .table-data .todo .todo-list li .imm-attente span {
-  margin-left: 5px;
-  font-size: small;
-  font-weight: 600;
-}
 #content main .table-data .todo .todo-list li .imm-reserve {
   background: var(--light-blue);
   border-radius: 8px;
@@ -601,11 +713,6 @@ body {
   align-items: center;
   color: var(--blue);
   margin-left: 5px;
-}
-#content main .table-data .todo .todo-list li .imm-reserve span {
-  margin-left: 5px;
-  font-size: small;
-  font-weight: 600;
 }
 #content main .table-data .todo .todo-list li .imm-vendu {
   background: var(--light-orange);
@@ -616,13 +723,14 @@ body {
   color: var(--orange);
   margin-left: 5px;
 }
-#content main .table-data .todo .todo-list li .imm-vendu span {
-  margin-left: 5px;
-  font-size: small;
-  font-weight: 600;
-}
 #content main .table-data .todo .todo-list li.completed {
   border-left: 10px solid var(--green);
+}
+#content main .table-data .todo .todo-list li.attente {
+  border-left: 10px solid var(--yellow);
+}
+#content main .table-data .todo .todo-list li.reserve {
+  border-left: 10px solid var(--blue);
 }
 #content main .table-data .todo .todo-list li.not-completed {
   border-left: 10px solid var(--orange);
@@ -638,14 +746,60 @@ body {
   height: auto;
   border-radius: 20px;
 }
+.error-msg {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.error-msg p {
+  margin: 0;
+  color: var(--dark);
+}
+
+
+
+.loader-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loader {
+  width: 28px;
+  height: 28px;
+  border: 2px solid var(--dark);
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+.loader::after {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-bottom-color: var(--orange);
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 /* MAIN */
 /* CONTENT */
-
-
-
-
-
-
 
 
 
@@ -665,7 +819,41 @@ body {
 }
 
 
+#slideshow {
+  overflow: hidden;
+  height: 410px;
+  width: 728px;
+  border-radius: 20px;
+}
 
+.slide-wrapper {
+  width: 3640px;
+  -webkit-animation: slide 25s ease infinite;
+}
+
+.slide {
+  float: left;
+  height: 410px;
+  width: 728px;
+}
+
+.slide img{
+  width: 100%;
+  height: 100%;
+}
+
+@-webkit-keyframes slide {
+  0% { margin-left: 0px; }
+  16% { margin-left: 0px; }
+  20% { margin-left: -728px; }
+  36% { margin-left: -728px; }
+  40% { margin-left: -1456px; }
+  56% { margin-left: -1456px; }
+  60% { margin-left: -2184px; }
+  76% { margin-left: -2184px; }
+  80% { margin-left: -2912px; }
+  96% { margin-left: -2912px; }
+}
 
 
 

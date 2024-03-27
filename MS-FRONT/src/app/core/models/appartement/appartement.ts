@@ -3,6 +3,7 @@ export interface Appartement {
   reference?: string;
   residence?: string;
   immeuble?: string;
+  etage?: string;
   description?: string;
   titreFoncier?: string;
   superficieUtile?: number;

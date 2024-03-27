@@ -18,7 +18,7 @@ public class Immeuble {
     private String numero;
     @ManyToOne
     private Residence residence;
-    @OneToMany(mappedBy = "immeuble")
+    @OneToMany(mappedBy = "immeuble", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Etage> etages;
     @JsonIgnore
     @CreatedDate

@@ -547,3 +547,15 @@ w
 G.idea/sonarlint/issuestore/9/3/93e85604b6af01b35d6e3538a3ae8494a7bc38e3,5\7\574c6535ebdfbdff668f737bf419e3c21df8b19f
 Å
 Q.idea/sonarlint/securityhotspotstore/9/3/93e85604b6af01b35d6e3538a3ae8494a7bc38e3,9\d\9d160bc55039cba47e7eb5271cad6efb992032f1
+â
+YMS-FRONT/src/app/pages/appartements/details-appartement/details-appartement.component.css,e\2\e2b144288b24d58c0d3a21bfa5724d9be504c155
+ä
+ZMS-FRONT/src/app/pages/appartements/details-appartement/details-appartement.component.html,f\e\fea2a880855ca27e764dcf28be4c29cec75d050e
+õ
+kMS-API/reservation-service/src/main/java/org/example/reservationservice/models/enums/StatusReservation.java,d\c\dcc02ad354c12a9aa3d525456ff1f29659fe7546
+ï
+eMS-API/appartement-service/src/main/java/org/example/appartementservice/models/entities/Immeuble.java,3\1\313933cde60c7d5dee9e84a0e2ec126eb6a8de7f
+í
+bMS-API/appartement-service/src/main/java/org/example/appartementservice/models/entities/Etage.java,6\e\6e2bfe921bbf940fb5d2006a4ca545e6cf912c03
+î
+dMS-API/appartement-service/src/main/java/org/example/appartementservice/models/entities/Magasin.java,f\8\f84f70c3a4a2ea6a57830dfcf0a40831713ff879

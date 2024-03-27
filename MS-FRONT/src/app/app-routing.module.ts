@@ -22,6 +22,11 @@ const routes: Routes = [
     loadChildren: () =>
       import("./pages/etages/etages.module").then((m  => m.EtagesModule))
   },
+  {
+    path: "appartements",
+    loadChildren: () =>
+      import("./pages/appartements/appartement.module").then((m  => m.AppartementModule))
+  },
   { path: 'clients', component: ClientsComponent, canActivate : [AuthGuard], data: { roles: ['ADMIN', 'COMMERCIAL'] } },
   { path: 'reservations', component: ReservationsComponent, canActivate : [AuthGuard], data: { roles: ['ADMIN', 'COMMERCIAL','CLIENT'] } },
 ];

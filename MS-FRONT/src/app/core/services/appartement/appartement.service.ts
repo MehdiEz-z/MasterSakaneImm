@@ -17,9 +17,9 @@ export class AppartementService {
       );
   }
   getAppartement(referenceAppartement: string | undefined){
-    return this.http.get<{data : Appartement}>(`${this.apiUrl}/appartements/${referenceAppartement}`)
+    return this.http.get<Appartement>(`${this.apiUrl}/appartements/${referenceAppartement}`)
       .pipe(
-        map(response => response.data)
+        map(response => response)
       );
   }
 }
