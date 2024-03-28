@@ -585,3 +585,9 @@ p
 @MS-FRONT/src/app/pages/etages/add-etage/add-etage.component.html,4\1\413777dd2e442dc9641ede5ede5e0c79d21ddebd
 o
 ?MS-FRONT/src/app/pages/etages/add-etage/add-etage.component.css,b\4\b48a97fda872edcb3664fab7118808fa535e0f6f
+€
+PMS-FRONT/src/app/pages/appartements/add-appartement/add-appartement.component.ts,b\b\bb77a01d3686c050e3b08254854286a4ffebc243
+‚
+RMS-FRONT/src/app/pages/appartements/add-appartement/add-appartement.component.html,9\d\9d7ef78e8306605f5592e33dd3790ccd4fd9a206
+
+QMS-FRONT/src/app/pages/appartements/add-appartement/add-appartement.component.css,a\1\a15a91b0d493900cecd686efd3c718ff737c38bd

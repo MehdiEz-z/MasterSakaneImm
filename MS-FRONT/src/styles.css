@@ -826,6 +826,7 @@ body {
 }
 .form-style-5 fieldset{
   border: none;
+  width: 100%;
 }
 .form-style-5 legend {
   font-size: 1.4em;

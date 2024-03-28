@@ -36,6 +36,11 @@ export class DetailsEtageComponent implements OnInit{
       r => console.log("Navigation vers la page de détail de l'appartement")
     );
   }
+  getCreateAppartement(){
+    this.router.navigateByUrl("appartements/add/"+this.etageRef).then(
+      r => console.log("Navigation vers la page de création d'un appartement")
+    );
+  }
   goBackImmeubleDetail(): void {
     this.router.navigateByUrl("immeubles/"+(this.etageRef)?.slice(0,11)).then(
       r => console.log("Navigation vers la page de détail d'immeuble")

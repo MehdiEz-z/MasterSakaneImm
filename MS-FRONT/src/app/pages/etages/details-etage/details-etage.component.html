@@ -20,7 +20,9 @@
     </ul>
   </div>
   <div class="right">
-    <a *ngIf="hasAnyRoles(['ADMIN'])" class="btn-create">Crée un Appartement</a>
+    <div *ngIf="hasAnyRoles(['ADMIN'])" >
+      <a class="btn-create" (click)="getCreateAppartement()" >Crée un Appartement</a>
+    </div>
     <a class="btn-retour" (click)="goBackImmeubleDetail()">Retour</a>
   </div>
 </div>
@@ -29,12 +31,12 @@
     <img src="assets/imgs/Green%20Walks_1-immA.jpg" alt="Residence">
   </div>
   <div class="todo">
-    <div class="head">
-      <h3>Appartements</h3>
-    </div>
+    <ng-container *ngIf="appartements | async ; else failureOrLoading">
+      <div class="head">
+        <h3>Appartements</h3>
+      </div>
 
-    <ul class="todo-list">
-     <!-- @for ( appartement of appartements; track $index){
+      <ul class="todo-list" *ngFor="let appartement of appartements | async">
         <a (click)="getAppartementDetails(appartement)">
           <li [class]="(appartement.status === 'DISPONIBLE' ? 'completed' : appartement.status === 'EN_ATTENTE' ? 'attente' : appartement.status === 'RESERVER' ? 'reserve' : 'not-completed')">
             <p>{{ appartement.numero }}</p>
@@ -46,7 +48,19 @@
             </div>
           </li>
         </a>
-      }-->
-    </ul>
+      </ul>
+    </ng-container>
   </div>
+  <ng-template #failureOrLoading>
+    <ng-container *ngIf="errorMessage; else loading">
+      <div class="error-msg">
+        <p>{{errorMessage}}</p>
+      </div>
+    </ng-container>
+    <ng-template #loading>
+      <div class="loader-container">
+        <span class="loader"></span>
+      </div>
+    </ng-template>
+  </ng-template>
 </div>

@@ -22,4 +22,10 @@ export class AppartementService {
         map(response => response)
       );
   }
+  saveAppartement(appartement: Appartement) {
+    return this.http.post<Appartement>(`${this.apiUrl}/appartements/`, appartement)
+      .pipe(
+        map(response => response)
+      );
+  }
 }
