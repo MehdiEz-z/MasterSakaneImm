@@ -3,7 +3,7 @@
     <h1>Résidences</h1>
     <ul class="breadcrumb">
       <li>
-        <a>{{residence?.nom}}</a>
+        <a>{{ (residence | async)?.nom }}</a>
       </li>
       <li><i class='bx bx-chevron-right' ></i></li>
       <li>
@@ -12,7 +12,9 @@
     </ul>
   </div>
   <div class="right">
-    <a *ngIf="hasAnyRoles(['ADMIN'])" class="btn-create">Crée un Immeuble</a>
+    <div *ngIf="hasAnyRoles(['ADMIN'])" >
+      <a class="btn-create" (click)="getCreateImmeuble()" >Crée un Immeuble</a>
+    </div>
     <a routerLink="/residences" class="btn-retour">Retour</a>
   </div>
 </div>
@@ -21,11 +23,11 @@
     <img src="assets/imgs/Green%20Walks_01.jpg" alt="Residence">
   </div>
   <div class="todo">
-    <div class="head">
-      <h3>Immeubles</h3>
-    </div>
-    <ul class="todo-list">
-      @for ( immeuble of immeubles; track $index){
+    <ng-container *ngIf="immeubles | async ; else failureOrLoading">
+      <div class="head">
+        <h3>Immeubles</h3>
+      </div>
+      <ul class="todo-list" *ngFor="let immeuble of immeubles | async">
         <a (click)="getImmeubleDetails(immeuble)" >
           <li class="not-completed">
             <p>{{ immeuble.numero }}</p>
@@ -49,7 +51,20 @@
             </div>
           </li>
         </a>
-      }
-    </ul>
+      </ul>
+    </ng-container>
   </div>
+
+  <ng-template #failureOrLoading>
+    <ng-container *ngIf="errorMessage; else loading">
+      <div class="error-msg">
+        <p>{{errorMessage}}</p>
+      </div>
+    </ng-container>
+    <ng-template #loading>
+      <div class="loader-container">
+        <span class="loader"></span>
+      </div>
+    </ng-template>
+  </ng-template>
 </div>

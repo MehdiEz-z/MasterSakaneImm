@@ -12,8 +12,8 @@ import {Etage} from "../../../core/models/appartement/etage";
   styleUrls: ['./details-immeuble.component.css']
 })
 export class DetailsImmeubleComponent implements OnInit {
-  immeubleRef: string | undefined;
-  immeuble: Immeuble | undefined;
+  immeubleRef!: string;
+  immeuble!: Immeuble;
   etages: Etage[] = [];
 
   constructor(private route: ActivatedRoute,
@@ -31,8 +31,8 @@ export class DetailsImmeubleComponent implements OnInit {
   getEtageDetails(etage : Etage){
     this.router.navigateByUrl("etages/detail/"+ etage.reference)
   }
-  goBack(): void {
-    window.history.back();
+  goBackResidenceDetail(): void {
+    this.router.navigateByUrl("residences/"+(this.immeuble.reference)?.slice(0,5))
   }
   ngOnInit(): void {
     this.immeubleService.getImmeuble(this.immeubleRef).subscribe(immeuble => {

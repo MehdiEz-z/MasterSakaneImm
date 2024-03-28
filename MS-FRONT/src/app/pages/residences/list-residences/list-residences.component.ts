@@ -16,12 +16,10 @@ export class ListResidencesComponent implements OnInit {
   errorMessage!: string;
 
   constructor(private residenceService: ResidenceService, public keycloakService: KeycloakService) { }
-
   hasAnyRoles(roles: string[]): boolean {
     const userRoles = this.keycloakService.getUserRoles();
     return roles.some(role => userRoles.includes(role));
   }
-
   ngOnInit(): void {
     this.residences = this.residenceService.getResidences().pipe(
       catchError((error) => {
@@ -32,7 +30,7 @@ export class ListResidencesComponent implements OnInit {
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: 'Une erreur interne du serveur est survenue lors de la récupération des résidences. Veuillez réessayer plus tard.',
+            text: 'Une erreur interne du serveur est survenue lors de la récupération des résidences.',
             showConfirmButton: false,
             timer: 4500
           }).then(r => {
@@ -41,7 +39,7 @@ export class ListResidencesComponent implements OnInit {
             }, 5000);
           });
         }
-        return throwError(error);
+        return throwError(() => error);
       })
     );
   }

@@ -16,11 +16,16 @@ export class ResidenceService {
         map(response => response.data)
       );
   }
-
-  getResidence(nom: string | undefined) {
-    return this.http.get<{ data: Residence }>(`${this.apiUrl}/residences/${nom}`)
+  getResidence(reference: string) {
+    return this.http.get<{ data: Residence }>(`${this.apiUrl}/residences/${reference}`)
       .pipe(
         map(response => response.data)
+      );
+  }
+  saveResidence(residence: Residence) {
+    return this.http.post<Residence>(`${this.apiUrl}/residences/`, residence)
+      .pipe(
+        map(response => response)
       );
   }
 }

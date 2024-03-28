@@ -12,7 +12,7 @@
     </ul>
   </div>
   <div *ngIf="hasAnyRoles(['ADMIN'])">
-    <a class="btn-create">Crée une Résidence</a>
+    <a routerLink="add" class="btn-create">Crée une Résidence</a>
   </div>
 </div>
 <div class="table-data">
@@ -39,7 +39,7 @@
             <span class="status completed">10 Appartements</span>
           </td>
           <td>
-            <a [routerLink]="[residence.nom]">
+            <a [routerLink]="[residence.reference]">
               <i class="detail bx bxs-info-circle"></i>
             </a>
           </td>

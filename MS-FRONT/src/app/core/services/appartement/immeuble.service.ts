@@ -11,7 +11,7 @@ export class ImmeubleService {
   private apiUrl = environment.apiApt;
   constructor(private http: HttpClient) { }
 
-  getImmeubles(reference: string | undefined){
+  getImmeubles(reference: string){
     return this.http.get<{data : Immeuble[]}>(`${this.apiUrl}/immeubles/${reference}/all`)
       .pipe(
         map(response => response.data)
@@ -21,6 +21,12 @@ export class ImmeubleService {
     return this.http.get<{data : Immeuble}>(`${this.apiUrl}/immeubles/${referenceImmeuble}`)
       .pipe(
         map(response => response.data)
+      );
+  }
+  saveImmeuble(immeuble: Immeuble) {
+    return this.http.post<Immeuble>(`${this.apiUrl}/immeubles/`, immeuble)
+      .pipe(
+        map(response => response)
       );
   }
 }

@@ -423,7 +423,7 @@ body {
   display: flex;
   gap: 10px;
 }
-#content main .head-title .btn-create{
+.btn-create{
   height: 36px;
   padding: 0 16px;
   border-radius: 10px;
@@ -434,8 +434,9 @@ body {
   align-items: center;
   grid-gap: 10px;
   font-weight: 500;
+  cursor: pointer;
 }
-#content main .head-title .btn-annuler{
+.btn-annuler{
   height: 36px;
   padding: 0 16px;
   border-radius: 10px;
@@ -447,7 +448,7 @@ body {
   grid-gap: 10px;
   font-weight: 500;
 }
-#content main .head-title .btn-retour{
+.btn-retour{
   height: 36px;
   padding: 0 16px;
   border-radius: 10px;
@@ -460,7 +461,22 @@ body {
   font-weight: 500;
   cursor: pointer;
 }
-
+.btn-new{
+  width: 40%;
+  padding: 10px;
+  border-radius: 10px;
+  background: var(--green);
+  color: var(--light);
+  font-weight: 700;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+}
+.box-btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 #content main .box-info {
   display: grid;
@@ -662,6 +678,7 @@ body {
 }
 #content main .table-data .todo .todo-list {
   width: 100%;
+  margin-bottom: 16px;
 }
 #content main .table-data .todo .todo-list a li{
   width: 100%;
@@ -798,6 +815,52 @@ body {
   }
 }
 
+
+
+.form-style-5{
+  width: 100%;
+  background: var(--light);
+  margin: 10px auto;
+  padding: 20px;
+  border-radius: 8px;
+}
+.form-style-5 fieldset{
+  border: none;
+}
+.form-style-5 legend {
+  font-size: 1.4em;
+  margin-bottom: 10px;
+}
+.form-style-5 label {
+  display: block;
+  margin-bottom: 8px;
+}
+.form-style-5 input[type="text"],
+.form-style-5 input[type="date"],
+.form-style-5 input[type="datetime"],
+.form-style-5 input[type="email"],
+.form-style-5 input[type="number"],
+.form-style-5 input[type="search"],
+.form-style-5 input[type="time"],
+.form-style-5 input[type="url"],
+.form-style-5 textarea,
+.form-style-5 select {
+  border: none;
+  border-radius: 4px;
+  font-size: 15px;
+  outline: 0;
+  padding: 10px;
+  width: 100%;
+  background-color: white;
+  color: var(--dark);
+  margin-bottom: 20px;
+}
+.form-style-5 select{
+  height:35px;
+}
+.hidden{
+  display: none;
+}
 /* MAIN */
 /* CONTENT */
 

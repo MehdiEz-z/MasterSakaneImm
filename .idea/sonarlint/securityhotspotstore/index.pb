@@ -559,3 +559,17 @@ eMS-API/appartement-service/src/main/java/org/example/appartementservice/models/
 bMS-API/appartement-service/src/main/java/org/example/appartementservice/models/entities/Etage.java,6\e\6e2bfe921bbf940fb5d2006a4ca545e6cf912c03
 î
 dMS-API/appartement-service/src/main/java/org/example/appartementservice/models/entities/Magasin.java,f\8\f84f70c3a4a2ea6a57830dfcf0a40831713ff879
+|
+LMS-FRONT/src/app/pages/residences/add-residence/add-residence.component.html,4\5\450ce25e38822388f8e118f177184af6caed064d
+z
+JMS-FRONT/src/app/pages/residences/add-residence/add-residence.component.ts,1\8\18d8cbf91213a9fb669dad17a974dde77d9388af
+™
+zMS-API/appartement-service/src/main/java/org/example/appartementservice/services/implementations/ResidenceServiceImpl.java,3\6\366529171a0f9ad6b57412e7b0b8cc968279eac7
+ù
+mMS-API/appartement-service/src/main/java/org/example/appartementservice/repositories/ResidenceRepository.java,8\e\8ebe48f706b8ddabdbbcedbc11c9efec4b0840f2
+y
+IMS-FRONT/src/app/pages/immeubles/add-immeuble/add-immeuble.component.html,c\2\c24e1d4e9604655b1dbbb0bc9cf55cc065322dde
+w
+GMS-FRONT/src/app/pages/immeubles/add-immeuble/add-immeuble.component.ts,a\2\a2679ab5035d5d13ed14db98022ec8dad6f9ad27
+±
+ÄMS-API/appartement-service/src/main/java/org/example/appartementservice/controllers/immeubles/vms/request/ImmeubleRequestVM.java,8\5\85101ec5010a09e538f60836960293669bbb758f
