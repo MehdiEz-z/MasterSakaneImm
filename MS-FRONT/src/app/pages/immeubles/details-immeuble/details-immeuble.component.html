@@ -3,11 +3,11 @@
     <h1>Immeubles</h1>
     <ul class="breadcrumb">
       <li>
-        <a>{{immeuble?.residence}}</a>
+        <a>{{(immeuble|async)?.residence}}</a>
       </li>
       <li><i class='bx bx-chevron-right' ></i></li>
       <li>
-        <a>{{immeuble?.numero}}</a>
+        <a>{{(immeuble|async)?.numero}}</a>
       </li>
       <li><i class='bx bx-chevron-right' ></i></li>
       <li>
@@ -16,7 +16,9 @@
     </ul>
   </div>
   <div class="right">
-    <a *ngIf="hasAnyRoles(['ADMIN'])" class="btn-create">Crée un Etage</a>
+    <div *ngIf="hasAnyRoles(['ADMIN'])" >
+      <a class="btn-create" (click)="getCreateEtage()" >Crée un Etage</a>
+    </div>
     <a class="btn-retour" (click)="goBackResidenceDetail()">Retour</a>
   </div>
 </div>
@@ -25,13 +27,12 @@
     <img src="assets/imgs/Green%20Walks_immA.jpg" alt="Residence">
   </div>
   <div class="todo">
-    <div class="head">
-      <h3>Etages</h3>
-    </div>
-
-    <ul class="todo-list">
-      @for ( etage of etages; track $index){
-        <a (click)="getEtageDetails(etage)">
+    <ng-container *ngIf="etages | async ; else failureOrLoading">
+      <div class="head">
+        <h3>Etages</h3>
+      </div>
+      <ul class="todo-list" *ngFor="let etage of etages | async">
+        <a (click)="getEtageDetails(etage)" >
           <li class="not-completed">
             <p>{{ etage.numero }}</p>
             <div class="status-imm">
@@ -54,7 +55,20 @@
             </div>
           </li>
         </a>
-      }
-    </ul>
+      </ul>
+    </ng-container>
   </div>
+
+  <ng-template #failureOrLoading>
+    <ng-container *ngIf="errorMessage; else loading">
+      <div class="error-msg">
+        <p>{{errorMessage}}</p>
+      </div>
+    </ng-container>
+    <ng-template #loading>
+      <div class="loader-container">
+        <span class="loader"></span>
+      </div>
+    </ng-template>
+  </ng-template>
 </div>

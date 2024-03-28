@@ -5,6 +5,9 @@ import { KeycloakService } from "keycloak-angular";
 import { Immeuble } from "../../../core/models/appartement/immeuble";
 import {EtageService} from "../../../core/services/appartement/etage.service";
 import {Etage} from "../../../core/models/appartement/etage";
+import {Observable, throwError} from "rxjs";
+import {catchError} from "rxjs/operators";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-details-immeuble',
@@ -13,8 +16,9 @@ import {Etage} from "../../../core/models/appartement/etage";
 })
 export class DetailsImmeubleComponent implements OnInit {
   immeubleRef!: string;
-  immeuble!: Immeuble;
-  etages: Etage[] = [];
+  immeuble!: Observable<Immeuble>;
+  errorMessage!: string;
+  etages!: Observable<Etage[]>;
 
   constructor(private route: ActivatedRoute,
               private immeubleService: ImmeubleService,
@@ -29,19 +33,42 @@ export class DetailsImmeubleComponent implements OnInit {
     return roles.some(role => userRoles.includes(role))
   }
   getEtageDetails(etage : Etage){
-    this.router.navigateByUrl("etages/detail/"+ etage.reference)
+    this.router.navigateByUrl("etages/"+ etage.reference).then(
+      r => console.log("Navigation vers la page de détail de l'étage")
+    )
+  }
+  getCreateEtage(){
+    this.router.navigateByUrl("etages/add/"+this.immeubleRef).then(
+      r => console.log("Navigation vers la page de création d'un étage")
+    )
   }
   goBackResidenceDetail(): void {
-    this.router.navigateByUrl("residences/"+(this.immeuble.reference)?.slice(0,5))
+    this.router.navigateByUrl("residences/"+(this.immeubleRef)?.slice(0,5)).then(
+      r => console.log("Navigation vers la page de détail de la résidence")
+    )
   }
   ngOnInit(): void {
-    this.immeubleService.getImmeuble(this.immeubleRef).subscribe(immeuble => {
-      this.immeuble = immeuble;
-      if(this.immeuble){
-        this.etageService.getEtages(this.immeuble.reference).subscribe(etages => {
-          this.etages = etages;
-        })
-      }
-    });
+    this.immeuble = this.immeubleService.getImmeuble(this.immeubleRef);
+    this.etages = this.etageService.getEtages(this.immeubleRef).pipe(
+      catchError((error) => {
+        if (error.status == 404 && error.error.message) {
+          this.errorMessage = error.error.message;
+        }
+        else if(error.status == 500){
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Une erreur interne du serveur est survenue lors de la récupération des etages.',
+            showConfirmButton: false,
+            timer: 4500
+          }).then(r => {
+            setTimeout(() => {
+              window.location.reload();
+            }, 5000);
+          });
+        }
+        return throwError(() => error);
+      })
+    )
   }
 }

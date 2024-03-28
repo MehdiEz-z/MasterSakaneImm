@@ -5,7 +5,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {KeycloakService} from "keycloak-angular";
 import {Immeuble} from "../../../core/models/appartement/immeuble";
 import {ImmeubleService} from "../../../core/services/appartement/immeuble.service";
-import {Observable, switchMap, throwError} from "rxjs";
+import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import Swal from "sweetalert2";
 
@@ -33,45 +33,37 @@ export class DetailsResidenceComponent implements OnInit {
     return roles.some(role => userRoles.includes(role));
   }
   getImmeubleDetails(immeuble: Immeuble) {
-    this.router.navigateByUrl("immeubles/" + immeuble.reference)
+    this.router.navigateByUrl("immeubles/" + immeuble.reference).then(r =>
+      console.log("Navigation vers le détail de l'immeuble")
+    );
   }
   getCreateImmeuble() {
-    this.router.navigateByUrl("immeubles/add/" + this.reference)
+    this.router.navigateByUrl("immeubles/add/" + this.reference).then(r =>
+      console.log("Navigation vers la création d'un immeuble")
+    );
   }
   ngOnInit(): void {
    this.residence = this.residenceService.getResidence(this.reference);
    this.immeubles = this.immeubleService.getImmeubles(this.reference).pipe(
      catchError((error) => {
-          if (error.status == 404 && error.error.message) {
-            this.errorMessage = error.error.message;
-          }
-          else if(error.status == 500){
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'Une erreur interne du serveur est survenue lors de la récupération des immeubles.',
-              showConfirmButton: false,
-              timer: 4500
-            }).then(r => {
-              setTimeout(() => {
-                window.location.reload();
-              }, 5000);
-            });
-          }
-          return throwError(() => error);
-        })
-
+        if (error.status == 404 && error.error.message) {
+          this.errorMessage = error.error.message;
+        }
+        else if(error.status == 500){
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Une erreur interne du serveur est survenue lors de la récupération des immeubles.',
+            showConfirmButton: false,
+            timer: 4500
+          }).then(r => {
+            setTimeout(() => {
+              window.location.reload();
+            }, 5000);
+          });
+        }
+        return throwError(() => error);
+      })
    );
   }
 }
-/*
-ngOnInit(): void {
-  this.residenceService.getResidence(this.reference).subscribe(residence => {
-    this.residence = residence;
-    if (this.residence) {
-      this.immeubleService.getImmeubles(this.residence.reference).subscribe(immeubles => {
-        this.immeubles = immeubles;
-      });
-    }
-  });
-}*/

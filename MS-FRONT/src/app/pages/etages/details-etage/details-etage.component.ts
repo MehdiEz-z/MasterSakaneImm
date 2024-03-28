@@ -5,6 +5,9 @@ import {KeycloakService} from "keycloak-angular";
 import {EtageService} from "../../../core/services/appartement/etage.service";
 import {Appartement} from "../../../core/models/appartement/appartement";
 import {AppartementService} from "../../../core/services/appartement/appartement.service";
+import {Observable, throwError} from "rxjs";
+import {catchError} from "rxjs/operators";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-details-etage',
@@ -12,9 +15,10 @@ import {AppartementService} from "../../../core/services/appartement/appartement
   styleUrl: './details-etage.component.css'
 })
 export class DetailsEtageComponent implements OnInit{
-  etageRef: string | undefined;
-  etage: Etage | undefined;
-  appartements: Appartement[] = [];
+  etageRef!: string;
+  etage!: Observable<Etage>;
+  appartements!: Observable<Appartement[]>;
+  errorMessage!: string;
 
   constructor(private route: ActivatedRoute,
               private etageService: EtageService,
@@ -28,19 +32,37 @@ export class DetailsEtageComponent implements OnInit{
     return roles.some(role => userRoles.includes(role));
   }
   getAppartementDetails(appartement: Appartement){
-    this.router.navigateByUrl("appartements/detail/"+ appartement.reference);
+    this.router.navigateByUrl("appartements/"+ appartement.reference).then(
+      r => console.log("Navigation vers la page de détail de l'appartement")
+    );
   }
-  goBack(): void {
-    window.history.back();
+  goBackImmeubleDetail(): void {
+    this.router.navigateByUrl("immeubles/"+(this.etageRef)?.slice(0,11)).then(
+      r => console.log("Navigation vers la page de détail d'immeuble")
+    )
   }
   ngOnInit(): void {
-    this.etageService.getEtage(this.etageRef).subscribe(etage => {
-      this.etage = etage;
-      if(this.etage){
-        this.appartementService.getAppartements(this.etage.reference).subscribe(appartements => {
-          this.appartements = appartements;
-        })
-      }
-    });
+    this.etage = this.etageService.getEtage(this.etageRef);
+    this.appartements = this.appartementService.getAppartements(this.etageRef).pipe(
+      catchError((error) => {
+        if (error.status == 404 && error.error.message) {
+          this.errorMessage = error.error.message;
+        }
+        else if(error.status == 500){
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Une erreur interne du serveur est survenue lors de la récupération des appartements.',
+            showConfirmButton: false,
+            timer: 4500
+          }).then(r => {
+            setTimeout(() => {
+              window.location.reload();
+            }, 5000);
+          });
+        }
+        return throwError(() => error);
+      })
+    )
   }
 }

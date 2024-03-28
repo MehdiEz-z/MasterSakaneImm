@@ -6,7 +6,7 @@ import {DetailsAppartementComponent} from "./details-appartement/details-apparte
 
 const routes: Routes = [
   {
-    path: "detail/:appartementReference",
+    path: ":appartementReference",
     component: DetailsAppartementComponent,
     data: { roles: ['ADMIN', 'COMMERCIAL','CLIENT'] }
   }

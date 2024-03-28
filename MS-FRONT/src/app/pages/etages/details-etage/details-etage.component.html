@@ -3,15 +3,15 @@
     <h1>Etages</h1>
     <ul class="breadcrumb">
       <li>
-        <a>{{ etage?.residence }}</a>
+        <a>{{(etage | async)?.residence}}</a>
       </li>
       <li><i class='bx bx-chevron-right' ></i></li>
       <li>
-        <a>{{ etage?.immeuble }}</a>
+        <a>{{(etage |async)?.immeuble}}</a>
       </li>
       <li><i class='bx bx-chevron-right' ></i></li>
       <li>
-        <a>{{etage?.numero}}</a>
+        <a>{{(etage|async)?.numero}}</a>
       </li>
       <li><i class='bx bx-chevron-right' ></i></li>
       <li>
@@ -21,7 +21,7 @@
   </div>
   <div class="right">
     <a *ngIf="hasAnyRoles(['ADMIN'])" class="btn-create">Crée un Appartement</a>
-    <a class="btn-retour" (click)="goBack()">Retour</a>
+    <a class="btn-retour" (click)="goBackImmeubleDetail()">Retour</a>
   </div>
 </div>
 <div class="table-data">
@@ -34,7 +34,7 @@
     </div>
 
     <ul class="todo-list">
-      @for ( appartement of appartements; track $index){
+     <!-- @for ( appartement of appartements; track $index){
         <a (click)="getAppartementDetails(appartement)">
           <li [class]="(appartement.status === 'DISPONIBLE' ? 'completed' : appartement.status === 'EN_ATTENTE' ? 'attente' : appartement.status === 'RESERVER' ? 'reserve' : 'not-completed')">
             <p>{{ appartement.numero }}</p>
@@ -46,7 +46,7 @@
             </div>
           </li>
         </a>
-      }
+      }-->
     </ul>
   </div>
 </div>

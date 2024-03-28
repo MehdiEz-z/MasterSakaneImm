@@ -10,16 +10,22 @@ import {map} from "rxjs";
 export class EtageService{
   private apiUrl = environment.apiApt;
   constructor(private http: HttpClient) { }
-  getEtages(reference: string | undefined){
+  getEtages(reference: string){
     return this.http.get<{data : Etage[]}>(`${this.apiUrl}/etages/${reference}/all`)
       .pipe(
         map(response => response.data)
       );
   }
-  getEtage(referenceEtage: string | undefined){
+  getEtage(referenceEtage: string){
     return this.http.get<{data : Etage}>(`${this.apiUrl}/etages/${referenceEtage}`)
       .pipe(
         map(response => response.data)
+      );
+  }
+  saveEtage(etage: Etage) {
+    return this.http.post<Etage>(`${this.apiUrl}/etages/`, etage)
+      .pipe(
+        map(response => response)
       );
   }
 }

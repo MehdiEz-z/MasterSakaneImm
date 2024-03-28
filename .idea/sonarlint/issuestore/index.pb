@@ -573,3 +573,15 @@ w
 GMS-FRONT/src/app/pages/immeubles/add-immeuble/add-immeuble.component.ts,a\2\a2679ab5035d5d13ed14db98022ec8dad6f9ad27
 ±
 €MS-API/appartement-service/src/main/java/org/example/appartementservice/controllers/immeubles/vms/request/ImmeubleRequestVM.java,8\5\85101ec5010a09e538f60836960293669bbb758f
+{
+KMS-FRONT/src/app/pages/residences/add-residence/add-residence.component.css,5\9\599afaea5ed6d07ab8e8fbdd867c6f87ff37c7e1
+x
+HMS-FRONT/src/app/pages/immeubles/add-immeuble/add-immeuble.component.css,7\9\79e74e546fb97a05284157e3145bbc508fea6f45
+n
+>MS-FRONT/src/app/pages/etages/add-etage/add-etage.component.ts,d\8\d8145bc5bdf0b7090eca2eafcf16c46eff3c40e7
+ª
+zMS-API/appartement-service/src/main/java/org/example/appartementservice/controllers/etages/vms/request/EtageRequestVM.java,e\d\ed3c9bdb77074819b1adcafdbb89b1d2089e203b
+p
+@MS-FRONT/src/app/pages/etages/add-etage/add-etage.component.html,4\1\413777dd2e442dc9641ede5ede5e0c79d21ddebd
+o
+?MS-FRONT/src/app/pages/etages/add-etage/add-etage.component.css,b\4\b48a97fda872edcb3664fab7118808fa535e0f6f
