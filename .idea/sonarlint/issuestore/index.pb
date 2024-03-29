@@ -591,3 +591,13 @@ PMS-FRONT/src/app/pages/appartements/add-appartement/add-appartement.component.t
 RMS-FRONT/src/app/pages/appartements/add-appartement/add-appartement.component.html,9\d\9d7ef78e8306605f5592e33dd3790ccd4fd9a206
 Å
 QMS-FRONT/src/app/pages/appartements/add-appartement/add-appartement.component.css,a\1\a15a91b0d493900cecd686efd3c718ff737c38bd
+g
+7MS-FRONT/src/app/core/services/client/client.service.ts,f\0\f09d09630916878a473b7aaace497eb1123eb1d6
+§
+tMS-API/client-service/src/main/java/org/example/clientservice/controllers/clients/vms/response/ClientResponseVM.java,7\4\741ccd6f1c266731fce74bede8190786d20c6d07
+]
+-MS-FRONT/src/app/core/models/client/client.ts,6\a\6adf5d51d057642be0bcbcc143193490922745c8
+¢
+rMS-API/client-service/src/main/java/org/example/clientservice/controllers/clients/vms/request/ClientRequestVM.java,1\4\1426092d7517005d5d1090eb1e72dd9f185ddede
+_
+/MS-FRONT/src/app/pages/clients/client.module.ts,7\a\7af5e1a60ab80043116e0da238e657ed68c32cf7

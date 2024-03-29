@@ -10,13 +10,13 @@ export class AppartementService {
   private apiUrl = environment.apiApt;
   constructor(private http: HttpClient) { }
 
-  getAppartements(reference: string | undefined){
+  getAppartements(reference: string){
     return this.http.get<{data : Appartement[]}>(`${this.apiUrl}/appartements/${reference}/all`)
       .pipe(
         map(response => response.data)
       );
   }
-  getAppartement(referenceAppartement: string | undefined){
+  getAppartement(referenceAppartement: string){
     return this.http.get<Appartement>(`${this.apiUrl}/appartements/${referenceAppartement}`)
       .pipe(
         map(response => response)

@@ -31,6 +31,9 @@ export class DetailsEtageComponent implements OnInit{
     const userRoles = this.keycloakService.getUserRoles();
     return roles.some(role => userRoles.includes(role));
   }
+  isReservedOrSold(appartement: Appartement): boolean {
+    return (!this.hasAnyRoles(['ADMIN','COMMERCIAL']) && (appartement.status === 'RESERVER' || appartement.status === 'VENDU'));
+  }
   getAppartementDetails(appartement: Appartement){
     this.router.navigateByUrl("appartements/"+ appartement.reference).then(
       r => console.log("Navigation vers la page de détail de l'appartement")

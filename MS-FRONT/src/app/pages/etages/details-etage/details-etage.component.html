@@ -37,7 +37,7 @@
       </div>
 
       <ul class="todo-list" *ngFor="let appartement of appartements | async">
-        <a (click)="getAppartementDetails(appartement)">
+        <a (click)="getAppartementDetails(appartement)" [class.disabled]="isReservedOrSold(appartement)">
           <li [class]="(appartement.status === 'DISPONIBLE' ? 'completed' : appartement.status === 'EN_ATTENTE' ? 'attente' : appartement.status === 'RESERVER' ? 'reserve' : 'not-completed')">
             <p>{{ appartement.numero }}</p>
             <div class="status-imm">

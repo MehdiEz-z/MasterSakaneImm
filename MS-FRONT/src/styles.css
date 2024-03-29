@@ -680,9 +680,9 @@ body {
   width: 100%;
   margin-bottom: 16px;
 }
+
 #content main .table-data .todo .todo-list a li{
   width: 100%;
-  margin-bottom: 16px;
   background: var(--grey);
   border-radius: 10px;
   padding: 14px 20px;
@@ -690,6 +690,13 @@ body {
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+}
+a.disabled{
+  pointer-events: none;
+  color: gray;
+  text-decoration: none;
+  cursor: default;
+  opacity: 0.6;
 }
 #content main .table-data .todo .todo-list li .status-imm {
   display: flex;
