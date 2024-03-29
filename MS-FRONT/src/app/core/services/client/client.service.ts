@@ -8,7 +8,7 @@ import {map} from "rxjs";
   providedIn: 'root'
 })
 export class ClientService {
-  private apiUrl = environment.apiApt;
+  private apiUrl = environment.apiClt;
   constructor(private http: HttpClient) { }
   getClients() {
     return this.http.get<{ data: Client[] }>(`${this.apiUrl}/clients/all`)
@@ -17,9 +17,15 @@ export class ClientService {
       );
   }
   getClient(reference: string) {
-    return this.http.get<{ data: Client }>(`${this.apiUrl}/clients/${reference}`)
+    return this.http.get<Client>(`${this.apiUrl}/clients/${reference}`)
       .pipe(
-        map(response => response.data)
+        map(response => response)
+      );
+  }
+  saveClient(client: Client) {
+    return this.http.post<Client>(`${this.apiUrl}/clients/`, client)
+      .pipe(
+        map(response => response)
       );
   }
 }

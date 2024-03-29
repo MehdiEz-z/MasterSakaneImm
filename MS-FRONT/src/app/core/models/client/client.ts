@@ -8,7 +8,7 @@ export interface Client {
   nomMere?: string;
   adresse?: string;
   cin?: string;
-  cinValidate?: Date;
+  cinValidite?: Date;
   telephone?: string;
   nationalite?: string;
   email?: string;

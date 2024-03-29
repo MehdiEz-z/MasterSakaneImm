@@ -25,7 +25,7 @@ li {
   --light-green: #e7ffde;
   --grey: #eee;
   --dark-grey: #AAAAAA;
-  --dark: #342E37;
+  --dark: #5b5b5b;
   --red: #c40e06;
   --yellow: #F3B664;
   --light-yellow: #fdf2e5;
@@ -834,6 +834,15 @@ a.disabled{
 .form-style-5 fieldset{
   border: none;
   width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.form-style-5 fieldset label{
+  font-size: small;
+  font-weight: 700;
+  color: var(--dark);
+  margin-left: 10px;
+  margin-bottom: 1px;
 }
 .form-style-5 legend {
   font-size: 1.4em;
@@ -855,13 +864,13 @@ a.disabled{
 .form-style-5 select {
   border: none;
   border-radius: 4px;
-  font-size: 15px;
+  font-size: 14px;
   outline: 0;
   padding: 10px;
   width: 100%;
   background-color: white;
-  color: var(--dark);
-  margin-bottom: 20px;
+  color: #696868;
+  margin-bottom: 18px;
 }
 .form-style-5 select{
   height:35px;

@@ -42,7 +42,7 @@ export class DetailsAppartementComponent implements OnInit{
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: 'Une erreur interne du serveur est survenue lors de la récupération des résidences.',
+            text: 'Une erreur interne du serveur est survenue lors de la récupération de l\'appartement.',
             showConfirmButton: false,
             timer: 4500
           }).then(r => {
@@ -55,6 +55,4 @@ export class DetailsAppartementComponent implements OnInit{
       })
     );
   }
-
-  protected readonly status = status;
 }

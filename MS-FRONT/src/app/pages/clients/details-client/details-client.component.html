@@ -1,0 +1,35 @@
+<ng-container *ngIf="client | async ; else failureOrLoading">
+  <div class="head-title">
+    <div class="left">
+      <div class="appt-status">
+        <h1>Clients</h1>
+      </div>
+      <ul class="breadcrumb">
+        <li>
+          <a>Clients</a>
+        </li>
+        <li><i class='bx bx-chevron-right' ></i></li>
+        <li>
+          <a class="active">Details</a>
+        </li>
+      </ul>
+    </div>
+    <div class="right">
+      <div *ngIf="hasAnyRoles(['ADMIN'])" >
+      </div>
+      <a class="btn-retour" routerLink="/clients">Retour</a>
+    </div>
+  </div>
+</ng-container>
+<ng-template #failureOrLoading>
+  <ng-container *ngIf="errorMessage; else loading">
+    <div class="error-msg">
+      <p>{{errorMessage}}</p>
+    </div>
+  </ng-container>
+  <ng-template #loading>
+    <div class="loader-container">
+      <span class="loader"></span>
+    </div>
+  </ng-template>
+</ng-template>

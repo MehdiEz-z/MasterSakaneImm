@@ -1,0 +1,67 @@
+<div class="head-title">
+  <div class="left">
+    <h1>Clients</h1>
+    <ul class="breadcrumb">
+      <li>
+        <a href="#">Clients</a>
+      </li>
+      <li><i class='bx bx-chevron-right' ></i></li>
+      <li>
+        <a class="active">List</a>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="hasAnyRoles(['ADMIN'])">
+    <a routerLink="add" class="btn-create">Crée un Client</a>
+  </div>
+</div>
+<div class="table-data">
+  <ng-container *ngIf="clients | async ; else failureOrLoading">
+    <div class="order">
+      <table>
+        <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Prenom</th>
+          <th>email</th>
+          <th>CIN</th>
+          <th>Détail</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let client of clients | async">
+          <td>
+            <p>{{ client.nom }}</p>
+          </td>
+          <td>
+            <p>{{ client.prenom }}</p>
+          </td>
+          <td>
+            <p>{{ client.email }}</p>
+          </td>
+          <td>
+            <p>{{ client.cin }}</p>
+          </td>
+          <td>
+            <a [routerLink]="[client.reference]">
+              <i class="detail bx bxs-info-circle"></i>
+            </a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
+  <ng-template #failureOrLoading>
+    <ng-container *ngIf="errorMessage; else loading">
+      <div class="error-msg">
+        <p>{{errorMessage}}</p>
+      </div>
+    </ng-container>
+    <ng-template #loading>
+      <div class="loader-container">
+        <span class="loader"></span>
+      </div>
+    </ng-template>
+  </ng-template>
+</div>

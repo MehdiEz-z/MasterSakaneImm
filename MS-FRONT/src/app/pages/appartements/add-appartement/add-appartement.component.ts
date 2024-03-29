@@ -41,7 +41,8 @@ export class AddAppartementComponent implements OnInit{
             timer: 2500
           }).then(r => {
             this.router.navigateByUrl("/appartements/" + response.data.reference).then(r  =>
-              console.log("navigate to appartement " + response.data.reference));
+              console.log("navigate to appartement " + response.data.reference)
+            );
           })
         },
         error: (error: any) => {
