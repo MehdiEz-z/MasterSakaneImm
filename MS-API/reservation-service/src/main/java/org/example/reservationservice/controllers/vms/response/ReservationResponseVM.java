@@ -3,6 +3,8 @@ import org.example.reservationservice.models.entities.Reservation;
 import java.time.LocalDate;
 public record ReservationResponseVM(
     String nomClient,
+
+    String reference,
     String prenomClient,
     String residence,
     String immeuble,
@@ -16,6 +18,7 @@ public record ReservationResponseVM(
     public static ReservationResponseVM toVM(Reservation reservation) {
         return new ReservationResponseVM(
             reservation.getClient().getNom(),
+            reservation.getReference(),
             reservation.getClient().getPrenom(),
             reservation.getAppartement().getResidence(),
             reservation.getAppartement().getImmeuble(),

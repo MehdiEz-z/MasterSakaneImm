@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {DashboardComponent} from "./pages/dashboard/dashboard.component";
-import {ReservationsComponent} from "./pages/reservations/reservations.component";
 import {AuthGuard} from "./core/guards/auth.guard";
 
 const routes: Routes = [
@@ -31,7 +30,11 @@ const routes: Routes = [
     loadChildren: () =>
       import("./pages/clients/client.module").then((m  => m.ClientModule))
   },
-  { path: 'reservations', component: ReservationsComponent, canActivate : [AuthGuard], data: { roles: ['ADMIN', 'COMMERCIAL','CLIENT'] } },
+  {
+    path: 'reservations',
+    loadChildren: () =>
+      import("./pages/reservations/reservation.module").then((m  => m.ReservationModule))
+  },
 ];
 
 @NgModule({

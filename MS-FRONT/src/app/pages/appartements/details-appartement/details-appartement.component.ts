@@ -30,7 +30,11 @@ export class DetailsAppartementComponent implements OnInit{
     this.router.navigateByUrl("etages/"+(this.appartementRef)?.slice(0,17)).then(
       r => console.log("Navigation vers la page de détail de l'étage")
     )
-
+  }
+  goReservationCreate(): void {
+    this.router.navigateByUrl("reservations/add/"+this.appartementRef).then(
+      r => console.log("Navigation vers la page de création de réservation")
+    )
   }
   ngOnInit(): void {
     this.appartement = this.appartementService.getAppartement(this.appartementRef).pipe(

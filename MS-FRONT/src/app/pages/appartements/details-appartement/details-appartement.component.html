@@ -31,7 +31,7 @@
       </ul>
     </div>
     <div class="right">
-      <a *ngIf="hasAnyRoles(['ADMIN','COMMERCIAL']) && (appartement |async)?.status === 'DISPONIBLE'" class="btn-create">Réserver</a>
+      <a *ngIf="hasAnyRoles(['ADMIN','COMMERCIAL']) && (appartement |async)?.status === 'DISPONIBLE'" (click)="goReservationCreate()" class="btn-create">Réserver</a>
       <a *ngIf="hasAnyRoles(['ADMIN']) && (appartement |async)?.status === 'EN_ATTENTE'" class="btn-create">Confirmer</a>
       <a *ngIf="hasAnyRoles(['ADMIN']) && (appartement |async)?.status === 'EN_ATTENTE'" class="btn-annuler">Annuler</a>
       <a class="btn-retour" (click)="goBackEtageDetail()">Retour</a>

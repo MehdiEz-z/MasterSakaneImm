@@ -622,6 +622,40 @@ body {
   flex-basis: auto;
   height: fit-content;
 }
+#content main .table-data .order table tbody td .status-reservation{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#content main .table-data .order table tbody td .status-reservation span{
+  margin-left: 5px;
+  font-size: small;
+  font-weight: 600;
+}
+#content main .table-data .order table tbody td .imm-attente{
+  background: var(--light-yellow);
+  border-radius: 8px;
+  padding: 2px 4px;
+  display: flex;
+  align-items: center;
+  color: var(--yellow);
+}
+#content main .table-data .order table tbody td .imm-annuler{
+  background: var(--light-orange);
+  border-radius: 8px;
+  padding: 2px 4px;
+  display: flex;
+  align-items: center;
+  color: var(--orange);
+}
+#content main .table-data .order table td .imm-confirmer{
+  background: var(--light-green);
+  border-radius: 8px;
+  padding: 2px 4px;
+  display: flex;
+  align-items: center;
+  color: var(--green);
+}
 #content main .table-data .order table {
   width: 100%;
   border-collapse: collapse;

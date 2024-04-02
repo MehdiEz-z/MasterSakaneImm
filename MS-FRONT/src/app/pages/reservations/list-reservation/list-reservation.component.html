@@ -1,0 +1,73 @@
+<div class="head-title">
+  <div class="left">
+    <h1>Clients</h1>
+    <ul class="breadcrumb">
+      <li>
+        <a href="#">Clients</a>
+      </li>
+      <li><i class='bx bx-chevron-right' ></i></li>
+      <li>
+        <a class="active">List</a>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="table-data">
+  <ng-container *ngIf="reservations | async ; else failureOrLoading">
+    <div class="order">
+      <table>
+        <thead>
+          <tr>
+            <th>Client</th>
+            <th>Résidence</th>
+            <th>Appartement</th>
+            <th>Date de Réservation</th>
+            <th>Status de Réservation</th>
+            <th>Détail</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let reservation of reservations | async">
+            <td>
+              <p>{{ reservation.nomClient }}</p>
+            </td>
+            <td>
+              <p>{{ reservation.residence }}</p>
+            </td>
+            <td>
+              <p>{{ reservation.appartement }}</p>
+            </td>
+            <td>
+              <p>{{ reservation.dateReservation }}</p>
+            </td>
+            <td>
+              <div class="status-reservation">
+                <div [class]="'imm-'+(reservation.statusReservation === 'EN_ATTENTE' ? 'attente' : reservation.statusReservation === 'ANNULER' ? 'annuler' : 'confirmer')">
+                  <i [class]="'bx bx-'+(reservation.statusReservation === 'EN_ATTENTE' ? 'time-five' : reservation.statusReservation === 'ANNULER' ? 'x-circle' : 'check-circle')"></i>
+                  <span>{{ reservation.statusReservation === 'EN_ATTENTE' ? 'En attente' : reservation.statusReservation === 'ANNULER' ? 'Annulée' : 'Confirmée' }}</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <a [routerLink]="[reservation.reference]">
+                <i class="detail bx bxs-info-circle"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
+  <ng-template #failureOrLoading>
+    <ng-container *ngIf="errorMessage; else loading">
+      <div class="error-msg">
+        <p>{{errorMessage}}</p>
+      </div>
+    </ng-container>
+    <ng-template #loading>
+      <div class="loader-container">
+        <span class="loader"></span>
+      </div>
+    </ng-template>
+  </ng-template>
+</div>
