@@ -18,9 +18,9 @@ public class Etage {
     private String numero;
     @ManyToOne
     private Immeuble immeuble;
-    @OneToMany(mappedBy = "etage")
+    @OneToMany(mappedBy = "etage", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Appartement> appartements;
-    @OneToMany(mappedBy = "etage")
+    @OneToMany(mappedBy = "etage", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Magasin> magasins;
     @JsonIgnore
     @CreatedDate

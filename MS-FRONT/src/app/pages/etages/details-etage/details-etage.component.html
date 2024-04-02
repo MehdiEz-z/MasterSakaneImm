@@ -1,0 +1,66 @@
+<div class="head-title">
+  <div class="left">
+    <h1>Etages</h1>
+    <ul class="breadcrumb">
+      <li>
+        <a>{{(etage | async)?.residence}}</a>
+      </li>
+      <li><i class='bx bx-chevron-right' ></i></li>
+      <li>
+        <a>{{(etage |async)?.immeuble}}</a>
+      </li>
+      <li><i class='bx bx-chevron-right' ></i></li>
+      <li>
+        <a>{{(etage|async)?.numero}}</a>
+      </li>
+      <li><i class='bx bx-chevron-right' ></i></li>
+      <li>
+        <a class="active">Details</a>
+      </li>
+    </ul>
+  </div>
+  <div class="right">
+    <div *ngIf="hasAnyRoles(['ADMIN'])" >
+      <a class="btn-create" (click)="getCreateAppartement()" >Crée un Appartement</a>
+    </div>
+    <a class="btn-retour" (click)="goBackImmeubleDetail()">Retour</a>
+  </div>
+</div>
+<div class="table-data">
+  <div class="image-container">
+    <img src="assets/imgs/Green%20Walks_1-immA.jpg" alt="Residence">
+  </div>
+  <div class="todo">
+    <ng-container *ngIf="appartements | async ; else failureOrLoading">
+      <div class="head">
+        <h3>Appartements</h3>
+      </div>
+
+      <ul class="todo-list" *ngFor="let appartement of appartements | async">
+        <a (click)="getAppartementDetails(appartement)" [class.disabled]="isReservedOrSold(appartement)">
+          <li [class]="(appartement.status === 'DISPONIBLE' ? 'completed' : appartement.status === 'EN_ATTENTE' ? 'attente' : appartement.status === 'RESERVER' ? 'reserve' : 'not-completed')">
+            <p>{{ appartement.numero }}</p>
+            <div class="status-imm">
+              <div [class]="'imm-'+(appartement.status === 'DISPONIBLE' ? 'disponible' : appartement.status === 'EN_ATTENTE' ? 'attente' : appartement.status === 'RESERVER' ? 'reserve' : 'vendu')">
+                <i [class]="'bx bx-'+(appartement.status === 'DISPONIBLE' ? 'check-circle' : appartement.status === 'EN_ATTENTE' ? 'time-five' : appartement.status === 'RESERVER' ? 'x-circle' : 'dollar-circle')"></i>
+                <span>{{ appartement.status === 'DISPONIBLE' ? 'Disponible' : appartement.status === 'EN_ATTENTE' ? 'En reservation' : appartement.status === 'RESERVER' ? 'Réservé' : 'Vendu' }}</span>
+              </div>
+            </div>
+          </li>
+        </a>
+      </ul>
+    </ng-container>
+  </div>
+  <ng-template #failureOrLoading>
+    <ng-container *ngIf="errorMessage; else loading">
+      <div class="error-msg">
+        <p>{{errorMessage}}</p>
+      </div>
+    </ng-container>
+    <ng-template #loading>
+      <div class="loader-container">
+        <span class="loader"></span>
+      </div>
+    </ng-template>
+  </ng-template>
+</div>

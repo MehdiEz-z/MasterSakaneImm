@@ -1,0 +1,73 @@
+<div class="head-title">
+  <div class="left">
+    <h1>Immeubles</h1>
+    <ul class="breadcrumb">
+      <li>
+        <a>{{(immeuble|async)?.residence}}</a>
+      </li>
+      <li><i class='bx bx-chevron-right' ></i></li>
+      <li>
+        <a>{{(immeuble|async)?.numero}}</a>
+      </li>
+      <li><i class='bx bx-chevron-right' ></i></li>
+      <li>
+        <a class="active">Details</a>
+      </li>
+    </ul>
+  </div>
+  <div class="right">
+    <div *ngIf="hasAnyRoles(['ADMIN'])" >
+      <a class="btn-create" (click)="getCreateEtage()" >Crée un Etage</a>
+    </div>
+    <a class="btn-retour" (click)="goBackResidenceDetail()">Retour</a>
+  </div>
+</div>
+<div class="table-data">
+  <div class="image-container">
+    <img src="assets/imgs/Green%20Walks_immA.jpg" alt="Residence">
+  </div>
+  <div class="todo">
+    <ng-container *ngIf="etages | async ; else failureOrLoading">
+      <div class="head">
+        <h3>Etages</h3>
+      </div>
+      <ul class="todo-list" *ngFor="let etage of etages | async">
+        <a (click)="getEtageDetails(etage)" >
+          <li class="not-completed">
+            <p>{{ etage.numero }}</p>
+            <div class="status-imm">
+              <div class="imm-disponible">
+                <i class='bx bx-check-circle'></i>
+                <span>10</span>
+              </div>
+              <div class="imm-attente">
+                <i class='bx bx-time-five'></i>
+                <span>10</span>
+              </div>
+              <div class="imm-reserve">
+                <i class='bx bx-x-circle'></i>
+                <span>10</span>
+              </div>
+              <div class="imm-vendu">
+                <i class='bx bx-dollar-circle' ></i>
+                <span>10</span>
+              </div>
+            </div>
+          </li>
+        </a>
+      </ul>
+    </ng-container>
+  </div>
+  <ng-template #failureOrLoading>
+    <ng-container *ngIf="errorMessage; else loading">
+      <div class="error-msg">
+        <p>{{errorMessage}}</p>
+      </div>
+    </ng-container>
+    <ng-template #loading>
+      <div class="loader-container">
+        <span class="loader"></span>
+      </div>
+    </ng-template>
+  </ng-template>
+</div>

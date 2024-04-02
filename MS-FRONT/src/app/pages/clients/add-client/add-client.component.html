@@ -1,0 +1,96 @@
+<div class="head-title">
+  <div class="left">
+    <h1>Appartements</h1>
+    <ul class="breadcrumb">
+      <li>
+        <a href="#">Appartements</a>
+      </li>
+      <li><i class='bx bx-chevron-right' ></i></li>
+      <li>
+        <a class="active">Crée une Appartement</a>
+      </li>
+    </ul>
+  </div>
+  <div class="right">
+    <a routerLink="/clients" class="btn-retour">Retour</a>
+  </div>
+</div>
+<div class="table-data">
+  <div class="form-style-5">
+    <form [formGroup]="newClientFormGroup" (ngSubmit)="saveClient()">
+      <fieldset>
+        <div style="width: 32%;margin-right: 2%">
+          <label>Nom</label>
+          <input type="text" formControlName="nom" name="field1" placeholder="Nom du Client *">
+        </div>
+        <div style="width: 32%;margin-right: 2%">
+          <label>Prenom</label>
+          <input type="text" formControlName="prenom" name="field2" placeholder="Prenom du Client *">
+        </div>
+        <div  style="width: 32%">
+          <label>Date Naissance</label>
+          <input type="date" formControlName="dateNaissance" name="field3" placeholder="Date Naissance *">
+        </div>
+        <div style="width: 32%;margin-right: 2%">
+          <label>Lieu de Naissance</label>
+          <input type="text" formControlName="lieuNaissance" name="field4" placeholder="Lieu de Naissance *">
+        </div>
+        <div style="width: 32%;margin-right: 2%">
+          <label>Nom du Pere</label>
+          <input type="text" formControlName="nomPere" name="field5" placeholder="Nom du Pere *">
+        </div>
+        <div  style="width: 32%">
+          <label>Nom du Mere</label>
+          <input type="text" formControlName="nomMere" name="field6" placeholder="Nom du Mere *">
+        </div>
+        <div style="width: 100%">
+          <label>Adresse</label>
+          <input type="text" formControlName="adresse" name="field7" placeholder="Adresse *">
+        </div>
+        <div style="width: 32%;margin-right: 2%">
+          <label>CIN</label>
+          <input type="text" formControlName="cin" name="field8" placeholder="CIN *">
+        </div>
+        <div  style="width: 32%; margin-right: 2%">
+          <label>CIN Validation</label>
+          <input type="date" formControlName="cinValidite" name="field9" placeholder="CIN Validate *">
+        </div>
+        <div style="width: 32%">
+          <label>Téléphone</label>
+          <input type="text" formControlName="telephone" name="field10" placeholder="Numero du Téléphone *">
+        </div>
+        <div style="width: 32%;margin-right: 2%">
+          <label>Nationalité</label>
+          <input type="text" formControlName="nationalite" name="field11" placeholder="Nationalité *">
+        </div>
+        <div style="width: 32%;margin-right: 2%">
+          <label>Email</label>
+          <input type="text" formControlName="email" name="field12" placeholder="Email *">
+        </div>
+        <div  style="width: 32%">
+          <label>Profession</label>
+          <input type="text" formControlName="profession" name="field13" placeholder="Profession *">
+        </div>
+        <div style="width: 49%; margin-right: 2%">
+          <label for="situation">Situation Familiale:</label>
+          <select id="situation" name="field14" formControlName="situationFamiliale">
+            <option *ngFor="let situation of situationsFamiliales" [value]="situation">
+              {{ situation }}
+            </option>
+          </select>
+        </div>
+        <div style="width: 49%;">
+          <label for="methode">Méthode Recherche</label>
+          <select id="methode" name="field15" formControlName="methode">
+            <option *ngFor="let methode of methodesRecherche" [value]="methode">
+              {{ methode }}
+            </option>
+          </select>
+        </div>
+      </fieldset>
+      <div class="box-btn">
+        <button class="btn-new">Crée</button>
+      </div>
+    </form>
+  </div>
+</div>

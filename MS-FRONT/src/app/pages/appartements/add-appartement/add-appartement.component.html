@@ -1,0 +1,40 @@
+<div class="head-title">
+  <div class="left">
+    <h1>Appartements</h1>
+    <ul class="breadcrumb">
+      <li>
+        <a href="#">Appartements</a>
+      </li>
+      <li><i class='bx bx-chevron-right' ></i></li>
+      <li>
+        <a class="active">Crée une Appartement</a>
+      </li>
+    </ul>
+  </div>
+  <div class="right">
+    <a (click)="goBackEtageDetail()" class="btn-retour">Retour</a>
+  </div>
+</div>
+<div class="table-data">
+  <div class="form-style-5">
+    <form [formGroup]="newAppartementFormGroup" (ngSubmit)="saveAppartement()">
+      <fieldset>
+        <input type="text" formControlName="numero" name="field1" style="width: 49%;margin-right: 2%" placeholder="Numero d'appartement *">
+        <input type="text" formControlName="titreFoncier" name="field2" style="width: 49%" placeholder="Titre Foncier *">
+        <textarea formControlName="description" name="field3" placeholder="Description"></textarea>
+        <input type="number" formControlName="superficieUtile" name="field3" style="width: 32%;margin-right: 2%" placeholder="Superficie Utile *">
+        <input type="number" formControlName="superficieTerrasse" name="field4" style="width: 32%;margin-right: 2%" placeholder="Superficie Terrasse *">
+        <input type="number" formControlName="prixMetreCarre" name="field5" style="width: 32%" placeholder="Prix de Metre Carre *">
+        <input type="number" formControlName="nombreChambre" name="field6" style="width: 15%;margin-right: 2%" placeholder="Chambre *">
+        <input type="number" formControlName="nombreSalon" name="field7" style="width: 15%;margin-right: 2%" placeholder="Salon *">
+        <input type="number" formControlName="nombreCuisine" name="field8" style="width: 15%;margin-right: 2%" placeholder="Cuisine *">
+        <input type="number" formControlName="nombreSalleDeBain" name="field9" style="width: 15%;margin-right: 2%" placeholder="SDB *">
+        <input type="number" formControlName="nombrePlacard" name="field10" style="width: 15%;margin-right: 2%" placeholder="Placard *">
+        <input type="number" formControlName="nombreBalcon" name="field11" style="width: 15%" placeholder="Balcon *">
+      </fieldset>
+      <div class="box-btn">
+        <button class="btn-new">Crée</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+<div class="head-title">
+  <div class="left">
+    <h1>Etages</h1>
+    <ul class="breadcrumb">
+      <li>
+        <a href="#">Etages</a>
+      </li>
+      <li><i class='bx bx-chevron-right' ></i></li>
+      <li>
+        <a class="active">Crée un Etage</a>
+      </li>
+    </ul>
+  </div>
+  <div class="right">
+    <a (click)="goBackImmeubleDetail()" class="btn-retour">Retour</a>
+  </div>
+</div>
+<div class="table-data">
+  <div class="form-style-5">
+    <form [formGroup]="newEtageFormGroup" (ngSubmit)="saveEtage()">
+      <fieldset>
+        <input class="hidden" type="text" formControlName="immeuble" name="field1">
+        <input type="text" formControlName="numero" name="field2" placeholder="Nom d'étage *">
+      </fieldset>
+      <div class="box-btn">
+        <button class="btn-new">Crée</button>
+      </div>
+    </form>
+  </div>
+</div>

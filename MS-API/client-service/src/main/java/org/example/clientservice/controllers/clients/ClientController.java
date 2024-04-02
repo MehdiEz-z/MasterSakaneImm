@@ -6,6 +6,7 @@ import org.example.clientservice.handlers.response.ResponseMessage;
 import org.example.clientservice.models.entities.Client;
 import org.example.clientservice.services.interfaces.ClientService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @RestController
@@ -22,11 +23,13 @@ public class ClientController {
                 "Client trouvé avec succès");
     }*/
     @GetMapping("/{reference}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','COMMERCIAL')")
     public ClientResponseVM getClientByReference(@PathVariable String reference) {
         Client client = clientService.getClientByReference(reference);
         return ClientResponseVM.toVM(client);
     }
     @GetMapping("/all")
+    @PreAuthorize("hasAnyAuthority('ADMIN','COMMERCIAL')")
     public ResponseEntity<ResponseMessage> getAllClients() {
         List<Client> clients = clientService.getAllClients();
         if(clients.isEmpty()) {
@@ -38,6 +41,7 @@ public class ClientController {
         }
     }
     @PostMapping("/")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<ResponseMessage> createClient(@RequestBody @Valid ClientRequestVM clientRequestVM){
         Client client = clientRequestVM.toClient();
         Client createdClient = clientService.createClient(client);

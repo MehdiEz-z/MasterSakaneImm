@@ -17,13 +17,13 @@ public class AppartementController {
         this.appartementService = appartementService;
     }
     @GetMapping("{reference}")
-    @PreAuthorize("hasAnyAuthority('ADMIN','COMMERCIAL')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','COMMERCIAL','CLIENT')")
     public AppartementResponseVM getAppartementByReference(@PathVariable String reference) {
         Appartement appartement = appartementService.getAppartementByReference(reference);
         return AppartementResponseVM.toVM(appartement);
     }
     @GetMapping("/{etageReference}/all")
-    @PreAuthorize("hasAnyAuthority('ADMIN','COMMERCIAL')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','COMMERCIAL','CLIENT')")
     public ResponseEntity<ResponseMessage> getAllAppartementByEtage(@PathVariable String etageReference) {
         List<Appartement> appartements = appartementService.getAllAppartementByEtage(etageReference);
         if(appartements.isEmpty()) {
@@ -35,6 +35,7 @@ public class AppartementController {
         }
     }
     @PutMapping("/{reference}/status/{status}")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public void updateAppartementStatus(@PathVariable String reference, @PathVariable String status) {
         appartementService.updateAppartementStatus(reference, status);
     }

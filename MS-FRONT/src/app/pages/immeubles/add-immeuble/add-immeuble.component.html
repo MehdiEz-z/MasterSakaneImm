@@ -1,0 +1,30 @@
+<div class="head-title">
+  <div class="left">
+    <h1>Immeubles</h1>
+    <ul class="breadcrumb">
+      <li>
+        <a href="#">Immeubles</a>
+      </li>
+      <li><i class='bx bx-chevron-right' ></i></li>
+      <li>
+        <a class="active">Crée un Immeuble</a>
+      </li>
+    </ul>
+  </div>
+  <div class="right">
+    <a (click)="goBackResidenceDetail()" class="btn-retour">Retour</a>
+  </div>
+</div>
+<div class="table-data">
+  <div class="form-style-5">
+    <form [formGroup]="newImmeubleFormGroup" (ngSubmit)="saveImmeuble()">
+      <fieldset>
+        <input class="hidden" type="text" formControlName="residence" name="field1">
+        <input type="text" formControlName="numero" name="field2" placeholder="Nom d'immeuble *">
+      </fieldset>
+      <div class="box-btn">
+        <button class="btn-new">Crée</button>
+      </div>
+    </form>
+  </div>
+</div>

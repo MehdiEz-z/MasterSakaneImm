@@ -1,0 +1,31 @@
+<div class="head-title">
+  <div class="left">
+    <h1>Résidences</h1>
+    <ul class="breadcrumb">
+      <li>
+        <a href="#">Résidences</a>
+      </li>
+      <li><i class='bx bx-chevron-right' ></i></li>
+      <li>
+        <a class="active">Crée une Résidence</a>
+      </li>
+    </ul>
+  </div>
+  <div class="right">
+    <a routerLink="/residences" class="btn-retour">Retour</a>
+  </div>
+</div>
+<div class="table-data">
+  <div class="form-style-5">
+    <form [formGroup]="newResidenceFormGroup" (ngSubmit)="saveResidence()">
+      <fieldset>
+        <input type="text" formControlName="nom" name="field1" placeholder="Nom de la Résidence *">
+        <input type="text" formControlName="adresse" name="field2" placeholder="Adresse de la Résidence *">
+        <textarea formControlName="description" name="field3" placeholder="Description"></textarea>
+      </fieldset>
+      <div class="box-btn">
+        <button class="btn-new">Crée</button>
+      </div>
+    </form>
+  </div>
+</div>

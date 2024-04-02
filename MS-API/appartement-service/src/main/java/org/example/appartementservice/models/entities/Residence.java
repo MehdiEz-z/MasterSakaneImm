@@ -15,10 +15,11 @@ import java.util.List;
 public class Residence {
     @Id @Column(unique = true)
     private String reference;
+    @Column(unique = true)
     private String nom;
     private String description;
     private String adresse;
-    @OneToMany(mappedBy = "residence")
+    @OneToMany(mappedBy = "residence", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Immeuble> immeubles;
     @JsonIgnore
     @CreatedDate

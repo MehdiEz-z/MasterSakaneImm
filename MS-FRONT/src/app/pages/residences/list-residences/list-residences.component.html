@@ -1,0 +1,63 @@
+<div class="head-title">
+  <div class="left">
+    <h1>Résidences</h1>
+    <ul class="breadcrumb">
+      <li>
+        <a href="#">Résidences</a>
+      </li>
+      <li><i class='bx bx-chevron-right' ></i></li>
+      <li>
+        <a class="active">List</a>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="hasAnyRoles(['ADMIN'])">
+    <a routerLink="add" class="btn-create">Crée une Résidence</a>
+  </div>
+</div>
+<div class="table-data">
+  <ng-container *ngIf="residences | async ; else failureOrLoading">
+    <div class="order">
+      <table>
+        <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Adresse</th>
+          <th>Disponibilité</th>
+          <th>Détail</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let residence of residences | async">
+          <td>
+            <p>{{ residence.nom }}</p>
+          </td>
+          <td>
+            <p>{{ residence.adresse }}</p>
+          </td>
+          <td>
+            <span class="status completed">10 Appartements</span>
+          </td>
+          <td>
+            <a [routerLink]="[residence.reference]">
+              <i class="detail bx bxs-info-circle"></i>
+            </a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
+  <ng-template #failureOrLoading>
+    <ng-container *ngIf="errorMessage; else loading">
+      <div class="error-msg">
+        <p>{{errorMessage}}</p>
+      </div>
+    </ng-container>
+    <ng-template #loading>
+      <div class="loader-container">
+        <span class="loader"></span>
+      </div>
+    </ng-template>
+  </ng-template>
+</div>
