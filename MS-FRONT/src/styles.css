@@ -882,11 +882,7 @@ a.disabled{
 }
 .form-style-5 legend {
   font-size: 1.4em;
-  margin-bottom: 10px;
-}
-.form-style-5 label {
-  display: block;
-  margin-bottom: 8px;
+  margin-bottom: 15px;
 }
 .form-style-5 input[type="text"],
 .form-style-5 input[type="date"],
@@ -910,6 +906,18 @@ a.disabled{
 }
 .form-style-5 select{
   height:35px;
+}
+.form-style-5 .number {
+  background: var(--green);
+  color: var(--light-green);
+  height: 25px;
+  width: 25px;
+  display: inline-block;
+  font-size: 0.8em;
+  margin-right: 8px;
+  text-align: center;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.2);
+  border-radius: 15px 15px 15px 0px;
 }
 .hidden{
   display: none;
