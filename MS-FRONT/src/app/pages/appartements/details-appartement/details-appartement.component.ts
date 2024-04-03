@@ -6,6 +6,7 @@ import {KeycloakService} from "keycloak-angular";
 import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import Swal from "sweetalert2";
+import {ReservationService} from "../../../core/services/reservation/reservation.service";
 
 @Component({
   selector: 'app-details-appartement',
@@ -18,6 +19,7 @@ export class DetailsAppartementComponent implements OnInit{
   errorMessage!: string;
   constructor(private route: ActivatedRoute,
               private appartementService: AppartementService,
+              private reservationService: ReservationService,
               public keycloakService: KeycloakService,
               private router: Router) {
     this.appartementRef = this.route.snapshot.params['appartementReference'];
@@ -35,6 +37,25 @@ export class DetailsAppartementComponent implements OnInit{
     this.router.navigateByUrl("reservations/add/"+this.appartementRef).then(
       r => console.log("Navigation vers la page de création de réservation")
     )
+  }
+  annulerReservation(): void {
+    this.reservationService.annulerReservation(this.appartementRef).subscribe({
+        next: (response : any) => {
+          Swal.fire({
+            icon: 'success',
+            title: response.message,
+            showConfirmButton: false,
+            timer: 2500
+          }).then(r => {
+            setTimeout(() => {
+              window.location.reload();
+            }, 5000);
+          });
+
+        }
+      }
+    );
+
   }
   ngOnInit(): void {
     this.appartement = this.appartementService.getAppartement(this.appartementRef).pipe(

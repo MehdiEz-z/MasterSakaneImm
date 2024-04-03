@@ -28,10 +28,8 @@ export class AddClientComponent implements OnInit{
     let client = this.newClientFormGroup.value;
     client.dateNaissance = this.formatDate(client.dateNaissance);
     client.cinValidite = this.formatDate(client.cinValidite);
-    console.log(this.newClientFormGroup)
     this.clientService.saveClient(client).subscribe({
         next: (response : any) => {
-          console.log(response);
           Swal.fire({
             icon: "success",
             title: response.message,

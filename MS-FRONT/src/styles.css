@@ -153,7 +153,7 @@ body {
   color: var(--green);
 }
 #sidebar .side-menu li a .bx {
-  min-width: calc(60px  - ((4px + 6px) * 2));
+  min-width: calc(60px - ((4px + 6px) * 2));
   display: flex;
   justify-content: center;
 }
@@ -537,11 +537,11 @@ body {
 .tab{
   cursor: pointer;
   padding:10px 20px;
-  margin:0px 2px;
-  background:var(--dark);;
+  margin:0 2px;
+  background:var(--dark);
   display:inline-block;
-  color:var(--light);;
-  border-radius:3px 3px 0px 0px;
+  color:var(--light);
+  border-radius:3px 3px 0 0;
   width: 30%;
 }
 .panels{
@@ -957,8 +957,8 @@ a.disabled{
 }
 
 @-webkit-keyframes slide {
-  0% { margin-left: 0px; }
-  16% { margin-left: 0px; }
+  0% { margin-left: 0; }
+  16% { margin-left: 0; }
   20% { margin-left: -728px; }
   36% { margin-left: -728px; }
   40% { margin-left: -1456px; }
