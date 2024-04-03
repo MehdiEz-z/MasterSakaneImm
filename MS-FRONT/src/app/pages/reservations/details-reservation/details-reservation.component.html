@@ -1,1 +1,39 @@
-<p>details-reservation works!</p>
+<ng-container *ngIf="reservation | async ; else failureOrLoading">
+  <div class="head-title">
+    <div class="left">
+      <div class="appt-status">
+        <h1>Réservation</h1>
+        <div [class]="'imm-'+((reservation |async)?.statusReservation=== 'CONFIRMEE' ? 'disponible' : (reservation |async)?.statusReservation=== 'EN_ATTENTE' ? 'attente' : 'vendu')">
+          <i [class]="'bx bx-'+((reservation |async)?.statusReservation=== 'CONFIRMEE' ? 'check-circle' : (reservation |async)?.statusReservation=== 'EN_ATTENTE' ? 'time-five' : 'x-circle')"></i>
+          <span>{{ (reservation |async)?.statusReservation=== 'CONFIRMEE' ? 'Confirmée' : (reservation |async)?.statusReservation=== 'EN_ATTENTE' ? 'En attente' : 'Annulée' }}</span>
+        </div>
+      </div>
+      <ul class="breadcrumb">
+        <li>
+          <a>Réservation</a>
+        </li>
+        <li><i class='bx bx-chevron-right' ></i></li>
+        <li>
+          <a class="active">Details</a>
+        </li>
+      </ul>
+    </div>
+    <div class="right">
+      <a *ngIf="hasAnyRoles(['ADMIN']) && (reservation |async)?.statusReservation === 'EN_ATTENTE'" (click)="confirmerReservation()" class="btn-create">Confirmer</a>
+      <a *ngIf="hasAnyRoles(['ADMIN']) && (reservation |async)?.statusReservation === 'EN_ATTENTE'" (click)="annulerReservation()" class="btn-annuler">Annuler</a>
+      <a class="btn-retour" routerLink="/reservations">Retour</a>
+    </div>
+  </div>
+</ng-container>
+<ng-template #failureOrLoading>
+  <ng-container *ngIf="errorMessage; else loading">
+    <div class="error-msg">
+      <p>{{errorMessage}}</p>
+    </div>
+  </ng-container>
+  <ng-template #loading>
+    <div class="loader-container">
+      <span class="loader"></span>
+    </div>
+  </ng-template>
+</ng-template>

@@ -38,25 +38,6 @@ export class DetailsAppartementComponent implements OnInit{
       r => console.log("Navigation vers la page de création de réservation")
     )
   }
-  annulerReservation(): void {
-    this.reservationService.annulerReservation(this.appartementRef).subscribe({
-        next: (response : any) => {
-          Swal.fire({
-            icon: 'success',
-            title: response.message,
-            showConfirmButton: false,
-            timer: 2500
-          }).then(r => {
-            setTimeout(() => {
-              window.location.reload();
-            }, 5000);
-          });
-
-        }
-      }
-    );
-
-  }
   ngOnInit(): void {
     this.appartement = this.appartementService.getAppartement(this.appartementRef).pipe(
       catchError((error) => {

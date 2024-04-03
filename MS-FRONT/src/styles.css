@@ -447,6 +447,7 @@ body {
   align-items: center;
   grid-gap: 10px;
   font-weight: 500;
+  cursor: pointer;
 }
 .btn-retour{
   height: 36px;
@@ -704,8 +705,9 @@ body {
 #content main .table-data .order table tr td .status.pending {
   background: var(--orange);
 }
-
-
+.swal2-confirm.btn-reserver {
+  background-color: var(--green);
+}
 #content main .table-data .todo {
   flex-grow: 1;
   flex-basis: 500px;

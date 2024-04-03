@@ -42,6 +42,9 @@ export class AddReservationComponent implements OnInit{
       showDenyButton: true,
       confirmButtonText: `Réserver`,
       denyButtonText: `Annuler`,
+      customClass: {
+        confirmButton: 'btn-reserver'
+      }
     }).then((result) => {
       if(result.isConfirmed){
         this.submitReservation(reservation);
@@ -67,7 +70,7 @@ export class AddReservationComponent implements OnInit{
           showConfirmButton: false,
           timer: 2500
         }).then(r => {
-          this.router.navigateByUrl("/appartements/"+ this.appartementRef).then(
+          this.router.navigateByUrl("/reservations/"+ response.data.reference).then(
             r => console.log("navigate to reservation " + response.data.reference)
           );
         })
