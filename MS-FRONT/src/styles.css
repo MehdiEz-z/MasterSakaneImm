@@ -72,7 +72,7 @@ body {
 #sidebar .brand {
   font-size: 24px;
   font-weight: 700;
-  height: 56px;
+  height: 36px;
   display: flex;
   align-items: center;
   color: var(--green);
@@ -84,10 +84,13 @@ body {
   padding-bottom: 20px;
   box-sizing: content-box;
 }
-#sidebar .brand .bx {
-  min-width: 60px;
-  display: flex;
-  justify-content: center;
+#sidebar .brand img {
+  margin-left: 10px;
+  margin-top: 25px;
+  margin-right: 10px;
+}
+#sidebar .brand .text {
+  margin-top: 25px;
 }
 #sidebar .side-menu {
   width: 100%;
