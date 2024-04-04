@@ -72,7 +72,7 @@ body {
 #sidebar .brand {
   font-size: 24px;
   font-weight: 700;
-  height: 56px;
+  height: 36px;
   display: flex;
   align-items: center;
   color: var(--green);
@@ -84,10 +84,13 @@ body {
   padding-bottom: 20px;
   box-sizing: content-box;
 }
-#sidebar .brand .bx {
-  min-width: 60px;
-  display: flex;
-  justify-content: center;
+#sidebar .brand img {
+  margin-left: 10px;
+  margin-top: 25px;
+  margin-right: 10px;
+}
+#sidebar .brand .text {
+  margin-top: 25px;
 }
 #sidebar .side-menu {
   width: 100%;
@@ -153,7 +156,7 @@ body {
   color: var(--green);
 }
 #sidebar .side-menu li a .bx {
-  min-width: calc(60px  - ((4px + 6px) * 2));
+  min-width: calc(60px - ((4px + 6px) * 2));
   display: flex;
   justify-content: center;
 }
@@ -447,6 +450,7 @@ body {
   align-items: center;
   grid-gap: 10px;
   font-weight: 500;
+  cursor: pointer;
 }
 .btn-retour{
   height: 36px;
@@ -537,11 +541,11 @@ body {
 .tab{
   cursor: pointer;
   padding:10px 20px;
-  margin:0px 2px;
-  background:var(--dark);;
+  margin:0 2px;
+  background:var(--dark);
   display:inline-block;
-  color:var(--light);;
-  border-radius:3px 3px 0px 0px;
+  color:var(--light);
+  border-radius:3px 3px 0 0;
   width: 30%;
 }
 .panels{
@@ -704,8 +708,9 @@ body {
 #content main .table-data .order table tr td .status.pending {
   background: var(--orange);
 }
-
-
+.swal2-confirm.btn-reserver {
+  background-color: var(--green);
+}
 #content main .table-data .todo {
   flex-grow: 1;
   flex-basis: 500px;
@@ -880,11 +885,7 @@ a.disabled{
 }
 .form-style-5 legend {
   font-size: 1.4em;
-  margin-bottom: 10px;
-}
-.form-style-5 label {
-  display: block;
-  margin-bottom: 8px;
+  margin-bottom: 15px;
 }
 .form-style-5 input[type="text"],
 .form-style-5 input[type="date"],
@@ -908,6 +909,18 @@ a.disabled{
 }
 .form-style-5 select{
   height:35px;
+}
+.form-style-5 .number {
+  background: var(--green);
+  color: var(--light-green);
+  height: 25px;
+  width: 25px;
+  display: inline-block;
+  font-size: 0.8em;
+  margin-right: 8px;
+  text-align: center;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.2);
+  border-radius: 15px 15px 15px 0px;
 }
 .hidden{
   display: none;
@@ -957,8 +970,8 @@ a.disabled{
 }
 
 @-webkit-keyframes slide {
-  0% { margin-left: 0px; }
-  16% { margin-left: 0px; }
+  0% { margin-left: 0; }
+  16% { margin-left: 0; }
   20% { margin-left: -728px; }
   36% { margin-left: -728px; }
   40% { margin-left: -1456px; }

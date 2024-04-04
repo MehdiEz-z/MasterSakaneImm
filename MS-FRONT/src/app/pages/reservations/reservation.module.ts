@@ -19,7 +19,7 @@ const routes: Routes = [
     data: { roles: ['ADMIN','COMMERCIAL'] }
   },
   {
-    path: ":reference",
+    path: ":reservationReference",
     component: DetailsReservationComponent,
     data: { roles: ['ADMIN', 'COMMERCIAL'] }
   },

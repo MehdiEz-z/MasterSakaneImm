@@ -6,6 +6,7 @@ import {KeycloakService} from "keycloak-angular";
 import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import Swal from "sweetalert2";
+import {ReservationService} from "../../../core/services/reservation/reservation.service";
 
 @Component({
   selector: 'app-details-appartement',
@@ -18,6 +19,7 @@ export class DetailsAppartementComponent implements OnInit{
   errorMessage!: string;
   constructor(private route: ActivatedRoute,
               private appartementService: AppartementService,
+              private reservationService: ReservationService,
               public keycloakService: KeycloakService,
               private router: Router) {
     this.appartementRef = this.route.snapshot.params['appartementReference'];

@@ -1,1 +1,86 @@
-<p>details-reservation works!</p>
+<ng-container *ngIf="reservation | async ; else failureOrLoading">
+  <div class="head-title">
+    <div class="left">
+      <div class="appt-status">
+        <h1>Réservation</h1>
+        <div [class]="'imm-'+((reservation |async)?.statusReservation=== 'CONFIRMEE' ? 'disponible' : (reservation |async)?.statusReservation=== 'EN_ATTENTE' ? 'attente' : 'vendu')">
+          <i [class]="'bx bx-'+((reservation |async)?.statusReservation=== 'CONFIRMEE' ? 'check-circle' : (reservation |async)?.statusReservation=== 'EN_ATTENTE' ? 'time-five' : 'x-circle')"></i>
+          <span>{{ (reservation |async)?.statusReservation=== 'CONFIRMEE' ? 'Confirmée' : (reservation |async)?.statusReservation=== 'EN_ATTENTE' ? 'En attente' : 'Annulée' }}</span>
+        </div>
+      </div>
+      <ul class="breadcrumb">
+        <li>
+          <a>Réservation</a>
+        </li>
+        <li><i class='bx bx-chevron-right' ></i></li>
+        <li>
+          <a class="active">Details</a>
+        </li>
+      </ul>
+    </div>
+    <div class="right">
+      <a *ngIf="hasAnyRoles(['ADMIN']) && (reservation |async)?.statusReservation === 'EN_ATTENTE'" (click)="confirmerReservation()" class="btn-create">Confirmer</a>
+      <a *ngIf="hasAnyRoles(['ADMIN']) && (reservation |async)?.statusReservation === 'EN_ATTENTE'" (click)="annulerReservation()" class="btn-annuler">Annuler</a>
+      <a class="btn-retour" routerLink="/reservations">Retour</a>
+    </div>
+  </div>
+  <div class="table-data">
+    <div class="form-style-5">
+      <fieldset>
+        <legend style="width: 100%"><span class="number">1</span>Informations de la Réservation</legend>
+        <div style="width: 32%;margin-right: 2%">
+          <label>Date de Réservation</label>
+          <input type="text" disabled placeholder="{{(reservation | async)?.dateReservation | date: 'dd MMMM yyyy'}}">
+        </div>
+        <div style="width: 32%;margin-right: 2%">
+          <label>Prix de Metre Carré</label>
+          <input type="text" disabled placeholder="{{(reservation | async)?.prixMetreCarre}} Dhs">
+        </div>
+        <div  style="width: 32%">
+          <label>Prix de Vente</label>
+          <input type="text" disabled placeholder="{{(reservation | async)?.prixDeVente}} Dhs">
+        </div>
+
+        <legend style="width: 100%"><span class="number">2</span>Informations de l'Appartement</legend>
+        <div style="width: 23.5%;margin-right: 2%">
+          <label>Résidence</label>
+          <input type="text" disabled placeholder="{{(reservation | async)?.residence}}">
+        </div>
+        <div style="width: 23.5%;margin-right: 2%">
+          <label>Immeuble</label>
+          <input type="text" disabled placeholder="{{(reservation | async)?.immeuble}}">
+        </div>
+        <div style="width: 23.5%;margin-right: 2%">
+          <label>Etage</label>
+          <input type="text" disabled placeholder="{{(reservation | async)?.etage}}">
+        </div>
+        <div style="width: 23.5%;">
+          <label>Appartement</label>
+          <input type="text" disabled placeholder="{{(reservation | async)?.appartement}}">
+        </div>
+
+        <legend style="width: 100%"><span class="number">3</span>Informations du client</legend>
+        <div style="width: 49%;margin-right: 2%">
+          <label>Nom du Client</label>
+          <input type="text" disabled placeholder="{{(reservation | async)?.nomClient}}">
+        </div>
+        <div style="width: 49%;">
+          <label>Prénom du Client</label>
+          <input type="text" disabled placeholder="{{(reservation | async)?.prenomClient}}">
+        </div>
+      </fieldset>
+    </div>
+  </div>
+</ng-container>
+<ng-template #failureOrLoading>
+  <ng-container *ngIf="errorMessage; else loading">
+    <div class="error-msg">
+      <p>{{errorMessage}}</p>
+    </div>
+  </ng-container>
+  <ng-template #loading>
+    <div class="loader-container">
+      <span class="loader"></span>
+    </div>
+  </ng-template>
+</ng-template>

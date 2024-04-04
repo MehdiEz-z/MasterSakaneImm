@@ -1,1 +1,40 @@
-<p>add-reservation works!</p>
+<div class="head-title">
+  <div class="left">
+    <h1>Réservations</h1>
+    <ul class="breadcrumb">
+      <li>
+        <a href="#">Réservation</a>
+      </li>
+      <li><i class='bx bx-chevron-right' ></i></li>
+      <li>
+        <a class="active">Crée une Réservation</a>
+      </li>
+    </ul>
+  </div>
+  <div class="right">
+    <a (click)="goBackAppartement()" class="btn-retour">Retour</a>
+  </div>
+</div>
+<div class="table-data">
+  <div class="form-style-5">
+    <form [formGroup]="newReservationFormGroup" (ngSubmit)="saveReservation()">
+      <fieldset>
+        <div style="width: 49%; margin-right: 2%">
+          <label for="client">Clients:</label>
+          <select id="client" name="field14" formControlName="clientReference">
+            <option *ngFor="let client of clients | async" [value]="client.reference">
+              {{ client.nom }} {{ client.prenom }}
+            </option>
+          </select>
+        </div>
+        <div style="width: 49%">
+          <label>Prix Metre Carre</label>
+          <input type="number" formControlName="prixMetreCarre" name="field1" placeholder="Prix Metre Carre *">
+        </div>
+      </fieldset>
+      <div class="box-btn">
+        <button class="btn-new">Crée</button>
+      </div>
+    </form>
+  </div>
+</div>

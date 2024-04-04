@@ -1,9 +1,9 @@
 <div class="head-title">
   <div class="left">
-    <h1>Clients</h1>
+    <h1>Réservation</h1>
     <ul class="breadcrumb">
       <li>
-        <a href="#">Clients</a>
+        <a href="#">Réservation</a>
       </li>
       <li><i class='bx bx-chevron-right' ></i></li>
       <li>
@@ -42,9 +42,9 @@
             </td>
             <td>
               <div class="status-reservation">
-                <div [class]="'imm-'+(reservation.statusReservation === 'EN_ATTENTE' ? 'attente' : reservation.statusReservation === 'ANNULER' ? 'annuler' : 'confirmer')">
-                  <i [class]="'bx bx-'+(reservation.statusReservation === 'EN_ATTENTE' ? 'time-five' : reservation.statusReservation === 'ANNULER' ? 'x-circle' : 'check-circle')"></i>
-                  <span>{{ reservation.statusReservation === 'EN_ATTENTE' ? 'En attente' : reservation.statusReservation === 'ANNULER' ? 'Annulée' : 'Confirmée' }}</span>
+                <div [class]="'imm-'+(reservation.statusReservation === 'EN_ATTENTE' ? 'attente' : reservation.statusReservation === 'ANNULEE' ? 'annuler' : 'confirmer')">
+                  <i [class]="'bx bx-'+(reservation.statusReservation === 'EN_ATTENTE' ? 'time-five' : reservation.statusReservation === 'ANNULEE' ? 'x-circle' : 'check-circle')"></i>
+                  <span>{{ reservation.statusReservation === 'EN_ATTENTE' ? 'En attente' : reservation.statusReservation === 'ANNULEE' ? 'Annulée' : 'Confirmée' }}</span>
                 </div>
               </div>
             </td>

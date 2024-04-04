@@ -1,0 +1,2 @@
+CREATE DATABASE IF NOT EXISTS appartement_service;
+CREATE DATABASE IF NOT EXISTS client_service;
